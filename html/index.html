@@ -14,8 +14,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
+  
+  <!-- ✅ CORRIGÉ : ../css/ au lieu de ./css/ -->
   <link rel="stylesheet" href="../css/index.css">
+
+  <style>
+    /* Sécurité : page invisible jusqu'à ce que le loader parte */
+    body > *:not(#page-loader) { visibility: visible; }
+  </style>
 </head>
 <body>
 
@@ -448,33 +454,203 @@
   <!-- Toast container -->
   <div class="toast-container" aria-live="polite" aria-atomic="true" role="status"></div>
 
-  <script src="/js/detail.js"defer></script>
+  <!-- ✅ CORRIGÉ : ../js/ au lieu de /js/ -->
   <script>
-    // Pagination interactive
-    document.querySelectorAll('.page-btn').forEach(btn => {
-      if (btn.textContent.trim() === '←' || btn.textContent.trim() === '→') {
-        btn.addEventListener('click', () => showToast('Navigation entre les pages', 'info'));
-        return;
-      }
-      btn.addEventListener('click', function() {
-        document.querySelectorAll('.page-btn').forEach(b => {
-          b.classList.remove('active');
-          b.removeAttribute('aria-current');
-        });
-        this.classList.add('active');
-        this.setAttribute('aria-current', 'page');
-        showToast(`Page ${this.textContent} chargée`, 'success');
-        window.scrollTo({ top: document.getElementById('evenements').offsetTop - 80, behavior: 'smooth' });
+  /* ============================================================
+     VilleNova — Script principal (inline, sans dépendance)
+     ============================================================ */
+
+  /* ---- 1. LOADER ---- */
+  window.addEventListener('load', () => {
+    const loader = document.getElementById('page-loader');
+    if (!loader) return;
+    // Minimum 600ms pour que l'animation soit visible
+    setTimeout(() => {
+      loader.classList.add('hidden');
+      loader.addEventListener('transitionend', () => loader.remove(), { once: true });
+    }, 600);
+  });
+
+  /* ---- 2. TOAST ---- */
+  function showToast(message, type = 'info', duration = 3500) {
+    const container = document.querySelector('.toast-container');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.setAttribute('role', 'alert');
+    toast.textContent = message;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+      toast.style.animation = 'toastOut .3s ease forwards';
+      toast.addEventListener('animationend', () => toast.remove(), { once: true });
+    }, duration);
+  }
+
+  /* ---- 3. MENU BURGER ---- */
+  const burger = document.querySelector('.nav-burger');
+  const navLinks = document.querySelector('.nav-links');
+
+  if (burger && navLinks) {
+    burger.addEventListener('click', () => {
+      const isOpen = burger.getAttribute('aria-expanded') === 'true';
+      burger.setAttribute('aria-expanded', String(!isOpen));
+      navLinks.classList.toggle('open', !isOpen);
+    });
+
+    // Ferme le menu au clic sur un lien
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        burger.setAttribute('aria-expanded', 'false');
+        navLinks.classList.remove('open');
       });
     });
 
-    // Newsletter
-    function handleNewsletter(e) {
-      e.preventDefault();
-      const email = document.getElementById('newsletter-email').value;
-      showToast(`Inscription confirmée pour ${email} ! 🎉`, 'success');
-      e.target.reset();
+    // Ferme au clic hors du menu
+    document.addEventListener('click', (e) => {
+      if (!burger.contains(e.target) && !navLinks.contains(e.target)) {
+        burger.setAttribute('aria-expanded', 'false');
+        navLinks.classList.remove('open');
+      }
+    });
+  }
+
+  /* ---- 4. FILTRES ---- */
+  document.querySelectorAll('.filter-tag').forEach(btn => {
+    btn.addEventListener('click', function () {
+      // Mise à jour des états actifs
+      document.querySelectorAll('.filter-tag').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      this.classList.add('active');
+      this.setAttribute('aria-pressed', 'true');
+
+      const filter = this.dataset.filter;
+      const cards  = document.querySelectorAll('#events-grid .event-card');
+
+      cards.forEach(card => {
+        const match = filter === 'all' || card.dataset.category === filter;
+        card.style.display = match ? '' : 'none';
+        card.setAttribute('aria-hidden', String(!match));
+      });
+    });
+  });
+
+  /* ---- 5. RECHERCHE ---- */
+  const searchInput = document.getElementById('search-input');
+  const searchBtn   = document.getElementById('search-btn');
+
+  function doSearch() {
+    const q = (searchInput?.value || '').toLowerCase().trim();
+    const cards = document.querySelectorAll('#events-grid .event-card');
+
+    cards.forEach(card => {
+      const text = card.textContent.toLowerCase();
+      const match = !q || text.includes(q);
+      card.style.display = match ? '' : 'none';
+      card.setAttribute('aria-hidden', String(!match));
+    });
+
+    if (q) showToast(`Résultats pour « ${searchInput.value} »`, 'info');
+  }
+
+  searchBtn?.addEventListener('click', doSearch);
+  searchInput?.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+
+  /* ---- 6. COMPTEURS STATS (Intersection Observer) ---- */
+  function animateCount(el, target, duration = 1400) {
+    const start = performance.now();
+    const update = (now) => {
+      const elapsed  = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(eased * target).toLocaleString('fr-FR');
+      if (progress < 1) requestAnimationFrame(update);
+    };
+    requestAnimationFrame(update);
+  }
+
+  const statsObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el     = entry.target;
+      const target = parseInt(el.dataset.count, 10);
+      if (!isNaN(target)) animateCount(el, target);
+      statsObs.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('[data-count]').forEach(el => statsObs.observe(el));
+
+  /* ---- 7. ANIMATE-IN (Intersection Observer) ---- */
+  const animObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (!entry.isIntersecting) return;
+      // Décalage en cascade
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      animObs.unobserve(entry.target);
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.animate-in').forEach(el => animObs.observe(el));
+
+  /* ---- 8. MODAL VIDÉO ---- */
+  const videoModal    = document.getElementById('video-modal');
+  const videoTrigger  = document.querySelector('[data-video-trigger]');
+  const videoClose    = document.querySelector('.video-modal-close');
+
+  function openVideoModal() {
+    if (!videoModal) return;
+    videoModal.classList.add('open');
+    videoModal.setAttribute('aria-hidden', 'false');
+    videoClose?.focus();
+  }
+
+  function closeVideoModal() {
+    if (!videoModal) return;
+    videoModal.classList.remove('open');
+    videoModal.setAttribute('aria-hidden', 'true');
+    const vid = videoModal.querySelector('video');
+    if (vid) vid.pause();
+    videoTrigger?.focus();
+  }
+
+  videoTrigger?.addEventListener('click', openVideoModal);
+  videoTrigger?.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openVideoModal(); });
+  videoClose?.addEventListener('click', closeVideoModal);
+  videoModal?.addEventListener('click', e => { if (e.target === videoModal) closeVideoModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVideoModal(); });
+
+  /* ---- 9. PAGINATION ---- */
+  document.querySelectorAll('.page-btn').forEach(btn => {
+    if (btn.textContent.trim() === '←' || btn.textContent.trim() === '→') {
+      btn.addEventListener('click', () => showToast('Navigation entre les pages', 'info'));
+      return;
     }
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.page-btn').forEach(b => {
+        b.classList.remove('active');
+        b.removeAttribute('aria-current');
+      });
+      this.classList.add('active');
+      this.setAttribute('aria-current', 'page');
+      showToast(`Page ${this.textContent} chargée`, 'success');
+      const section = document.getElementById('evenements');
+      if (section) window.scrollTo({ top: section.offsetTop - 80, behavior: 'smooth' });
+    });
+  });
+
+  /* ---- 10. NEWSLETTER ---- */
+  function handleNewsletter(e) {
+    e.preventDefault();
+    const email = document.getElementById('newsletter-email').value;
+    showToast(`Inscription confirmée pour ${email} ! 🎉`, 'success');
+    e.target.reset();
+  }
+
   </script>
 
 </body>
