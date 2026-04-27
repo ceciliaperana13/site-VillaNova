@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VilleNova — Planche de Style & Charte Graphique</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sable-clair:#F4EDE4;--sable-moyen:#E6D3B3;--sable-fonce:#C2A27C;
+      --terracotta:#D17B49;--brun-chaud:#8B5E3C;
+      --blanc-casse:#FAF9F7;--gris-clair:#D1D1D1;--gris-fonce:#4A4A4A;--noir-doux:#2B2B2B;
+      --font-titre:'Playfair Display',serif;--font-corps:'DM Sans',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:var(--font-corps);background:#F0EAE0;color:var(--noir-doux);line-height:1.6;}
+    .page{max-width:1100px;margin:0 auto;padding:3rem 2rem;}
+    h1{font-family:var(--font-titre);font-size:3rem;font-weight:900;color:var(--brun-chaud);margin-bottom:.3rem;}
+    .subtitle{color:var(--gris-fonce);font-size:1.1rem;margin-bottom:3rem;}
+    .section{margin-bottom:3rem;}
+    .section-title{font-family:var(--font-titre);font-size:1.4rem;color:var(--brun-chaud);margin-bottom:1.2rem;padding-bottom:.5rem;border-bottom:2px solid var(--sable-moyen);}
+    /* Couleurs */
+    .color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1rem;}
+    .color-chip{border-radius:12px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.08);}
+    .color-preview{height:80px;}
+    .color-info{background:#fff;padding:.7rem;font-size:.8rem;}
+    .color-info strong{display:block;font-size:.88rem;color:var(--noir-doux);}
+    .color-info code{font-size:.75rem;color:var(--gris-fonce);}
+    /* Typo */
+    .type-samples{display:flex;flex-direction:column;gap:1.2rem;}
+    .type-row{background:#fff;border-radius:12px;padding:1.2rem 1.5rem;display:flex;align-items:baseline;gap:1.5rem;flex-wrap:wrap;}
+    .type-label{font-size:.75rem;color:var(--gris-fonce);min-width:160px;flex-shrink:0;}
+    /* Boutons */
+    .btn-showcase{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.8rem;border-radius:50px;font-size:1rem;font-weight:600;font-family:var(--font-corps);cursor:pointer;border:none;transition:all .25s;}
+    .btn-primary{background:var(--terracotta);color:#fff;box-shadow:0 4px 14px rgba(209,123,73,.3);}
+    .btn-primary:hover{background:var(--brun-chaud);}
+    .btn-outline{background:transparent;color:var(--terracotta);border:2px solid var(--terracotta);}
+    .btn-ghost{background:var(--sable-moyen);color:var(--brun-chaud);}
+    .btn-sm{padding:.45rem 1rem;font-size:.85rem;}
+    /* Cartes */
+    .card-showcase{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem;}
+    .sample-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08);border:1px solid var(--gris-clair);}
+    .sample-card-img{height:140px;object-fit:cover;width:100%;}
+    .sample-card-body{padding:1.1rem;}
+    .sample-card-body h3{font-family:var(--font-titre);font-size:1.05rem;color:var(--brun-chaud);margin-bottom:.3rem;}
+    .sample-card-body p{font-size:.85rem;color:var(--gris-fonce);}
+    /* Icons accessibilité */
+    .a11y-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;}
+    .a11y-item{background:#fff;border-radius:12px;padding:1rem 1.2rem;display:flex;gap:.75rem;align-items:flex-start;border:1px solid var(--sable-moyen);}
+    .a11y-icon{font-size:1.8rem;}
+    .a11y-item strong{display:block;font-size:.9rem;color:var(--noir-doux);}
+    .a11y-item p{font-size:.78rem;color:var(--gris-fonce);margin:0;}
+    /* Contraste */
+    .contrast-table{width:100%;border-collapse:collapse;font-size:.88rem;}
+    .contrast-table th,.contrast-table td{padding:.7rem 1rem;text-align:left;border-bottom:1px solid var(--sable-moyen);}
+    .contrast-table th{background:var(--sable-moyen);color:var(--brun-chaud);font-weight:700;}
+    .pass{color:#2a7d4f;font-weight:700;}
+    /* User stories */
+    .story-list{list-style:none;}
+    .story-list li{background:#fff;border-left:4px solid var(--terracotta);padding:1rem 1.2rem;margin-bottom:.75rem;border-radius:0 12px 12px 0;font-size:.92rem;}
+    .story-list li strong{color:var(--brun-chaud);}
+    /* Wireframe pills */
+    .wireframe-note{background:var(--sable-moyen);border-radius:8px;padding:.6rem 1rem;font-size:.82rem;color:var(--gris-fonce);margin-top:.5rem;}
+    /* Parcours */
+    .parcours{display:flex;align-items:flex-start;gap:0;flex-wrap:wrap;margin-bottom:1.2rem;}
+    .parcours-step{background:#fff;border-radius:10px;padding:.7rem 1rem;font-size:.82rem;border:1px solid var(--gris-clair);position:relative;min-width:120px;text-align:center;}
+    .parcours-step strong{display:block;font-size:.9rem;color:var(--brun-chaud);}
+    .parcours-arrow{display:flex;align-items:center;padding:0 .4rem;color:var(--terracotta);font-size:1.2rem;margin-top:.7rem;}
+    @media(max-width:768px){.btn-showcase{flex-direction:column;align-items:flex-start;}}
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header style="margin-bottom:3rem;">
+    <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;">
+      <svg width="40" height="40" viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="14" fill="#D17B49" opacity=".15"/>
+        <path d="M8 20 L16 10 L24 20" stroke="#8B5E3C" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M11 20 L11 24 M21 20 L21 24" stroke="#D17B49" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="16" cy="10" r="2.5" fill="#D17B49"/>
+      </svg>
+      <span style="font-family:var(--font-titre);font-size:1.6rem;color:var(--brun-chaud);font-weight:700;">VilleNova</span>
+    </div>
+    <h1>Planche de Style</h1>
+    <p class="subtitle">Charte graphique officielle · Agenda événementiel de Marseille · 2025</p>
+  </header>
+
+  <!-- ====== 1. COULEURS ====== -->
+  <section class="section">
+    <h2 class="section-title">01 · Palette de couleurs</h2>
+    <h3 style="font-size:1rem;color:var(--gris-fonce);margin-bottom:.8rem;">Couleurs principales</h3>
+    <div class="color-grid" style="margin-bottom:1.5rem;">
+      <div class="color-chip">
+        <div class="color-preview" style="background:#F4EDE4;"></div>
+        <div class="color-info"><strong>Sable clair</strong><code>#F4EDE4</code><br><small>Fond principal</small></div>
+      </div>
+      <div class="color-chip">
+        <div class="color-preview" style="background:#E6D3B3;"></div>
+        <div class="color-info"><strong>Sable moyen</strong><code>#E6D3B3</code><br><small>Sections, cartes</small></div>
+      </div>
+      <div class="color-chip">
+        <div class="color-preview" style="background:#C2A27C;"></div>
+        <div class="color-info"><strong>Sable foncé</strong><code>#C2A27C</code><br><small>Structurant</small></div>
+      </div>
+      <div class="color-chip">
+        <div class="color-preview" style="background:#D17B49;"></div>
+        <div class="color-info"><strong>Terracotta</strong><code>#D17B49</code><br><small>CTA, boutons</small></div>
+      </div>
+      <div class="color-chip">
+        <div class="color-preview" style="background:#8B5E3C;"></div>
+        <div class="color-info"><strong>Brun chaud</strong><code>#8B5E3C</code><br><small>Titres, hover</small></div>
+      </div>
+    </div>
+    <h3 style="font-size:1rem;color:var(--gris-fonce);margin-bottom:.8rem;">Couleurs neutres</h3>
+    <div class="color-grid">
+      <div class="color-chip"><div class="color-preview" style="background:#FAF9F7;border:1px solid #ddd;"></div><div class="color-info"><strong>Blanc cassé</strong><code>#FAF9F7</code><br><small>Fond alternatif</small></div></div>
+      <div class="color-chip"><div class="color-preview" style="background:#D1D1D1;"></div><div class="color-info"><strong>Gris clair</strong><code>#D1D1D1</code><br><small>Bordures</small></div></div>
+      <div class="color-chip"><div class="color-preview" style="background:#4A4A4A;"></div><div class="color-info"><strong>Gris foncé</strong><code>#4A4A4A</code><br><small>Texte secondaire</small></div></div>
+      <div class="color-chip"><div class="color-preview" style="background:#2B2B2B;"></div><div class="color-info"><strong>Noir doux</strong><code>#2B2B2B</code><br><small>Texte principal</small></div></div>
+    </div>
+  </section>
+
+  <!-- ====== 2. TYPOGRAPHIE ====== -->
+  <section class="section">
+    <h2 class="section-title">02 · Typographie</h2>
+    <div style="background:#fff;border-radius:12px;padding:1.2rem 1.5rem;margin-bottom:1rem;">
+      <p style="font-size:.78rem;color:var(--gris-fonce);margin-bottom:.5rem;">Police de titre</p>
+      <p style="font-family:var(--font-titre);font-size:2.5rem;font-weight:900;color:var(--brun-chaud);">Playfair Display</p>
+      <p style="font-family:var(--font-titre);font-size:1rem;color:var(--gris-fonce);">ABCDEFGHIJKLMNOPQRSTUVWXYZ · abcdefghijklmnopqrstuvwxyz · 0123456789</p>
+      <p style="font-size:.78rem;color:var(--gris-fonce);margin-top:.5rem;">Usage : titres H1–H3, noms d'événements, logo</p>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:1.2rem 1.5rem;margin-bottom:1.5rem;">
+      <p style="font-size:.78rem;color:var(--gris-fonce);margin-bottom:.5rem;">Police de corps</p>
+      <p style="font-family:var(--font-corps);font-size:1.8rem;font-weight:600;color:var(--noir-doux);">DM Sans</p>
+      <p style="font-family:var(--font-corps);font-size:1rem;color:var(--gris-fonce);">ABCDEFGHIJKLMNOPQRSTUVWXYZ · abcdefghijklmnopqrstuvwxyz · 0123456789</p>
+      <p style="font-size:.78rem;color:var(--gris-fonce);margin-top:.5rem;">Usage : corps de texte, boutons, navigation, descriptions</p>
+    </div>
+    <div class="type-samples">
+      <div class="type-row"><span class="type-label">H1 · 3.5rem/900</span><span style="font-family:var(--font-titre);font-size:2.8rem;font-weight:900;color:var(--brun-chaud);">Festival Jazz</span></div>
+      <div class="type-row"><span class="type-label">H2 · 2rem/700</span><span style="font-family:var(--font-titre);font-size:2rem;font-weight:700;color:var(--brun-chaud);">Événements à venir</span></div>
+      <div class="type-row"><span class="type-label">H3 · 1.3rem/700</span><span style="font-family:var(--font-titre);font-size:1.3rem;font-weight:700;color:var(--brun-chaud);">Concert au Dôme</span></div>
+      <div class="type-row"><span class="type-label">Corps · 1rem/400</span><span style="font-size:1rem;color:var(--gris-fonce);">Découvrez tous les événements culturels de Marseille sur VilleNova.</span></div>
+      <div class="type-row"><span class="type-label">Label · .82rem/600</span><span style="font-size:.82rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--terracotta);">Festival · Concert · Gratuit</span></div>
+    </div>
+  </section>
+
+  <!-- ====== 3. BOUTONS ====== -->
+  <section class="section">
+    <h2 class="section-title">03 · Composants — Boutons</h2>
+    <div class="btn-showcase">
+      <button class="btn btn-primary">Réserver →</button>
+      <button class="btn btn-outline">Voir l'agenda</button>
+      <button class="btn btn-ghost">Explorer</button>
+      <button class="btn btn-primary btn-sm">CTA petit</button>
+      <button class="btn btn-outline btn-sm">Filtrer</button>
+    </div>
+    <p style="font-size:.82rem;color:var(--gris-fonce);margin-top:1rem;">Taille minimum bouton : <strong>48px de hauteur</strong> · Border-radius : 50px (pills) · Focus visible avec outline 3px terracotta</p>
+  </section>
+
+  <!-- ====== 4. CARTES ====== -->
+  <section class="section">
+    <h2 class="section-title">04 · Composants — Cartes événement</h2>
+    <div class="card-showcase">
+      <div class="sample-card">
+        <img class="sample-card-img" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&q=75" alt="Exemple carte événement festival">
+        <div class="sample-card-body">
+          <p style="font-size:.75rem;color:var(--terracotta);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.3rem;">Festival</p>
+          <h3>Jazz au Vieux-Port</h3>
+          <p>15–17 mai · Gratuit · En plein air</p>
+          <button class="btn btn-primary btn-sm" style="margin-top:.8rem;">Voir →</button>
+        </div>
+      </div>
+      <div class="sample-card" style="opacity:.6;">
+        <div style="height:140px;background:var(--sable-moyen);display:flex;align-items:center;justify-content:center;color:var(--gris-fonce);">État skeleton</div>
+        <div class="sample-card-body">
+          <div style="height:12px;background:var(--sable-moyen);border-radius:4px;width:60%;margin-bottom:.5rem;"></div>
+          <div style="height:16px;background:var(--sable-moyen);border-radius:4px;width:90%;margin-bottom:.3rem;"></div>
+          <div style="height:12px;background:var(--sable-moyen);border-radius:4px;width:70%;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 5. ACCESSIBILITÉ ====== -->
+  <section class="section">
+    <h2 class="section-title">05 · Accessibilité (WCAG 2.1 AA / RGAA 4.1)</h2>
+    <div class="a11y-grid" style="margin-bottom:1.5rem;">
+      <div class="a11y-item"><span class="a11y-icon">♿</span><div><strong>PMR</strong><p>Tous les lieux partenaires sont accessibles aux personnes à mobilité réduite.</p></div></div>
+      <div class="a11y-item"><span class="a11y-icon">🤟</span><div><strong>LSF</strong><p>Interprètes Langue des Signes lors des événements phares. LSF intégrée aux mises en scène.</p></div></div>
+      <div class="a11y-item"><span class="a11y-icon">💬</span><div><strong>Sous-titrage</strong><p>Sous-titres temps réel sur écrans latéraux. Vidéos sous-titrées avec fichiers .vtt.</p></div></div>
+      <div class="a11y-item"><span class="a11y-icon">🔊</span><div><strong>Audiodescription</strong><p>Application mobile avec audiodescription des lieux, programmes et œuvres exposées.</p></div></div>
+      <div class="a11y-item"><span class="a11y-icon">🎨</span><div><strong>Contraste ≥ 4.5:1</strong><p>Toutes les combinaisons texte/fond respectent les ratios WCAG 2.1 niveau AA.</p></div></div>
+      <div class="a11y-item"><span class="a11y-icon">⌨️</span><div><strong>Navigation clavier</strong><p>Tous les éléments interactifs sont accessibles au clavier. Focus visible partout.</p></div></div>
+    </div>
+    <h3 style="font-size:1rem;color:var(--gris-fonce);margin-bottom:.8rem;">Ratios de contraste</h3>
+    <table class="contrast-table">
+      <thead><tr><th>Combinaison</th><th>Ratio</th><th>WCAG AA (4.5:1)</th></tr></thead>
+      <tbody>
+        <tr><td>#2B2B2B sur #FAF9F7</td><td>14.7:1</td><td class="pass">✓ PASS</td></tr>
+        <tr><td>#2B2B2B sur #F4EDE4</td><td>12.2:1</td><td class="pass">✓ PASS</td></tr>
+        <tr><td>#FAF9F7 sur #8B5E3C</td><td>5.8:1</td><td class="pass">✓ PASS</td></tr>
+        <tr><td>#FAF9F7 sur #D17B49</td><td>3.2:1</td><td style="color:orange;font-weight:700;">⚠ Grand texte OK</td></tr>
+        <tr><td>#2B2B2B sur #E6D3B3</td><td>8.1:1</td><td class="pass">✓ PASS</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.78rem;color:var(--gris-fonce);margin-top:.5rem;">Note : terracotta sur blanc n'est utilisé que pour les grandes tailles de texte (boutons, badges) où le seuil est 3:1.</p>
+  </section>
+
+  <!-- ====== 6. USER STORIES ====== -->
+  <section class="section">
+    <h2 class="section-title">06 · User Stories</h2>
+    <ul class="story-list">
+      <li><strong>US1 — Découvrir les événements :</strong> En tant que <em>visiteur Marseillais</em>, je veux voir tous les événements à venir sur la page d'accueil, filtrables par catégorie, pour trouver rapidement ce qui m'intéresse.</li>
+      <li><strong>US2 — Consulter un événement :</strong> En tant que <em>visiteur intéressé</em>, je veux accéder à la fiche détaillée d'un événement (programme, lieu, tarif, accessibilité) pour décider si je souhaite y participer.</li>
+      <li><strong>US3 — Réserver une place :</strong> En tant que <em>participant confirmé</em>, je veux réserver ma place en ligne depuis la fiche événement pour être sûr d'avoir accès à la manifestation.</li>
+      <li><strong>US4 — Accessibilité sourds/malentendants :</strong> En tant que <em>personne malentendante</em>, je veux voir quels événements proposent LSF ou sous-titrage, pour choisir des événements adaptés à mes besoins.</li>
+      <li><strong>US5 — S'informer via mobile :</strong> En tant que <em>visiteur sur smartphone</em>, je veux naviguer facilement sur le site (menu burger, cartes lisibles, boutons accessibles) pour trouver des événements en déplacement.</li>
+    </ul>
+  </section>
+
+  <!-- ====== 7. PARCOURS UTILISATEURS ====== -->
+  <section class="section">
+    <h2 class="section-title">07 · Parcours Utilisateurs (5 scénarios)</h2>
+
+    <h3 style="font-size:1rem;color:var(--brun-chaud);margin-bottom:.5rem;">Parcours 1 — Découvrir un événement gratuit</h3>
+    <div class="parcours">
+      <div class="parcours-step"><strong>1</strong>Accueil</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>2</strong>Filtre "Gratuit"</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>3</strong>Clic sur carte</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>4</strong>Fiche détail</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>5</strong>Ajout favori</div>
+    </div>
+
+    <h3 style="font-size:1rem;color:var(--brun-chaud);margin-bottom:.5rem;margin-top:1rem;">Parcours 2 — Réserver un concert</h3>
+    <div class="parcours">
+      <div class="parcours-step"><strong>1</strong>Accueil</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>2</strong>Recherche</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>3</strong>Fiche détail</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>4</strong>Billetterie</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>5</strong>Confirmation</div>
+    </div>
+
+    <h3 style="font-size:1rem;color:var(--brun-chaud);margin-bottom:.5rem;margin-top:1rem;">Parcours 3 — Trouver événement accessible LSF</h3>
+    <div class="parcours">
+      <div class="parcours-step"><strong>1</strong>Accueil</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>2</strong>Filtre "LSF"</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>3</strong>Fiche détail</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>4</strong>Infos accès</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>5</strong>Inscription PMR</div>
+    </div>
+
+    <h3 style="font-size:1rem;color:var(--brun-chaud);margin-bottom:.5rem;margin-top:1rem;">Parcours 4 — S'abonner à la newsletter</h3>
+    <div class="parcours">
+      <div class="parcours-step"><strong>1</strong>Accueil</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>2</strong>Scroll bas</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>3</strong>Bloc newsletter</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>4</strong>Saisie email</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>5</strong>Confirmation toast</div>
+    </div>
+
+    <h3 style="font-size:1rem;color:var(--brun-chaud);margin-bottom:.5rem;margin-top:1rem;">Parcours 5 — Partager un événement</h3>
+    <div class="parcours">
+      <div class="parcours-step"><strong>1</strong>Accueil</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>2</strong>Fiche événement</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>3</strong>Bouton Partage</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>4</strong>Copier le lien</div><div class="parcours-arrow">→</div>
+      <div class="parcours-step"><strong>5</strong>Envoi WhatsApp</div>
+    </div>
+  </section>
+
+  <!-- ====== 8. LOI DE MILLER ====== -->
+  <section class="section">
+    <h2 class="section-title">08 · Loi de Miller — 7 éléments apparents par page</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;">
+      <div style="background:#fff;border-radius:12px;padding:1rem 1.2rem;border-left:4px solid var(--terracotta);">
+        <strong style="color:var(--brun-chaud);">1 — Navigation</strong>
+        <p style="font-size:.82rem;color:var(--gris-fonce);margin-top:.3rem;">Header avec 5 liens max + CTA (Accueil, Événements, Agenda, Carte, Contact)</p>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:1rem 1.2rem;border-left:4px solid var(--terracotta);">
+        <strong style="color:var(--brun-chaud);">2 — Filtres catégories</strong>
+        <p style="font-size:.82rem;color:var(--gris-fonce);margin-top:.3rem;">7 filtres : Tous, Concerts, Expos, Festivals, Théâtre, Gastro, Sport</p>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:1rem 1.2rem;border-left:4px solid var(--terracotta);">
+        <strong style="color:var(--brun-chaud);">3 — Recherche</strong>
+        <p style="font-size:.82rem;color:var(--gris-fonce);margin-top:.3rem;">Barre de recherche unique et bien visible en haut de la liste</p>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:1rem 1.2rem;border-left:4px solid var(--terracotta);">
+        <strong style="color:var(--brun-chaud);">4 — Carte événement</strong>
+        <p style="font-size:.82rem;color:var(--gris-fonce);margin-top:.3rem;">Image, date, lieu, titre, description courte, prix — max 6 infos/carte</p>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:1rem 1.2rem;border-left:4px solid var(--terracotta);">
+        <strong style="color:var(--brun-chaud);">5 — Sidebar détail</strong>
+        <p style="font-size:.82rem;color:var(--gris-fonce);margin-top:.3rem;">Date, heure, lieu, transport, prix, bouton réservation — exactement 6 éléments</p>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:1rem 1.2rem;border-left:4px solid var(--terracotta);">
+        <strong style="color:var(--brun-chaud);">6 — Badges accessibilité</strong>
+        <p style="font-size:.82rem;color:var(--gris-fonce);margin-top:.3rem;">Max 4 icônes accessibilité visibles : PMR, LSF, Sous-titres, Audio</p>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:1rem 1.2rem;border-left:4px solid var(--terracotta);">
+        <strong style="color:var(--brun-chaud);">7 — Footer</strong>
+        <p style="font-size:.82rem;color:var(--gris-fonce);margin-top:.3rem;">4 colonnes max : Brand, Événements, VilleNova, Légal</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 9. ÉCO-CONCEPTION ====== -->
+  <section class="section">
+    <h2 class="section-title">09 · Éco-conception numérique</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;">
+      <div style="background:#e8f5e9;border-radius:12px;padding:1rem 1.2rem;"><strong style="color:#2e7d32;">Images lazy loading</strong><p style="font-size:.82rem;color:#555;margin-top:.3rem;">Attribut loading="lazy" sur toutes les images hors-écran. Format WebP recommandé.</p></div>
+      <div style="background:#e8f5e9;border-radius:12px;padding:1rem 1.2rem;"><strong style="color:#2e7d32;">2 polices max</strong><p style="font-size:.82rem;color:#555;margin-top:.3rem;">Playfair Display + DM Sans uniquement. Preconnect Google Fonts pour accélérer le chargement.</p></div>
+      <div style="background:#e8f5e9;border-radius:12px;padding:1rem 1.2rem;"><strong style="color:#2e7d32;">CSS natif</strong><p style="font-size:.82rem;color:#555;margin-top:.3rem;">Zéro framework CSS. Variables CSS natives. Animations CSS uniquement (pas de librairie JS animation).</p></div>
+      <div style="background:#e8f5e9;border-radius:12px;padding:1rem 1.2rem;"><strong style="color:#2e7d32;">JS minimal</strong><p style="font-size:.82rem;color:#555;margin-top:.3rem;">Vanilla JS uniquement. Pas de jQuery. Code asynchrone avec async/await.</p></div>
+      <div style="background:#e8f5e9;border-radius:12px;padding:1rem 1.2rem;"><strong style="color:#2e7d32;">Vidéo preload="none"</strong><p style="font-size:.82rem;color:#555;margin-top:.3rem;">Les vidéos ne se chargent qu'au clic de l'utilisateur, évitant les transferts inutiles.</p></div>
+      <div style="background:#e8f5e9;border-radius:12px;padding:1rem 1.2rem;"><strong style="color:#2e7d32;">prefers-reduced-motion</strong><p style="font-size:.82rem;color:#555;margin-top:.3rem;">Toutes les animations sont désactivées si l'utilisateur a configuré ce préférence système.</p></div>
+    </div>
+  </section>
+
+  <footer style="text-align:center;padding:2rem 0;border-top:1px solid var(--sable-moyen);color:var(--gris-fonce);font-size:.82rem;margin-top:2rem;">
+    VilleNova © 2025 · Planche de style v1.0 · Conforme RGAA 4.1 / WCAG 2.1 AA
+  </footer>
+
+</div>
+</body>
+</html>

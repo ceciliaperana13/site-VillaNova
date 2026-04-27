@@ -1,0 +1,14 @@
+/* index.css — styles spécifiques page d'accueil */
+
+/* Correction path fonts pour sous-dossier */
+.site-header.scrolled {
+  box-shadow: 0 2px 20px rgba(43,43,43,0.14);
+}
+
+/* Layout vidéo responsive */
+@media (max-width: 768px) {
+  #video-section-title + div,
+  [aria-labelledby="video-section-title"] .section > div > div:last-of-type > div {
+    grid-template-columns: 1fr !important;
+  }
+}
