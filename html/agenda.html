@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda — VilleNova · Tous les événements à Marseille</title>
+  <meta name="description" content="Agenda complet des événements culturels, concerts, expositions et festivals à Marseille.">
+  <meta name="theme-color" content="#D17B49">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/agenda.css">
+</head>
+<body>
+
+  <!-- Loader -->
+  <div id="page-loader" role="status" aria-label="Chargement">
+    <div class="loader-ring"></div>
+    <span style="font-family:var(--font-titre);color:var(--brun-chaud);font-size:1.1rem;">VilleNova</span>
+  </div>
+
+  <a class="skip-link" href="#main-content">Aller au contenu principal</a>
+
+  <!-- ======= HEADER ======= -->
+  <header class="site-header" role="banner">
+    <div class="nav-inner">
+      <a href="../html/index.html" class="logo" aria-label="VilleNova - Accueil">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="#D17B49" opacity=".15"/>
+          <path d="M8 20 L16 10 L24 20" stroke="#8B5E3C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M11 20 L11 24 M21 20 L21 24" stroke="#D17B49" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="16" cy="10" r="2.5" fill="#D17B49"/>
+        </svg>
+        Ville<span class="accent">Nova</span>
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="nav-links" id="nav-links" role="list">
+          <li><a href="../html/index.html">Accueil</a></li>
+          <li><a href="../html/index.html#evenements">Événements</a></li>
+          <li><a href="agenda.html" aria-current="page">Agenda</a></li>
+          <li><a href="carte.html">Carte</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="billetterie.html" class="nav-cta">Billetterie</a></li>
+        </ul>
+      </nav>
+      <button class="nav-burger" aria-expanded="false" aria-controls="nav-links" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ======= HERO AGENDA ======= -->
+    <section class="agenda-hero" aria-labelledby="agenda-title">
+      <div class="agenda-hero-inner">
+        <span class="hero-eyebrow">📅 Agenda 2025</span>
+        <h1 id="agenda-title">Tous les événements<br>à Marseille</h1>
+        <p>Concerts, expos, festivals, gastronomie, sport — retrouvez l'intégralité<br>du programme culturel marseillais en un seul endroit.</p>
+      </div>
+      <!-- Vague décorative -->
+      <div class="agenda-hero-wave" aria-hidden="true">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" fill="var(--sable-clair)"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ======= BARRE DE CONTRÔLES ======= -->
+    <div class="agenda-controls" role="toolbar" aria-label="Contrôles de l'agenda">
+      <div class="controls-inner">
+
+        <!-- Navigation mensuelle -->
+        <div class="month-nav" aria-label="Navigation par mois">
+          <button class="month-btn" id="prev-month" aria-label="Mois précédent">←</button>
+          <h2 class="month-title" id="month-title" aria-live="polite">Mai 2025</h2>
+          <button class="month-btn" id="next-month" aria-label="Mois suivant">→</button>
+        </div>
+
+        <!-- Toggle vue -->
+        <div class="view-toggle" role="group" aria-label="Mode d'affichage">
+          <button class="view-btn active" id="btn-calendar" data-view="calendar" aria-pressed="true" title="Vue calendrier">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            Calendrier
+          </button>
+          <button class="view-btn" id="btn-list" data-view="list" aria-pressed="false" title="Vue liste">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+              <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+            </svg>
+            Liste
+          </button>
+        </div>
+
+        <!-- Recherche -->
+        <div class="search-bar agenda-search" role="search">
+          <span aria-hidden="true">🔍</span>
+          <input type="search" id="agenda-search" placeholder="Rechercher…" aria-label="Rechercher un événement" autocomplete="off">
+          <button id="agenda-search-btn" aria-label="Rechercher">→</button>
+        </div>
+
+      </div>
+
+      <!-- Filtres catégories -->
+      <div class="filters-bar agenda-filters" role="group" aria-label="Filtrer par catégorie">
+        <div class="filters-inner">
+          <button class="filter-tag active" data-filter="all" aria-pressed="true">Tous <span class="filter-count" id="count-all"></span></button>
+          <button class="filter-tag" data-filter="concert"  aria-pressed="false">🎵 Concerts</button>
+          <button class="filter-tag" data-filter="expo"     aria-pressed="false">🖼 Expositions</button>
+          <button class="filter-tag" data-filter="festival" aria-pressed="false">🎉 Festivals</button>
+          <button class="filter-tag" data-filter="theatre"  aria-pressed="false">🎭 Théâtre</button>
+          <button class="filter-tag" data-filter="gastro"   aria-pressed="false">🍽 Gastronomie</button>
+          <button class="filter-tag" data-filter="sport"    aria-pressed="false">⚽ Sport</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= RÉSUMÉ RÉSULTATS ======= -->
+    <div class="results-summary" aria-live="polite" aria-atomic="true">
+      <span id="results-count">7 événements</span>
+      <span id="results-period">en Mai–Juin 2025</span>
+    </div>
+
+    <!-- ======= VUE CALENDRIER ======= -->
+    <section class="agenda-section" id="view-calendar" aria-labelledby="calendar-label">
+      <h2 class="sr-only" id="calendar-label">Calendrier des événements</h2>
+
+      <div class="calendar-grid" id="calendar-grid" role="grid" aria-label="Calendrier mai 2025">
+        <!-- Jours de la semaine -->
+        <div class="cal-weekdays" role="row">
+          <div role="columnheader" aria-label="Lundi">Lun</div>
+          <div role="columnheader" aria-label="Mardi">Mar</div>
+          <div role="columnheader" aria-label="Mercredi">Mer</div>
+          <div role="columnheader" aria-label="Jeudi">Jeu</div>
+          <div role="columnheader" aria-label="Vendredi">Ven</div>
+          <div role="columnheader" aria-label="Samedi">Sam</div>
+          <div role="columnheader" aria-label="Dimanche">Dim</div>
+        </div>
+        <!-- Cellules générées par JS -->
+        <div class="cal-body" id="cal-body" role="rowgroup"></div>
+      </div>
+
+      <!-- Légende catégories -->
+      <div class="cal-legend" aria-label="Légende des catégories">
+        <span class="legend-item"><span class="legend-dot" data-cat="festival"></span>Festival</span>
+        <span class="legend-item"><span class="legend-dot" data-cat="concert"></span>Concert</span>
+        <span class="legend-item"><span class="legend-dot" data-cat="expo"></span>Exposition</span>
+        <span class="legend-item"><span class="legend-dot" data-cat="theatre"></span>Théâtre</span>
+        <span class="legend-item"><span class="legend-dot" data-cat="gastro"></span>Gastronomie</span>
+        <span class="legend-item"><span class="legend-dot" data-cat="sport"></span>Sport</span>
+      </div>
+    </section>
+
+    <!-- ======= VUE LISTE ======= -->
+    <section class="agenda-section hidden" id="view-list" aria-labelledby="list-label">
+      <h2 class="sr-only" id="list-label">Liste des événements</h2>
+      <div id="list-container"></div>
+    </section>
+
+    <!-- ======= PANNEAU DÉTAIL (sidebar event) ======= -->
+    <aside class="event-panel" id="event-panel" aria-modal="false" aria-hidden="true" aria-label="Détail de l'événement">
+      <div class="event-panel-inner">
+        <button class="panel-close" id="panel-close" aria-label="Fermer le panneau">✕</button>
+        <div id="panel-content"></div>
+      </div>
+    </aside>
+    <div class="panel-overlay" id="panel-overlay" aria-hidden="true"></div>
+
+  </main>
+
+  <!-- ======= FOOTER ======= -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="../html/index.html" class="logo" aria-label="VilleNova - Accueil">
+          <svg viewBox="0 0 32 32" fill="none" width="24" aria-hidden="true">
+            <circle cx="16" cy="16" r="14" fill="#D17B49" opacity=".2"/>
+            <path d="M8 20 L16 10 L24 20" stroke="#E6D3B3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M11 20 L11 24 M21 20 L21 24" stroke="#D17B49" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="16" cy="10" r="2.5" fill="#D17B49"/>
+          </svg>
+          Ville<span class="accent">Nova</span>
+        </a>
+        <p>L'agenda événementiel de référence pour Marseille et sa métropole.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Événements</h3>
+        <a href="#">Concerts</a><a href="#">Expositions</a><a href="#">Festivals</a><a href="#">Théâtre</a><a href="#">Gastronomie</a>
+      </div>
+      <div class="footer-col">
+        <h3>VilleNova</h3>
+        <a href="#">À propos</a><a href="contact.html">Contact</a><a href="#">Partenaires</a><a href="#">Accessibilité</a>
+      </div>
+      <div class="footer-col">
+        <h3>Légal</h3>
+        <a href="#">Mentions légales</a><a href="#">CGU</a><a href="#">Confidentialité</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 VilleNova – Marseille</span>
+      <span>RGAA 4.1 · WCAG 2.1 AA</span>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div class="toast-container" aria-live="polite" aria-atomic="true" role="status"></div>
+
+  <script src="../js/agenda.js" defer></script>
+  <script>
+    /* Loader */
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('page-loader');
+      if (!loader) return;
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        loader.addEventListener('transitionend', () => loader.remove(), { once: true });
+      }, 500);
+    });
+
+    /* Burger */
+    const burger   = document.querySelector('.nav-burger');
+    const navLinks = document.querySelector('.nav-links');
+    burger?.addEventListener('click', () => {
+      const open = burger.getAttribute('aria-expanded') === 'true';
+      burger.setAttribute('aria-expanded', String(!open));
+      navLinks.classList.toggle('open', !open);
+    });
+  </script>
+
+</body>
+</html>
