@@ -208,27 +208,8 @@
   <!-- Toast -->
   <div class="toast-container" aria-live="polite" aria-atomic="true" role="status"></div>
 
-  <script src="../js/agenda.js" defer></script>
-  <script>
-    /* Loader */
-    window.addEventListener('load', () => {
-      const loader = document.getElementById('page-loader');
-      if (!loader) return;
-      setTimeout(() => {
-        loader.classList.add('hidden');
-        loader.addEventListener('transitionend', () => loader.remove(), { once: true });
-      }, 500);
-    });
-
-    /* Burger */
-    const burger   = document.querySelector('.nav-burger');
-    const navLinks = document.querySelector('.nav-links');
-    burger?.addEventListener('click', () => {
-      const open = burger.getAttribute('aria-expanded') === 'true';
-      burger.setAttribute('aria-expanded', String(!open));
-      navLinks.classList.toggle('open', !open);
-    });
-  </script>
+  <script src="../js/agenda.js" ></script>
+  
 
 </body>
 </html>

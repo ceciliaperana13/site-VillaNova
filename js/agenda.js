@@ -1,799 +1,765 @@
 /* ============================================================
    VilleNova — agenda.js
-   Logique complète de la page Agenda
+   Gestion complète de l'agenda : données, calendrier,
+   liste, filtres, recherche, panneau de détail, loader.
    ============================================================ */
 
 'use strict';
 
-/* ============================================================
-   1. DONNÉES DES ÉVÉNEMENTS
-   ============================================================ */
+/* ── 1. DONNÉES ÉVÉNEMENTS ────────────────────────────────── */
+
 const EVENTS = [
   {
     id: 1,
-    titre: 'Jazz des Calanques',
-    categorie: 'concert',
-    emoji: '🎵',
-    dateDebut: new Date(2025, 4, 3),   // 3 mai
-    dateFin:   new Date(2025, 4, 3),
-    heure: '20h30',
-    lieu: 'Palais du Pharo',
-    adresse: '58 Bd Charles Livon, Marseille 7e',
-    prix: 24,
-    gratuit: false,
-    description: 'Une soirée jazz intimiste face à la mer avec le quartet Dimitri Papadopoulos. Un voyage musical entre Méditerranée et Nouvelle-Orléans pour une expérience unique sous les étoiles.',
-    tags: ['Jazz', 'Live', 'Mer'],
-    accessibilite: ['♿', '👂', '🅿'],
-    image: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=800&q=80',
+    titre: 'Festival Marseille Jazz des Cinq Continents',
+    date: '2025-05-03',
+    dateFin: '2025-05-10',
+    heure: '19h00',
+    lieu: 'Jardins du Palais Longchamp',
+    categorie: 'festival',
+    prix: 'Gratuit – 45 €',
+    description:
+      'Le rendez-vous incontournable du jazz méditerranéen. Artistes internationaux, scènes en plein air et ateliers pour tous les publics.',
+    image: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=600&q=80',
+    lien: '#',
+    tags: ['jazz', 'plein air', 'international'],
   },
   {
     id: 2,
-    titre: 'Marseille Street Food Festival',
-    categorie: 'gastro',
-    emoji: '🍽',
-    dateDebut: new Date(2025, 4, 9),   // 9 mai
-    dateFin:   new Date(2025, 4, 11),
-    heure: '11h–22h',
-    lieu: 'Cours Julien',
-    adresse: 'Cours Julien, Marseille 6e',
-    prix: 0,
-    gratuit: true,
-    description: 'Trois jours de gastronomie de rue réunissant plus de 40 food trucks venus de toute la Méditerranée. Saveurs siciliennes, libanaises, provençales et bien plus encore.',
-    tags: ['Street food', 'Méditerranée', 'Famille'],
-    accessibilite: ['♿', '🚲'],
-    image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80',
+    titre: 'Exposition Cézanne & La Méditerranée',
+    date: '2025-05-08',
+    dateFin: '2025-06-30',
+    heure: '10h00 – 18h00',
+    lieu: 'Musée des Beaux-Arts',
+    categorie: 'expo',
+    prix: '12 € / 8 € réduit',
+    description:
+      'Une plongée dans l\'univers lumineux de Cézanne. Plus de 80 œuvres autour de la lumière et des paysages du Sud.',
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',
+    lien: '#',
+    tags: ['peinture', 'impressionnisme', 'patrimoine'],
   },
   {
     id: 3,
-    titre: 'Exposition : Lumières du Sud',
-    categorie: 'expo',
-    emoji: '🖼',
-    dateDebut: new Date(2025, 4, 10),  // 10 mai
-    dateFin:   new Date(2025, 5, 28),  // 28 juin
-    heure: '10h–19h (fermé lundi)',
-    lieu: 'MuCEM',
-    adresse: '7 Promenade Robert Laffont, Marseille 2e',
-    prix: 11,
-    gratuit: false,
-    description: 'Une traversée photographique de la lumière méditerranéenne à travers les œuvres de 18 artistes contemporains issus de 12 pays riverains de la Méditerranée.',
-    tags: ['Photo', 'Contemporain', 'Méditerranée'],
-    accessibilite: ['♿', '👁', '👂'],
-    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&q=80',
+    titre: 'Concert Ibrahim Maalouf',
+    date: '2025-05-15',
+    dateFin: null,
+    heure: '20h30',
+    lieu: 'Le Silo',
+    categorie: 'concert',
+    prix: '35 € – 55 €',
+    description:
+      'Le trompettiste franco-libanais de renommée mondiale revient à Marseille pour une soirée fusion entre jazz, musiques arabes et électro.',
+    image: 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&q=80',
+    lien: '#',
+    tags: ['jazz', 'world music', 'trompette'],
   },
   {
     id: 4,
-    titre: 'Festival de la Bonne Mère',
-    categorie: 'festival',
-    emoji: '🎉',
-    dateDebut: new Date(2025, 4, 16),  // 16 mai
-    dateFin:   new Date(2025, 4, 18),
-    heure: 'Dès 16h',
-    lieu: 'Vieux-Port',
-    adresse: 'Quai des Belges, Marseille 1er',
-    prix: 0,
-    gratuit: true,
-    description: 'Le grand festival populaire du Vieux-Port : scènes musicales, expositions artisanales, animations familiales et feu d'artifice le samedi soir. L'événement phare du printemps marseillais.',
-    tags: ['Gratuit', 'Famille', 'Feux d'artifice'],
-    accessibilite: ['♿', '🚲', '🅿'],
-    image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80',
+    titre: 'Marché Nocturne des Créateurs',
+    date: '2025-05-17',
+    dateFin: null,
+    heure: '18h00 – 23h00',
+    lieu: 'Cours Julien',
+    categorie: 'gastro',
+    prix: 'Entrée libre',
+    description:
+      'Une soirée festive au cœur du quartier créatif. Artisans locaux, food trucks et animations musicales toute la nuit.',
+    image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80',
+    lien: '#',
+    tags: ['artisanat', 'food', 'nuit'],
   },
   {
     id: 5,
-    titre: 'Don Giovanni – Opéra de Marseille',
-    categorie: 'theatre',
-    emoji: '🎭',
-    dateDebut: new Date(2025, 4, 21),  // 21 mai
-    dateFin:   new Date(2025, 4, 21),
-    heure: '19h30',
-    lieu: 'Opéra de Marseille',
-    adresse: '2 Rue Molière, Marseille 1er',
-    prix: 55,
-    gratuit: false,
-    description: 'Le chef-d'œuvre de Mozart dans une mise en scène audacieuse signée Clara Vidal. L'Orchestre Philharmonique de Marseille sous la baguette du maestro Ivan Kozlov.',
-    tags: ['Opéra', 'Mozart', 'Classique'],
-    accessibilite: ['♿', '👂', '👁'],
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80',
+    titre: 'Marseille vs Lyon — Ligue 1',
+    date: '2025-05-21',
+    dateFin: null,
+    heure: '21h00',
+    lieu: 'Stade Vélodrome',
+    categorie: 'sport',
+    prix: '20 € – 120 €',
+    description:
+      'Le choc des titans ! Le classique OM-OL dans une ambiance électrique au Vélodrome pour la 36e journée de Ligue 1.',
+    image: 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=600&q=80',
+    lien: '#',
+    tags: ['football', 'ligue 1', 'OM'],
   },
   {
     id: 6,
-    titre: 'Semi-Marathon des Calanques',
-    categorie: 'sport',
-    emoji: '⚽',
-    dateDebut: new Date(2025, 4, 25),  // 25 mai
-    dateFin:   new Date(2025, 4, 25),
-    heure: '8h00',
-    lieu: 'Départ Parc Borély',
-    adresse: 'Avenue du Parc Borély, Marseille 8e',
-    prix: 35,
-    gratuit: false,
-    description: 'Le plus beau semi-marathon de France ! Un parcours spectaculaire longeant les calanques, de Borély jusqu'à Cassis, avec des panoramas à couper le souffle.',
-    tags: ['Running', 'Nature', 'Calanques'],
-    accessibilite: ['🅿'],
-    image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80',
+    titre: 'La Mouette de Tchekhov',
+    date: '2025-05-24',
+    dateFin: '2025-05-31',
+    heure: '20h00',
+    lieu: 'Théâtre du Gymnase',
+    categorie: 'theatre',
+    prix: '18 € / 12 € réduit',
+    description:
+      'Mise en scène contemporaine du chef-d\'œuvre de Tchekhov par la compagnie Zéphyr. Une relecture lumineuse et décalée.',
+    image: 'https://images.unsplash.com/photo-1503095396549-807759245b35?w=600&q=80',
+    lien: '#',
+    tags: ['théâtre classique', 'Tchekhov', 'mise en scène'],
   },
   {
     id: 7,
-    titre: 'Nuits Électroniques du Fort',
+    titre: 'Fête de la Musique — Place de la Préfecture',
+    date: '2025-06-21',
+    dateFin: null,
+    heure: '17h00 – 01h00',
+    lieu: 'Place de la Préfecture',
     categorie: 'concert',
-    emoji: '🎵',
-    dateDebut: new Date(2025, 4, 30),  // 30 mai
-    dateFin:   new Date(2025, 4, 31),
-    heure: '22h–6h',
-    lieu: 'Fort Saint-Jean',
-    adresse: 'Fort Saint-Jean, Marseille 2e',
-    prix: 28,
-    gratuit: false,
-    description: 'Deux nuits de musique électronique dans les espaces historiques du Fort Saint-Jean. Line-up international avec 12 DJs et artistes live dans un cadre exceptionnel face à la mer.',
-    tags: ['Électro', 'Nuit', 'Fort Saint-Jean'],
-    accessibilite: ['♿'],
-    image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&q=80',
-  },
-  {
-    id: 8,
-    titre: 'Marché des Créateurs',
-    categorie: 'expo',
-    emoji: '🖼',
-    dateDebut: new Date(2025, 5, 7),   // 7 juin
-    dateFin:   new Date(2025, 5, 8),
-    heure: '10h–19h',
-    lieu: 'Friche la Belle de Mai',
-    adresse: '41 Rue Jobin, Marseille 3e',
-    prix: 0,
-    gratuit: true,
-    description: 'Plus de 80 artistes et artisans locaux exposent leurs créations : bijoux, céramique, illustration, photographie et textiles. Un rendez-vous incontournable de la scène créative marseillaise.',
-    tags: ['Artisanat', 'Art', 'Local'],
-    accessibilite: ['♿', '🚲'],
-    image: 'https://images.unsplash.com/photo-1531835551805-16d864c8d311?w=800&q=80',
-  },
-  {
-    id: 9,
-    titre: 'Fête de la Musique',
-    categorie: 'festival',
-    emoji: '🎉',
-    dateDebut: new Date(2025, 5, 21),  // 21 juin
-    dateFin:   new Date(2025, 5, 21),
-    heure: 'Dès 18h',
-    lieu: 'Partout à Marseille',
-    adresse: 'Cours Julien, Vieux-Port, La Plaine…',
-    prix: 0,
-    gratuit: true,
-    description: 'Des centaines de scènes dans toute la ville pour la plus grande fête musicale de l'année. Rock, jazz, hip-hop, musiques du monde : Marseille vibre jusqu'à l'aube.',
-    tags: ['Gratuit', 'Tous styles', 'Plein air'],
-    accessibilite: ['♿', '🚲'],
-    image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&q=80',
-  },
-  {
-    id: 10,
-    titre: 'Les Rencontres du Cinéma',
-    categorie: 'theatre',
-    emoji: '🎭',
-    dateDebut: new Date(2025, 5, 12),  // 12 juin
-    dateFin:   new Date(2025, 5, 15),
-    heure: 'Variable',
-    lieu: 'Cinémas Variétés & Prado',
-    adresse: 'Plusieurs salles, Marseille',
-    prix: 8,
-    gratuit: false,
-    description: 'Quatre jours de cinéma méditerranéen avec projections, rencontres avec les réalisateurs, ateliers et débats. Focus sur le cinéma maghrébin et les nouvelles voix du bassin méditerranéen.',
-    tags: ['Cinéma', 'Méditerranée', 'Débats'],
-    accessibilite: ['♿', '👁', '👂'],
-    image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800&q=80',
+    prix: 'Gratuit',
+    description:
+      'La grande fête nationale de la musique investit le centre-ville. Scènes gratuites, artistes locaux et atmosphère festive.',
+    image: 'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=600&q=80',
+    lien: '#',
+    tags: ['gratuit', 'outdoor', 'fête nationale'],
   },
 ];
 
-/* ============================================================
-   2. ÉTAT DE L'APPLICATION
-   ============================================================ */
+/* ── 2. ÉTAT GLOBAL ───────────────────────────────────────── */
+
 const state = {
-  moisCourant: new Date().getMonth(),
-  anneeCourante: new Date().getFullYear(),
-  vue: 'calendar',           // 'calendar' | 'list'
-  filtre: 'all',
-  recherche: '',
-  evenementOuvert: null,
+  currentDate: new Date(2025, 4, 1), // Mai 2025
+  view: 'calendar',                  // 'calendar' | 'list'
+  activeFilter: 'all',
+  searchQuery: '',
+  selectedEventId: null,
 };
 
-/* ============================================================
-   3. UTILITAIRES
-   ============================================================ */
-const $ = (sel, ctx = document) => ctx.querySelector(sel);
-const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+/* ── 3. UTILITAIRES ───────────────────────────────────────── */
 
 const MOIS_FR = [
-  'Janvier','Février','Mars','Avril','Mai','Juin',
-  'Juillet','Août','Septembre','Octobre','Novembre','Décembre'
-];
-const MOIS_COURT = [
-  'Jan','Fév','Mar','Avr','Mai','Jui',
-  'Juil','Aoû','Sep','Oct','Nov','Déc'
+  'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+  'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre',
 ];
 
-const LABELS_CAT = {
-  festival: 'Festival',
-  concert:  'Concert',
-  expo:     'Exposition',
-  theatre:  'Théâtre / Ciné',
-  gastro:   'Gastronomie',
-  sport:    'Sport',
+const JOURS_FR = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+
+const CAT_META = {
+  festival: { emoji: '🎉', label: 'Festival',      color: '#D17B49' },
+  concert:  { emoji: '🎵', label: 'Concert',       color: '#8B5E3C' },
+  expo:     { emoji: '🖼', label: 'Exposition',    color: '#C2A27C' },
+  theatre:  { emoji: '🎭', label: 'Théâtre',       color: '#6B8C6E' },
+  gastro:   { emoji: '🍽', label: 'Gastronomie',   color: '#B05D5D' },
+  sport:    { emoji: '⚽', label: 'Sport',         color: '#4A789C' },
 };
 
-function formaterPrix(evt) {
-  if (evt.gratuit) return '<span class="free">Gratuit</span>';
-  return `<strong>${evt.prix} €</strong>`;
+/**
+ * Parse une date ISO YYYY-MM-DD en objet Date local (sans décalage UTC).
+ */
+function parseDate(str) {
+  const [y, m, d] = str.split('-').map(Number);
+  return new Date(y, m - 1, d);
 }
 
-function formaterPrixTexte(evt) {
-  if (evt.gratuit) return 'Gratuit';
-  return `${evt.prix} €`;
+/**
+ * Formate une date en "3 mai 2025".
+ */
+function formatDateFR(dateStr) {
+  const d = parseDate(dateStr);
+  return `${d.getDate()} ${MOIS_FR[d.getMonth()].toLowerCase()} ${d.getFullYear()}`;
 }
 
-function formaterDuree(evt) {
-  const d = evt.dateDebut, f = evt.dateFin;
-  if (d.toDateString() === f.toDateString()) return '';
-  const diff = Math.round((f - d) / 86400000);
-  return `${diff + 1} jours`;
-}
-
-function dateInRange(date, debut, fin) {
-  const d = new Date(date); d.setHours(0,0,0,0);
-  const s = new Date(debut); s.setHours(0,0,0,0);
-  const e = new Date(fin);   e.setHours(0,0,0,0);
-  return d >= s && d <= e;
-}
-
-function sanitize(str) {
-  const el = document.createElement('div');
-  el.textContent = str;
-  return el.innerHTML;
-}
-
-/* ============================================================
-   4. FILTRAGE
-   ============================================================ */
-function evenementsFiltres() {
-  const rech = state.recherche.toLowerCase().trim();
-  return EVENTS.filter(evt => {
-    // filtre catégorie
-    if (state.filtre !== 'all' && evt.categorie !== state.filtre) return false;
-    // filtre mois/année : au moins un jour dans le mois courant
-    const moisDebut = evt.dateDebut.getMonth() === state.moisCourant && evt.dateDebut.getFullYear() === state.anneeCourante;
-    const moisFin   = evt.dateFin.getMonth()   === state.moisCourant && evt.dateFin.getFullYear()   === state.anneeCourante;
-    const chevauche = evt.dateDebut <= new Date(state.anneeCourante, state.moisCourant + 1, 0) &&
-                      evt.dateFin   >= new Date(state.anneeCourante, state.moisCourant, 1);
-    if (!chevauche) return false;
-    // filtre recherche
-    if (rech) {
-      const haystack = [evt.titre, evt.lieu, evt.description, ...evt.tags]
-        .join(' ').toLowerCase();
-      if (!haystack.includes(rech)) return false;
-    }
-    return true;
+/**
+ * Retourne les événements correspondant au filtre et à la recherche actifs.
+ */
+function getFilteredEvents() {
+  const q = state.searchQuery.toLowerCase().trim();
+  return EVENTS.filter((ev) => {
+    const catOk = state.activeFilter === 'all' || ev.categorie === state.activeFilter;
+    if (!catOk) return false;
+    if (!q) return true;
+    return (
+      ev.titre.toLowerCase().includes(q) ||
+      ev.lieu.toLowerCase().includes(q) ||
+      (ev.tags || []).some((t) => t.toLowerCase().includes(q))
+    );
   });
 }
 
-/* ============================================================
-   5. RENDU CALENDRIER
-   ============================================================ */
-function renderCalendrier() {
-  const calBody = $('#cal-body');
-  if (!calBody) return;
-  calBody.innerHTML = '';
-
-  const annee = state.anneeCourante;
-  const mois  = state.moisCourant;
-  const premier = new Date(annee, mois, 1);
-  const dernier = new Date(annee, mois + 1, 0);
-
-  // Lundi=1 → on veut que la semaine commence le lundi
-  let debutSemaine = premier.getDay(); // 0=dim,1=lun...
-  debutSemaine = debutSemaine === 0 ? 6 : debutSemaine - 1;
-
-  const evts = evenementsFiltres();
-
-  // Cellules vides avant le 1er
-  for (let i = 0; i < debutSemaine; i++) {
-    const vide = document.createElement('div');
-    vide.className = 'cal-day cal-empty';
-    vide.setAttribute('aria-hidden', 'true');
-    calBody.appendChild(vide);
-  }
-
-  const today = new Date();
-  today.setHours(0,0,0,0);
-
-  for (let jour = 1; jour <= dernier.getDate(); jour++) {
-    const dateCell = new Date(annee, mois, jour);
-    const cell = document.createElement('div');
-    cell.className = 'cal-day';
-    cell.setAttribute('role', 'gridcell');
-    cell.setAttribute('data-date', dateCell.toISOString().slice(0,10));
-
-    if (dateCell.toDateString() === today.toDateString()) {
-      cell.classList.add('cal-today');
-    }
-
-    // Numéro du jour
-    const numEl = document.createElement('div');
-    numEl.className = 'cal-day-num';
-    numEl.textContent = jour;
-    cell.appendChild(numEl);
-
-    // Événements du jour
-    const evtsDuJour = evts.filter(e => dateInRange(dateCell, e.dateDebut, e.dateFin));
-    const MAX_VIS = 2;
-
-    evtsDuJour.slice(0, MAX_VIS).forEach(evt => {
-      const chip = document.createElement('div');
-      chip.className = `cal-event cat-${evt.categorie}`;
-      chip.textContent = evt.titre;
-      chip.setAttribute('role', 'button');
-      chip.setAttribute('tabindex', '0');
-      chip.setAttribute('aria-label', `${evt.titre} – ${evt.heure}`);
-      chip.addEventListener('click', (e) => { e.stopPropagation(); ouvrirPanel(evt.id); });
-      chip.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ouvrirPanel(evt.id); }
-      });
-      cell.appendChild(chip);
-    });
-
-    if (evtsDuJour.length > MAX_VIS) {
-      const more = document.createElement('div');
-      more.className = 'cal-more';
-      more.textContent = `+${evtsDuJour.length - MAX_VIS} autre${evtsDuJour.length - MAX_VIS > 1 ? 's' : ''}`;
-      more.setAttribute('role', 'button');
-      more.setAttribute('tabindex', '0');
-      more.setAttribute('aria-label', `${evtsDuJour.length - MAX_VIS} autre(s) événement(s) ce jour`);
-      more.addEventListener('click', (e) => { e.stopPropagation(); basculerVueListe(); });
-      more.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); basculerVueListe(); }
-      });
-      cell.appendChild(more);
-    }
-
-    if (evtsDuJour.length > 0) {
-      cell.classList.add('has-events');
-      cell.setAttribute('aria-label', `${jour} ${MOIS_FR[mois]} – ${evtsDuJour.length} événement(s)`);
-    } else {
-      cell.setAttribute('aria-label', `${jour} ${MOIS_FR[mois]}`);
-    }
-
-    calBody.appendChild(cell);
-  }
-
-  // Cellules vides après le dernier
-  const total = debutSemaine + dernier.getDate();
-  const restant = total % 7 === 0 ? 0 : 7 - (total % 7);
-  for (let i = 0; i < restant; i++) {
-    const vide = document.createElement('div');
-    vide.className = 'cal-day cal-empty';
-    vide.setAttribute('aria-hidden', 'true');
-    calBody.appendChild(vide);
-  }
+/**
+ * Retourne les événements présents sur un jour donné.
+ */
+function getEventsOnDay(year, month, day) {
+  const target = new Date(year, month, day);
+  return EVENTS.filter((ev) => {
+    const start = parseDate(ev.date);
+    const end = ev.dateFin ? parseDate(ev.dateFin) : start;
+    return target >= start && target <= end;
+  });
 }
 
-/* ============================================================
-   6. RENDU LISTE
-   ============================================================ */
-function renderListe() {
-  const container = $('#list-container');
-  if (!container) return;
+/* ── 4. RENDU CALENDRIER ──────────────────────────────────── */
+
+function renderCalendar() {
+  const year = state.currentDate.getFullYear();
+  const month = state.currentDate.getMonth();
+
+  // Mise à jour du titre
+  document.getElementById('month-title').textContent =
+    `${MOIS_FR[month]} ${year}`;
+
+  const body = document.getElementById('cal-body');
+  body.innerHTML = '';
+
+  const firstDay = new Date(year, month, 1);
+  // Lundi = 0 en ISO, dimanche = 6
+  const startOffset = (firstDay.getDay() + 6) % 7;
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const today = new Date();
+
+  // Cellules vides avant le 1er
+  for (let i = 0; i < startOffset; i++) {
+    const empty = document.createElement('div');
+    empty.className = 'cal-cell cal-cell--empty';
+    empty.setAttribute('role', 'gridcell');
+    empty.setAttribute('aria-label', '');
+    body.appendChild(empty);
+  }
+
+  const filtered = getFilteredEvents();
+  const filteredIds = new Set(filtered.map((e) => e.id));
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const cell = document.createElement('div');
+    cell.className = 'cal-cell';
+    cell.setAttribute('role', 'gridcell');
+
+    const dayEvents = getEventsOnDay(year, month, d).filter((e) => filteredIds.has(e.id));
+    const isToday =
+      today.getDate() === d &&
+      today.getMonth() === month &&
+      today.getFullYear() === year;
+
+    if (isToday) cell.classList.add('cal-cell--today');
+    if (dayEvents.length) cell.classList.add('cal-cell--has-events');
+
+    const label = `${d} ${MOIS_FR[month]} ${year}${dayEvents.length ? `, ${dayEvents.length} événement(s)` : ''}`;
+    cell.setAttribute('aria-label', label);
+
+    // Numéro du jour
+    const num = document.createElement('span');
+    num.className = 'cal-day-num';
+    num.textContent = d;
+    cell.appendChild(num);
+
+    // Points d'événements (max 3 affichés)
+    if (dayEvents.length) {
+      const dots = document.createElement('div');
+      dots.className = 'cal-dots';
+      dayEvents.slice(0, 3).forEach((ev) => {
+        const dot = document.createElement('span');
+        dot.className = 'cal-dot';
+        dot.dataset.cat = ev.categorie;
+        dot.setAttribute('title', ev.titre);
+        dots.appendChild(dot);
+      });
+      if (dayEvents.length > 3) {
+        const more = document.createElement('span');
+        more.className = 'cal-dot-more';
+        more.textContent = `+${dayEvents.length - 3}`;
+        dots.appendChild(more);
+      }
+      cell.appendChild(dots);
+
+      cell.style.cursor = 'pointer';
+      cell.setAttribute('tabindex', '0');
+      cell.addEventListener('click', () => openDayPanel(year, month, d, dayEvents));
+      cell.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openDayPanel(year, month, d, dayEvents);
+        }
+      });
+    }
+
+    body.appendChild(cell);
+  }
+
+  // Mise à jour du résumé
+  updateResultsSummary(filtered);
+}
+
+/* ── 5. RENDU LISTE ───────────────────────────────────────── */
+
+function renderList() {
+  const container = document.getElementById('list-container');
+  const filtered = getFilteredEvents();
   container.innerHTML = '';
 
-  const evts = evenementsFiltres();
-
-  if (evts.length === 0) {
+  if (!filtered.length) {
     container.innerHTML = `
-      <div class="no-results" role="status">
-        <span class="no-results-icon">🔍</span>
-        <h3>Aucun événement trouvé</h3>
-        <p>Essayez de modifier vos filtres ou votre recherche.</p>
+      <div class="list-empty">
+        <span style="font-size:2.5rem">🔍</span>
+        <p>Aucun événement trouvé pour cette sélection.</p>
+        <button onclick="resetFilters()" class="btn-reset">Réinitialiser les filtres</button>
       </div>`;
+    updateResultsSummary(filtered);
     return;
   }
 
   // Grouper par mois
-  const groupes = {};
-  evts.forEach(evt => {
-    const key = `${evt.dateDebut.getFullYear()}-${String(evt.dateDebut.getMonth()).padStart(2,'0')}`;
-    if (!groupes[key]) groupes[key] = { mois: evt.dateDebut.getMonth(), annee: evt.dateDebut.getFullYear(), evts: [] };
-    groupes[key].evts.push(evt);
+  const groups = {};
+  filtered.forEach((ev) => {
+    const d = parseDate(ev.date);
+    const key = `${d.getFullYear()}-${d.getMonth()}`;
+    if (!groups[key]) groups[key] = { label: `${MOIS_FR[d.getMonth()]} ${d.getFullYear()}`, events: [] };
+    groups[key].events.push(ev);
   });
 
-  Object.values(groupes)
-    .sort((a, b) => a.annee - b.annee || a.mois - b.mois)
-    .forEach(groupe => {
-      const section = document.createElement('div');
-      section.className = 'list-month-group';
+  Object.values(groups).forEach((group) => {
+    const section = document.createElement('div');
+    section.className = 'list-group';
 
-      const titre = document.createElement('h3');
-      titre.className = 'list-month-title';
-      titre.textContent = `${MOIS_FR[groupe.mois]} ${groupe.annee}`;
-      section.appendChild(titre);
+    const heading = document.createElement('h3');
+    heading.className = 'list-group-heading';
+    heading.textContent = group.label;
+    section.appendChild(heading);
 
-      const liste = document.createElement('div');
-      liste.className = 'list-events';
-
-      groupe.evts.forEach(evt => {
-        const card = creerCarteListeEl(evt);
-        liste.appendChild(card);
-      });
-
-      section.appendChild(liste);
-      container.appendChild(section);
+    group.events.forEach((ev) => {
+      section.appendChild(buildEventCard(ev));
     });
+
+    container.appendChild(section);
+  });
+
+  updateResultsSummary(filtered);
 }
 
-function creerCarteListeEl(evt) {
+/**
+ * Construit une carte d'événement pour la vue liste.
+ */
+function buildEventCard(ev) {
+  const meta = CAT_META[ev.categorie] || {};
   const card = document.createElement('article');
-  card.className = 'list-event-card';
-  card.setAttribute('role', 'button');
+  card.className = 'event-card';
   card.setAttribute('tabindex', '0');
-  card.setAttribute('aria-label', `${evt.titre} – ${evt.lieu} – ${formaterPrixTexte(evt)}`);
+  card.setAttribute('aria-label', `${ev.titre}, le ${formatDateFR(ev.date)} à ${ev.lieu}`);
 
-  const duree = formaterDuree(evt);
+  const dateRange = ev.dateFin
+    ? `${formatDateFR(ev.date)} → ${formatDateFR(ev.dateFin)}`
+    : formatDateFR(ev.date);
 
   card.innerHTML = `
-    <div class="list-card-date">
-      <div class="list-date-day">${evt.dateDebut.getDate()}</div>
-      <div class="list-date-month">${MOIS_COURT[evt.dateDebut.getMonth()]}</div>
-      ${duree ? `<div class="list-date-range">${duree}</div>` : ''}
-    </div>
-    <div class="list-card-body">
-      <div class="list-card-category cat-text-${evt.categorie}">${evt.emoji} ${LABELS_CAT[evt.categorie]}</div>
-      <div class="list-card-title">${sanitize(evt.titre)}</div>
-      <div class="list-card-meta">
-        <span>🕐 ${evt.heure}</span>
-        <span aria-hidden="true">·</span>
-        <span>📍 ${sanitize(evt.lieu)}</span>
+    <div class="event-card-img" style="background-image:url('${ev.image}');" role="img" aria-label="${ev.titre}"></div>
+    <div class="event-card-body">
+      <div class="event-card-meta">
+        <span class="event-badge" data-cat="${ev.categorie}">${meta.emoji || ''} ${meta.label || ev.categorie}</span>
+        <span class="event-card-price">${ev.prix}</span>
       </div>
-      <div class="list-card-desc">${sanitize(evt.description)}</div>
-      <div class="list-card-tags">
-        ${evt.tags.map(t => `<span class="tag">${sanitize(t)}</span>`).join('')}
+      <h4 class="event-card-title">${ev.titre}</h4>
+      <p class="event-card-info">
+        <span class="event-card-date">📅 ${dateRange}</span>
+        <span class="event-card-time">🕐 ${ev.heure}</span>
+        <span class="event-card-lieu">📍 ${ev.lieu}</span>
+      </p>
+      <p class="event-card-desc">${ev.description}</p>
+      <div class="event-card-tags">
+        ${(ev.tags || []).map((t) => `<span class="tag">${t}</span>`).join('')}
       </div>
     </div>
-    <div class="list-card-action">
-      <div class="list-card-price">${formaterPrix(evt)}<span style="font-size:.7rem;color:var(--gris-fonce);">${evt.gratuit ? '' : 'par pers.'}</span></div>
-      <div class="list-card-a11y" aria-label="Accessibilité">${evt.accessibilite.map(a => `<span title="Accessibilité">${a}</span>`).join('')}</div>
-      <button class="btn btn-sm btn-primary" style="font-size:.78rem;padding:.4rem .9rem;" aria-label="Voir les détails de ${sanitize(evt.titre)}">Voir →</button>
-    </div>`;
+    <div class="event-card-actions">
+      <button class="btn-detail" aria-label="Voir les détails de ${ev.titre}">Détails →</button>
+    </div>
+  `;
 
-  card.addEventListener('click', () => ouvrirPanel(evt.id));
+  card.querySelector('.btn-detail').addEventListener('click', () => openEventPanel(ev));
   card.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ouvrirPanel(evt.id); }
+    if (e.key === 'Enter') openEventPanel(ev);
   });
 
   return card;
 }
 
-/* ============================================================
-   7. PANNEAU DÉTAIL
-   ============================================================ */
-function ouvrirPanel(id) {
-  const evt = EVENTS.find(e => e.id === id);
-  if (!evt) return;
-  state.evenementOuvert = id;
+/* ── 6. PANNEAU DE DÉTAIL ─────────────────────────────────── */
 
-  const panel   = $('#event-panel');
-  const overlay = $('#panel-overlay');
-  const content = $('#panel-content');
-  if (!panel || !overlay || !content) return;
+function openEventPanel(ev) {
+  const meta = CAT_META[ev.categorie] || {};
+  const panel = document.getElementById('event-panel');
+  const overlay = document.getElementById('panel-overlay');
+  const content = document.getElementById('panel-content');
 
-  const dateFmt = evt.dateDebut.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
-  const dateFin = evt.dateFin.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
-  const memeJour = evt.dateDebut.toDateString() === evt.dateFin.toDateString();
+  const dateRange = ev.dateFin
+    ? `Du ${formatDateFR(ev.date)} au ${formatDateFR(ev.dateFin)}`
+    : `Le ${formatDateFR(ev.date)}`;
 
   content.innerHTML = `
-    <img class="panel-img" src="${sanitize(evt.image)}" alt="Illustration – ${sanitize(evt.titre)}" loading="lazy" onerror="this.style.display='none'">
-    <span class="panel-category cat-text-${evt.categorie}">${evt.emoji} ${LABELS_CAT[evt.categorie]}</span>
-    <h2 class="panel-title">${sanitize(evt.titre)}</h2>
-    <div class="panel-info-list">
-      <div class="panel-info-row">
-        <span class="icon">📅</span>
-        <span>${dateFmt}${memeJour ? '' : ` → ${dateFin}`}</span>
-      </div>
-      <div class="panel-info-row">
-        <span class="icon">🕐</span>
-        <span>${sanitize(evt.heure)}</span>
-      </div>
-      <div class="panel-info-row">
-        <span class="icon">📍</span>
-        <span>
-          <strong>${sanitize(evt.lieu)}</strong><br>
-          <a href="https://maps.google.com/?q=${encodeURIComponent(evt.adresse)}" target="_blank" rel="noopener noreferrer" style="color:var(--terracotta);font-size:.82rem;">${sanitize(evt.adresse)}</a>
-        </span>
-      </div>
+    <div class="panel-img-wrap">
+      <img src="${ev.image}" alt="${ev.titre}" loading="lazy" />
+      <span class="panel-badge" data-cat="${ev.categorie}">${meta.emoji || ''} ${meta.label || ev.categorie}</span>
     </div>
-    <p class="panel-desc">${sanitize(evt.description)}</p>
-    <div class="panel-tags">
-      ${evt.tags.map(t => `<span class="tag">${sanitize(t)}</span>`).join('')}
-    </div>
-    <div class="panel-price-block">
-      <div>
-        <div class="panel-price-label">Tarif</div>
-        <div class="panel-price-value ${evt.gratuit ? 'free' : ''}">${formaterPrixTexte(evt)}</div>
+    <div class="panel-body">
+      <h3 class="panel-title">${ev.titre}</h3>
+      <ul class="panel-meta-list">
+        <li><span class="panel-icon">📅</span> <span>${dateRange}</span></li>
+        <li><span class="panel-icon">🕐</span> <span>${ev.heure}</span></li>
+        <li><span class="panel-icon">📍</span> <span>${ev.lieu}</span></li>
+        <li><span class="panel-icon">💶</span> <span>${ev.prix}</span></li>
+      </ul>
+      <p class="panel-desc">${ev.description}</p>
+      <div class="panel-tags">
+        ${(ev.tags || []).map((t) => `<span class="tag">${t}</span>`).join('')}
       </div>
-      ${!evt.gratuit ? `<a href="billetterie.html" class="btn btn-primary" aria-label="Acheter des billets pour ${sanitize(evt.titre)}">🎟 Réserver</a>` : '<span style="color:#2a7d4f;font-size:.85rem;">✔ Entrée libre</span>'}
+      <a href="${ev.lien}" class="btn-cta panel-cta" target="_blank" rel="noopener noreferrer">
+        Réserver / Plus d'infos →
+      </a>
     </div>
-    ${evt.accessibilite.length ? `
-    <div class="panel-a11y" aria-label="Accessibilité">
-      ${evt.accessibilite.map(a => `<span class="panel-a11y-tag">${a} Accessible</span>`).join('')}
-    </div>` : ''}
-    <div style="display:flex;gap:.6rem;flex-wrap:wrap;">
-      <button class="btn btn-secondary" onclick="partagerEvenement(${evt.id})" style="font-size:.82rem;flex:1;">↗ Partager</button>
-      <button class="btn btn-secondary" onclick="ajouterCalendrier(${evt.id})" style="font-size:.82rem;flex:1;">📅 Ajouter</button>
-    </div>`;
+  `;
 
-  panel.classList.add('open');
   panel.setAttribute('aria-hidden', 'false');
-  overlay.classList.add('active');
-  document.body.style.overflow = 'hidden';
+  overlay.setAttribute('aria-hidden', 'false');
+  panel.classList.add('is-open');
+  overlay.classList.add('is-visible');
 
-  // Focus sur le bouton fermer
-  requestAnimationFrame(() => {
-    const btnFermer = $('#panel-close');
-    btnFermer?.focus();
+  // Focus trap : focus sur le bouton fermer
+  const closeBtn = document.getElementById('panel-close');
+  closeBtn.focus();
+
+  document.body.style.overflow = 'hidden';
+  state.selectedEventId = ev.id;
+}
+
+/**
+ * Ouvre le panneau avec la liste des événements d'un jour (si plusieurs).
+ */
+function openDayPanel(year, month, day, events) {
+  if (events.length === 1) {
+    openEventPanel(events[0]);
+    return;
+  }
+
+  const panel = document.getElementById('event-panel');
+  const overlay = document.getElementById('panel-overlay');
+  const content = document.getElementById('panel-content');
+
+  const dayLabel = `${day} ${MOIS_FR[month]} ${year}`;
+
+  content.innerHTML = `
+    <div class="panel-body">
+      <h3 class="panel-title">Événements du ${dayLabel}</h3>
+      <ul class="panel-day-list">
+        ${events
+          .map((ev) => {
+            const meta = CAT_META[ev.categorie] || {};
+            return `<li>
+              <button class="panel-day-item" data-id="${ev.id}" aria-label="Voir ${ev.titre}">
+                <span class="panel-day-badge" data-cat="${ev.categorie}">${meta.emoji || ''}</span>
+                <span class="panel-day-info">
+                  <strong>${ev.titre}</strong>
+                  <small>${ev.heure} · ${ev.lieu}</small>
+                </span>
+                <span class="panel-day-arrow">→</span>
+              </button>
+            </li>`;
+          })
+          .join('')}
+      </ul>
+    </div>
+  `;
+
+  // Événements sur les boutons de la liste
+  content.querySelectorAll('.panel-day-item').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const ev = EVENTS.find((e) => e.id === Number(btn.dataset.id));
+      if (ev) openEventPanel(ev);
+    });
   });
 
-  // Trap focus dans le panneau
-  panel._trapHandler = trapFocus(panel);
+  panel.setAttribute('aria-hidden', 'false');
+  overlay.setAttribute('aria-hidden', 'false');
+  panel.classList.add('is-open');
+  overlay.classList.add('is-visible');
+  document.getElementById('panel-close').focus();
+  document.body.style.overflow = 'hidden';
 }
 
-function fermerPanel() {
-  const panel   = $('#event-panel');
-  const overlay = $('#panel-overlay');
-  if (!panel || !overlay) return;
+function closePanel() {
+  const panel = document.getElementById('event-panel');
+  const overlay = document.getElementById('panel-overlay');
 
-  panel.classList.remove('open');
+  panel.classList.remove('is-open');
+  overlay.classList.remove('is-visible');
   panel.setAttribute('aria-hidden', 'true');
-  overlay.classList.remove('active');
+  overlay.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
-  state.evenementOuvert = null;
-
-  if (panel._trapHandler) {
-    panel.removeEventListener('keydown', panel._trapHandler);
-    panel._trapHandler = null;
-  }
+  state.selectedEventId = null;
 }
 
-function trapFocus(el) {
-  const focusables = 'a[href], button:not([disabled]), input, [tabindex]:not([tabindex="-1"])';
-  const handler = (e) => {
-    if (e.key !== 'Tab') return;
-    const els = [...el.querySelectorAll(focusables)].filter(f => f.offsetParent !== null);
-    if (!els.length) return;
-    const first = els[0], last = els[els.length - 1];
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault(); last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault(); first.focus();
-    }
-  };
-  el.addEventListener('keydown', handler);
-  return handler;
+/* ── 7. FILTRES & RECHERCHE ───────────────────────────────── */
+
+function setFilter(filter) {
+  state.activeFilter = filter;
+
+  document.querySelectorAll('.filter-tag').forEach((btn) => {
+    const active = btn.dataset.filter === filter;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-pressed', String(active));
+  });
+
+  refresh();
 }
 
-/* Fonctions exposées globalement pour les boutons inline */
-window.partagerEvenement = function(id) {
-  const evt = EVENTS.find(e => e.id === id);
-  if (!evt) return;
-  if (navigator.share) {
-    navigator.share({ title: evt.titre, text: evt.description, url: window.location.href })
-      .catch(() => {});
+function resetFilters() {
+  state.activeFilter = 'all';
+  state.searchQuery = '';
+  document.getElementById('agenda-search').value = '';
+  document.querySelectorAll('.filter-tag').forEach((btn) => {
+    const active = btn.dataset.filter === 'all';
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-pressed', String(active));
+  });
+  refresh();
+}
+
+function updateResultsSummary(filtered) {
+  const countEl = document.getElementById('results-count');
+  const periodEl = document.getElementById('results-period');
+
+  const n = filtered.length;
+  countEl.textContent = `${n} événement${n > 1 ? 's' : ''}`;
+
+  const year = state.currentDate.getFullYear();
+  const month = state.currentDate.getMonth();
+  periodEl.textContent = `en ${MOIS_FR[month]} ${year}`;
+}
+
+/* ── 8. NAVIGATION MENSUELLE ──────────────────────────────── */
+
+function changeMonth(delta) {
+  const d = state.currentDate;
+  state.currentDate = new Date(d.getFullYear(), d.getMonth() + delta, 1);
+  refresh();
+}
+
+/* ── 9. BASCULEMENT DE VUE ────────────────────────────────── */
+
+function setView(view) {
+  state.view = view;
+
+  const calSection = document.getElementById('view-calendar');
+  const listSection = document.getElementById('view-list');
+  const btnCal = document.getElementById('btn-calendar');
+  const btnList = document.getElementById('btn-list');
+
+  if (view === 'calendar') {
+    calSection.classList.remove('hidden');
+    listSection.classList.add('hidden');
+    btnCal.classList.add('active');
+    btnList.classList.remove('active');
+    btnCal.setAttribute('aria-pressed', 'true');
+    btnList.setAttribute('aria-pressed', 'false');
+    renderCalendar();
   } else {
-    navigator.clipboard?.writeText(window.location.href)
-      .then(() => showToast('Lien copié dans le presse-papier !'))
-      .catch(() => showToast('Partagez cette page depuis votre navigateur.'));
+    calSection.classList.add('hidden');
+    listSection.classList.remove('hidden');
+    btnCal.classList.remove('active');
+    btnList.classList.add('active');
+    btnCal.setAttribute('aria-pressed', 'false');
+    btnList.setAttribute('aria-pressed', 'true');
+    renderList();
   }
-};
-
-window.ajouterCalendrier = function(id) {
-  const evt = EVENTS.find(e => e.id === id);
-  if (!evt) return;
-
-  const fmt = (d) => d.toISOString().replace(/[-:]/g,'').slice(0,15) + 'Z';
-  const start = fmt(evt.dateDebut);
-  const end   = fmt(new Date(evt.dateFin.getTime() + 86400000));
-  const url = `https://calendar.google.com/calendar/r/eventedit?text=${encodeURIComponent(evt.titre)}&dates=${start}/${end}&details=${encodeURIComponent(evt.description)}&location=${encodeURIComponent(evt.adresse)}`;
-  window.open(url, '_blank', 'noopener,noreferrer');
-};
-
-/* ============================================================
-   8. EN-TÊTE MOIS & RÉSUMÉ
-   ============================================================ */
-function mettreAJourTitreMois() {
-  const el = $('#month-title');
-  if (el) el.textContent = `${MOIS_FR[state.moisCourant]} ${state.anneeCourante}`;
 }
 
-function mettreAJourResume() {
-  const evts = evenementsFiltres();
-  const countEl = $('#results-count');
-  const periodEl = $('#results-period');
-  if (countEl) countEl.textContent = `${evts.length} événement${evts.length > 1 ? 's' : ''}`;
-  if (periodEl) periodEl.textContent = `en ${MOIS_FR[state.moisCourant]} ${state.anneeCourante}`;
+/* ── 10. RAFRAÎCHISSEMENT GLOBAL ──────────────────────────── */
+
+function refresh() {
+  if (state.view === 'calendar') {
+    renderCalendar();
+  } else {
+    renderList();
+  }
 }
 
-/* ============================================================
-   9. TOAST NOTIFICATIONS
-   ============================================================ */
-function showToast(msg, duree = 3000) {
-  const container = $('.toast-container');
+/* ── 11. TOAST ────────────────────────────────────────────── */
+
+function showToast(message, type = 'info') {
+  const container = document.querySelector('.toast-container');
   if (!container) return;
 
   const toast = document.createElement('div');
-  toast.className = 'toast';
-  toast.textContent = msg;
+  toast.className = `toast toast--${type}`;
   toast.setAttribute('role', 'alert');
-  toast.style.cssText = `
-    background: var(--brun-chaud);
-    color: var(--blanc-casse);
-    padding: .75rem 1.2rem;
-    border-radius: var(--radius-pill);
-    box-shadow: var(--shadow-hover);
-    font-size: .88rem;
-    font-weight: 500;
-    animation: fadeUp .3s ease both;
-    margin-top: .5rem;
-  `;
+  toast.textContent = message;
 
   container.appendChild(toast);
+
+  // Animation d'entrée
+  requestAnimationFrame(() => toast.classList.add('toast--visible'));
+
   setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transition = 'opacity .3s';
-    setTimeout(() => toast.remove(), 300);
-  }, duree);
+    toast.classList.remove('toast--visible');
+    toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+  }, 3500);
 }
 
-/* ============================================================
-   10. RENDU COMPLET
-   ============================================================ */
-function rendreAgenda() {
-  mettreAJourTitreMois();
-  mettreAJourResume();
-  if (state.vue === 'calendar') {
-    renderCalendrier();
-  } else {
-    renderListe();
-  }
+/* ── 12. LOADER DE PAGE ───────────────────────────────────── */
+
+function hideLoader() {
+  const loader = document.getElementById('page-loader');
+  if (!loader) return;
+  loader.classList.add('loader--hidden');
+  loader.addEventListener('transitionend', () => loader.remove(), { once: true });
 }
 
-/* ============================================================
-   11. BASCULER VUE
-   ============================================================ */
-function basculerVueListe() {
-  state.vue = 'list';
+/* ── 13. MENU BURGER (MOBILE) ─────────────────────────────── */
 
-  $('#view-calendar')?.classList.add('hidden');
-  $('#view-list')?.classList.remove('hidden');
+function initBurgerMenu() {
+  const burger = document.querySelector('.nav-burger');
+  const navLinks = document.getElementById('nav-links');
+  if (!burger || !navLinks) return;
 
-  $('#btn-calendar')?.classList.remove('active');
-  $('#btn-calendar')?.setAttribute('aria-pressed', 'false');
-  $('#btn-list')?.classList.add('active');
-  $('#btn-list')?.setAttribute('aria-pressed', 'true');
-
-  renderListe();
-}
-
-/* ============================================================
-   12. INITIALISATION & ÉVÉNEMENTS DOM
-   ============================================================ */
-document.addEventListener('DOMContentLoaded', () => {
-
-  /* ---- Initialisation état depuis la date du jour ---- */
-  const now = new Date();
-  state.moisCourant   = now.getMonth();
-  state.anneeCourante = now.getFullYear();
-
-  /* ---- Rendu initial ---- */
-  rendreAgenda();
-
-  /* ---- Navigation mois ---- */
-  $('#prev-month')?.addEventListener('click', () => {
-    if (state.moisCourant === 0) { state.moisCourant = 11; state.anneeCourante--; }
-    else state.moisCourant--;
-    rendreAgenda();
+  burger.addEventListener('click', () => {
+    const expanded = burger.getAttribute('aria-expanded') === 'true';
+    burger.setAttribute('aria-expanded', String(!expanded));
+    navLinks.classList.toggle('is-open', !expanded);
+    burger.classList.toggle('is-active', !expanded);
   });
 
-  $('#next-month')?.addEventListener('click', () => {
-    if (state.moisCourant === 11) { state.moisCourant = 0; state.anneeCourante++; }
-    else state.moisCourant++;
-    rendreAgenda();
-  });
-
-  /* ---- Toggle vue calendrier / liste ---- */
-  $$('.view-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const vue = btn.dataset.view;
-      state.vue = vue;
-
-      $$('.view-btn').forEach(b => {
-        b.classList.toggle('active', b.dataset.view === vue);
-        b.setAttribute('aria-pressed', String(b.dataset.view === vue));
-      });
-
-      $('#view-calendar')?.classList.toggle('hidden', vue !== 'calendar');
-      $('#view-list')?.classList.toggle('hidden', vue !== 'list');
-
-      rendreAgenda();
+  // Fermeture au clic sur un lien
+  navLinks.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      burger.setAttribute('aria-expanded', 'false');
+      navLinks.classList.remove('is-open');
+      burger.classList.remove('is-active');
     });
   });
+}
 
-  /* ---- Filtres catégorie ---- */
-  $$('.filter-tag').forEach(btn => {
-    btn.addEventListener('click', () => {
-      state.filtre = btn.dataset.filter;
+/* ── 14. FOCUS TRAP POUR LE PANNEAU ───────────────────────── */
 
-      $$('.filter-tag').forEach(b => {
-        b.classList.toggle('active', b.dataset.filter === state.filtre);
-        b.setAttribute('aria-pressed', String(b.dataset.filter === state.filtre));
-      });
+function initFocusTrap() {
+  const panel = document.getElementById('event-panel');
+  if (!panel) return;
 
-      rendreAgenda();
-    });
+  panel.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+
+    const focusables = [
+      ...panel.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      ),
+    ].filter((el) => !el.hasAttribute('disabled'));
+
+    if (!focusables.length) return;
+
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  });
+}
+
+/* ── 15. INITIALISATION ───────────────────────────────────── */
+
+function init() {
+  // Masquer le loader après chargement
+  window.addEventListener('load', () => {
+    setTimeout(hideLoader, 400);
   });
 
-  /* ---- Recherche ---- */
-  const searchInput = $('#agenda-search');
-  const searchBtn   = $('#agenda-search-btn');
+  // Calendrier initial
+  renderCalendar();
 
-  let debounceTimer;
+  /* Navigation mensuelle */
+  document.getElementById('prev-month')?.addEventListener('click', () => changeMonth(-1));
+  document.getElementById('next-month')?.addEventListener('click', () => changeMonth(1));
+
+  /* Basculement de vue */
+  document.getElementById('btn-calendar')?.addEventListener('click', () => setView('calendar'));
+  document.getElementById('btn-list')?.addEventListener('click', () => setView('list'));
+
+  /* Filtres catégories */
+  document.querySelectorAll('.filter-tag').forEach((btn) => {
+    btn.addEventListener('click', () => setFilter(btn.dataset.filter));
+  });
+
+  /* Recherche */
+  const searchInput = document.getElementById('agenda-search');
+  const searchBtn = document.getElementById('agenda-search-btn');
+
+  let searchDebounce;
   searchInput?.addEventListener('input', () => {
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => {
-      state.recherche = searchInput.value;
-      rendreAgenda();
+    clearTimeout(searchDebounce);
+    searchDebounce = setTimeout(() => {
+      state.searchQuery = searchInput.value;
+      refresh();
     }, 280);
   });
 
   searchBtn?.addEventListener('click', () => {
-    state.recherche = searchInput?.value ?? '';
-    rendreAgenda();
+    state.searchQuery = searchInput?.value || '';
+    refresh();
   });
 
   searchInput?.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-      clearTimeout(debounceTimer);
-      state.recherche = searchInput.value;
-      rendreAgenda();
+      state.searchQuery = searchInput.value;
+      refresh();
     }
   });
 
-  /* ---- Panneau : fermer ---- */
-  $('#panel-close')?.addEventListener('click', fermerPanel);
-  $('#panel-overlay')?.addEventListener('click', fermerPanel);
+  /* Fermeture du panneau */
+  document.getElementById('panel-close')?.addEventListener('click', closePanel);
+  document.getElementById('panel-overlay')?.addEventListener('click', closePanel);
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && state.evenementOuvert) fermerPanel();
+    if (e.key === 'Escape') closePanel();
   });
 
-  /* ---- Navigation clavier dans le calendrier ---- */
-  $('#cal-body')?.addEventListener('keydown', (e) => {
-    if (!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)) return;
-    e.preventDefault();
-    const cells = $$('.cal-day:not(.cal-empty)', $('#cal-body'));
-    const focused = document.activeElement?.closest('.cal-day');
-    if (!focused) { cells[0]?.focus(); return; }
-    const idx = cells.indexOf(focused);
-    const map = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7 };
-    const next = cells[idx + map[e.key]];
-    next?.focus();
-  });
+  /* Focus trap */
+  initFocusTrap();
 
-  /* ---- Mise en relief de la navbar ---- */
-  const headerEl = document.querySelector('.site-header');
-  if (headerEl) {
-    window.addEventListener('scroll', () => {
-      headerEl.classList.toggle('scrolled', window.scrollY > 10);
-    }, { passive: true });
+  /* Menu burger */
+  initBurgerMenu();
+
+  /* Sticky header */
+  const header = document.querySelector('.site-header');
+  if (header) {
+    const sentinel = document.createElement('div');
+    sentinel.style.height = '1px';
+    document.body.prepend(sentinel);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => header.classList.toggle('is-scrolled', !entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(sentinel);
   }
 
-  /* ---- Swipe mobile pour fermer le panneau ---- */
-  let touchStartX = 0;
-  const panel = $('#event-panel');
-  panel?.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
-  panel?.addEventListener('touchend', (e) => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    if (dx > 60) fermerPanel(); // swipe droite → fermer
-  }, { passive: true });
+  /* Animation d'apparition des sections au scroll */
+  const animTarget = document.querySelectorAll('.agenda-section, .agenda-controls');
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08 }
+    );
+    animTarget.forEach((el) => revealObserver.observe(el));
+  }
+}
 
-});
+/* Lancement quand le DOM est prêt */
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
+/* ── 16. EXPORTS (si utilisé en module) ──────────────────── */
+// export { EVENTS, state, refresh, openEventPanel, closePanel };
