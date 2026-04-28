@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Billetterie — VilleNova Marseille</title>
+  <meta name="description" content="Achetez vos billets pour les événements culturels, concerts et festivals de Marseille sur VilleNova.">
+  <meta name="theme-color" content="#D17B49">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="billetterie.css">
+</head>
+<body>
+
+  <!-- ═══ LOADER ═══ -->
+  <div id="page-loader" role="status" aria-label="Chargement">
+    <div class="loader-ring"></div>
+    <span class="loader-label">VilleNova</span>
+  </div>
+
+  <!-- ═══ LIEN ÉVITEMENT ═══ -->
+  <a class="skip-link" href="#main-content">Aller au contenu principal</a>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="site-header" role="banner">
+    <div class="nav-inner">
+      <a href="index.html" class="logo" aria-label="VilleNova — Accueil">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="#D17B49" opacity=".15"/>
+          <path d="M8 20 L16 10 L24 20" stroke="#8B5E3C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M11 20 L11 24 M21 20 L21 24" stroke="#D17B49" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="16" cy="10" r="2.5" fill="#D17B49"/>
+        </svg>
+        Ville<span class="accent">Nova</span>
+      </a>
+
+      <nav aria-label="Navigation principale">
+        <ul class="nav-links" role="list">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="#">Événements</a></li>
+          <li><a href="#">Agenda</a></li>
+          <li><a href="#">Carte</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="billetterie.html" class="nav-cta" aria-current="page">Billetterie</a></li>
+        </ul>
+      </nav>
+
+      <!-- Panier résumé header -->
+      <button class="cart-pill" id="cart-toggle" aria-label="Voir le panier" aria-expanded="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-count" id="cart-count" aria-live="polite">0</span>
+      </button>
+
+      <button class="nav-burger" id="nav-burger" aria-expanded="false" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══ MAIN ═══ -->
+  <main id="main-content">
+
+    <!-- ── HERO BILLETTERIE ── -->
+    <section class="hero-billet" aria-labelledby="hero-title">
+      <div class="hero-bg-pattern" aria-hidden="true"></div>
+      <div class="hero-content">
+        <span class="hero-eyebrow">🎟 Billetterie officielle</span>
+        <h1 id="hero-title">Vos billets<br><em>en quelques clics</em></h1>
+        <p>Réservez vos places pour les meilleurs événements marseillais. Paiement sécurisé, billets e-mail instantanés.</p>
+        <div class="hero-badges" aria-label="Garanties">
+          <span class="badge-pill">✓ Paiement sécurisé</span>
+          <span class="badge-pill">✓ Billet e-mail immédiat</span>
+          <span class="badge-pill">✓ Remboursement 48h</span>
+        </div>
+      </div>
+      <div class="hero-illustration" aria-hidden="true">
+        <div class="ticket-deco">
+          <div class="ticket-deco-inner">
+            <span class="ticket-deco-date">15 MAI</span>
+            <span class="ticket-deco-event">Jazz au Vieux-Port</span>
+            <div class="ticket-deco-perforation"></div>
+            <span class="ticket-deco-seat">PARTERRE · A-12</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FILTRES ── -->
+    <div class="filters-band" role="group" aria-label="Filtrer les événements">
+      <div class="filters-inner">
+        <button class="filter-chip active" data-filter="all" aria-pressed="true">Tous</button>
+        <button class="filter-chip" data-filter="concert" aria-pressed="false">🎵 Concerts</button>
+        <button class="filter-chip" data-filter="festival" aria-pressed="false">🎉 Festivals</button>
+        <button class="filter-chip" data-filter="expo" aria-pressed="false">🖼 Expositions</button>
+        <button class="filter-chip" data-filter="theatre" aria-pressed="false">🎭 Théâtre</button>
+        <button class="filter-chip" data-filter="gastro" aria-pressed="false">🍽 Gastronomie</button>
+
+        <div class="filter-sep" aria-hidden="true"></div>
+
+        <label class="sort-label" for="sort-select">Trier :</label>
+        <select id="sort-select" class="sort-select" aria-label="Trier les événements">
+          <option value="date">Date</option>
+          <option value="price-asc">Prix croissant</option>
+          <option value="price-desc">Prix décroissant</option>
+          <option value="popular">Popularité</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ── GRILLE ÉVÉNEMENTS ── -->
+    <section class="section" aria-labelledby="events-title">
+      <div class="section-header">
+        <h2 class="section-title" id="events-title">Événements disponibles</h2>
+        <p class="results-count" id="results-count" aria-live="polite">6 événements</p>
+      </div>
+
+      <div class="events-billet-grid" id="events-grid" role="list">
+
+        <!-- ══ CARD 1 — VEDETTE ══ -->
+        <article class="billet-card billet-featured animate-in" data-category="festival" role="listitem" aria-labelledby="ev1-title">
+          <div class="billet-card-img">
+            <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80"
+                 alt="Festival de jazz, scène illuminée face à la mer au Vieux-Port de Marseille"
+                 loading="eager" width="800" height="450">
+            <div class="card-overlay">
+              <span class="card-cat-badge">🎉 Festival</span>
+              <span class="card-featured-badge">✦ À la une</span>
+            </div>
+          </div>
+          <div class="billet-card-body">
+            <div class="card-meta-row">
+              <time class="card-date" datetime="2025-05-15">📅 15–17 mai 2025</time>
+              <span class="card-loc">📍 Vieux-Port</span>
+            </div>
+            <h3 class="card-title" id="ev1-title">Jazz au Vieux-Port — Festival International</h3>
+            <p class="card-desc">30 artistes internationaux sur la grande scène flottante. Trois nuits de jazz face à la Méditerranée, entrée libre le jour, billetterie le soir.</p>
+
+            <div class="tarifs-grid" role="group" aria-label="Choix du tarif">
+              <div class="tarif-row">
+                <div class="tarif-info">
+                  <span class="tarif-nom">Soirée Vendredi</span>
+                  <span class="tarif-prix">22 €</span>
+                </div>
+                <div class="qty-control" role="group" aria-label="Quantité Soirée Vendredi">
+                  <button class="qty-btn qty-minus" aria-label="Retirer une place" data-event="jazz-ven" data-price="22" data-name="Jazz — Vendredi">−</button>
+                  <output class="qty-val" aria-live="polite" data-event="jazz-ven">0</output>
+                  <button class="qty-btn qty-plus" aria-label="Ajouter une place" data-event="jazz-ven" data-price="22" data-name="Jazz — Vendredi">+</button>
+                </div>
+              </div>
+              <div class="tarif-row">
+                <div class="tarif-info">
+                  <span class="tarif-nom">Soirée Samedi</span>
+                  <span class="tarif-prix">28 €</span>
+                </div>
+                <div class="qty-control" role="group" aria-label="Quantité Soirée Samedi">
+                  <button class="qty-btn qty-minus" aria-label="Retirer" data-event="jazz-sam" data-price="28" data-name="Jazz — Samedi">−</button>
+                  <output class="qty-val" aria-live="polite" data-event="jazz-sam">0</output>
+                  <button class="qty-btn qty-plus" aria-label="Ajouter" data-event="jazz-sam" data-price="28" data-name="Jazz — Samedi">+</button>
+                </div>
+              </div>
+              <div class="tarif-row">
+                <div class="tarif-info">
+                  <span class="tarif-nom">Pass 3 nuits</span>
+                  <span class="tarif-prix tarif-promo">60 € <s>72 €</s></span>
+                </div>
+                <div class="qty-control" role="group" aria-label="Quantité Pass 3 nuits">
+                  <button class="qty-btn qty-minus" aria-label="Retirer" data-event="jazz-pass" data-price="60" data-name="Jazz — Pass 3 nuits">−</button>
+                  <output class="qty-val" aria-live="polite" data-event="jazz-pass">0</output>
+                  <button class="qty-btn qty-plus" aria-label="Ajouter" data-event="jazz-pass" data-price="60" data-name="Jazz — Pass 3 nuits">+</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-dispo">
+              <span class="dispo-dot dispo-ok" aria-hidden="true"></span>
+              <span>Places disponibles</span>
+              <span class="dispo-count">142 restantes</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- ══ CARD 2 ══ -->
+        <article class="billet-card animate-in" data-category="concert" role="listitem" aria-labelledby="ev2-title" style="--delay:.08s">
+          <div class="billet-card-img">
+            <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&q=75"
+                 alt="Concert électronique, lumières scéniques bleues et violettes" loading="lazy" width="600" height="338">
+            <div class="card-overlay">
+              <span class="card-cat-badge">🎵 Concert</span>
+            </div>
+          </div>
+          <div class="billet-card-body">
+            <div class="card-meta-row">
+              <time class="card-date" datetime="2025-05-03">📅 3 mai 2025</time>
+              <span class="card-loc">📍 Le Dôme</span>
+            </div>
+            <h3 class="card-title" id="ev2-title">Nuit Électronique — Kollektif Sound</h3>
+            <p class="card-desc">Son Dolby Surround, lasers et mapping vidéo. Les meilleurs DJs de la scène marseillaise et internationale.</p>
+            <div class="tarifs-grid" role="group" aria-label="Tarifs">
+              <div class="tarif-row">
+                <div class="tarif-info"><span class="tarif-nom">Tarif standard</span><span class="tarif-prix">18 €</span></div>
+                <div class="qty-control">
+                  <button class="qty-btn qty-minus" data-event="elec-std" data-price="18" data-name="Nuit Électronique — Standard" aria-label="Retirer">−</button>
+                  <output class="qty-val" data-event="elec-std" aria-live="polite">0</output>
+                  <button class="qty-btn qty-plus" data-event="elec-std" data-price="18" data-name="Nuit Électronique — Standard" aria-label="Ajouter">+</button>
+                </div>
+              </div>
+              <div class="tarif-row">
+                <div class="tarif-info"><span class="tarif-nom">VIP (accès backstage)</span><span class="tarif-prix">45 €</span></div>
+                <div class="qty-control">
+                  <button class="qty-btn qty-minus" data-event="elec-vip" data-price="45" data-name="Nuit Électronique — VIP" aria-label="Retirer">−</button>
+                  <output class="qty-val" data-event="elec-vip" aria-live="polite">0</output>
+                  <button class="qty-btn qty-plus" data-event="elec-vip" data-price="45" data-name="Nuit Électronique — VIP" aria-label="Ajouter">+</button>
+                </div>
+              </div>
+            </div>
+            <div class="card-dispo">
+              <span class="dispo-dot dispo-warn" aria-hidden="true"></span>
+              <span>Stock limité</span>
+              <span class="dispo-count">28 restantes</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- ══ CARD 3 ══ -->
+        <article class="billet-card animate-in" data-category="expo" role="listitem" aria-labelledby="ev3-title" style="--delay:.16s">
+          <div class="billet-card-img">
+            <img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=600&q=75"
+                 alt="Exposition d'art contemporain au MUCEM, grandes toiles abstraites" loading="lazy" width="600" height="338">
+            <div class="card-overlay">
+              <span class="card-cat-badge">🖼 Exposition</span>
+            </div>
+          </div>
+          <div class="billet-card-body">
+            <div class="card-meta-row">
+              <time class="card-date" datetime="2025-06-30">📅 Jusqu'au 30 juin</time>
+              <span class="card-loc">📍 MUCEM</span>
+            </div>
+            <h3 class="card-title" id="ev3-title">Méditerranée — Mémoires Croisées</h3>
+            <p class="card-desc">Exposition immersive sur les cultures méditerranéennes, photographies, installations et archives sonores.</p>
+            <div class="tarifs-grid" role="group" aria-label="Tarifs">
+              <div class="tarif-row">
+                <div class="tarif-info"><span class="tarif-nom">Plein tarif</span><span class="tarif-prix">12 €</span></div>
+                <div class="qty-control">
+                  <button class="qty-btn qty-minus" data-event="expo-plein" data-price="12" data-name="Méditerranée — Plein tarif" aria-label="Retirer">−</button>
+                  <output class="qty-val" data-event="expo-plein" aria-live="polite">0</output>
+                  <button class="qty-btn qty-plus" data-event="expo-plein" data-price="12" data-name="Méditerranée — Plein tarif" aria-label="Ajouter">+</button>
+                </div>
+              </div>
+              <div class="tarif-row">
+                <div class="tarif-info"><span class="tarif-nom">Tarif réduit</span><span class="tarif-prix">8 €</span></div>
+                <div class="qty-control">
+                  <button class="qty-btn qty-minus" data-event="expo-reduit" data-price="8" data-name="Méditerranée — Tarif réduit" aria-label="Retirer">−</button>
+                  <output class="qty-val" data-event="expo-reduit" aria-live="polite">0</output>
+                  <button class="qty-btn qty-plus" data-event="expo-reduit" data-price="8" data-name="Méditerranée — Tarif réduit" aria-label="Ajouter">+</button>
+                </div>
+              </div>
+            </div>
+            <div class="card-dispo">
+              <span class="dispo-dot dispo-ok" aria-hidden="true"></span>
+              <span>Billets disponibles</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- ══ CARD 4 ══ -->
+        <article class="billet-card animate-in" data-category="theatre" role="listitem" aria-labelledby="ev4-title" style="--delay:.24s">
+          <div class="billet-card-img">
+            <img src="https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=600&q=75"
+                 alt="Représentation de théâtre contemporain sous éclairage dramatique" loading="lazy" width="600" height="338">
+            <div class="card-overlay">
+              <span class="card-cat-badge">🎭 Théâtre</span>
+            </div>
+          </div>
+          <div class="billet-card-body">
+            <div class="card-meta-row">
+              <time class="card-date" datetime="2025-05-10">📅 10–25 mai 2025</time>
+              <span class="card-loc">📍 Théâtre du Gymnase</span>
+            </div>
+            <h3 class="card-title" id="ev4-title">Les Nouvelles Libertés — Cie Lucioles</h3>
+            <p class="card-desc">Pièce contemporaine avec LSF intégrée à la mise en scène. Représentations sous-titrées disponibles.</p>
+            <div class="tarifs-grid" role="group" aria-label="Tarifs">
+              <div class="tarif-row">
+                <div class="tarif-info"><span class="tarif-nom">Plein tarif</span><span class="tarif-prix">15 €</span></div>
+                <div class="qty-control">
+                  <button class="qty-btn qty-minus" data-event="theatre-plein" data-price="15" data-name="Nouvelles Libertés — Plein tarif" aria-label="Retirer">−</button>
+                  <output class="qty-val" data-event="theatre-plein" aria-live="polite">0</output>
+                  <button class="qty-btn qty-plus" data-event="theatre-plein" data-price="15" data-name="Nouvelles Libertés — Plein tarif" aria-label="Ajouter">+</button>
+                </div>
+              </div>
+              <div class="tarif-row">
+                <div class="tarif-info"><span class="tarif-nom">Étudiant / -26 ans</span><span class="tarif-prix">9 €</span></div>
+                <div class="qty-control">
+                  <button class="qty-btn qty-minus" data-event="theatre-etud" data-price="9" data-name="Nouvelles Libertés — Étudiant" aria-label="Retirer">−</button>
+                  <output class="qty-val" data-event="theatre-etud" aria-live="polite">0</output>
+                  <button class="qty-btn qty-plus" data-event="theatre-etud" data-price="9" data-name="Nouvelles Libertés — Étudiant" aria-label="Ajouter">+</button>
+                </div>
+              </div>
+            </div>
+            <div class="card-dispo">
+              <span class="dispo-dot dispo-ok" aria-hidden="true"></span>
+              <span>Places disponibles</span>
+              <span class="dispo-count">67 restantes</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- ══ CARD 5 ══ -->
+        <article class="billet-card animate-in" data-category="gastro" role="listitem" aria-labelledby="ev5-title" style="--delay:.32s">
+          <div class="billet-card-img">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=75"
+                 alt="Dîner gastronomique de chefs étoilés marseillais" loading="lazy" width="600" height="338">
+            <div class="card-overlay">
+              <span class="card-cat-badge">🍽 Gastronomie</span>
+            </div>
+          </div>
+          <div class="billet-card-body">
+            <div class="card-meta-row">
+              <time class="card-date" datetime="2025-06-08">📅 8 juin 2025</time>
+              <span class="card-loc">📍 Vallon des Auffes</span>
+            </div>
+            <h3 class="card-title" id="ev5-title">Saveurs de la Mer — Dîner de Chefs</h3>
+            <p class="card-desc">5 chefs étoilés revisitent la bouillabaisse lors d'un dîner gastronomique face à la Méditerranée.</p>
+            <div class="tarifs-grid" role="group" aria-label="Tarifs">
+              <div class="tarif-row">
+                <div class="tarif-info"><span class="tarif-nom">Couvert dîner</span><span class="tarif-prix">95 €</span></div>
+                <div class="qty-control">
+                  <button class="qty-btn qty-minus" data-event="gastro-std" data-price="95" data-name="Saveurs de la Mer — Couvert" aria-label="Retirer">−</button>
+                  <output class="qty-val" data-event="gastro-std" aria-live="polite">0</output>
+                  <button class="qty-btn qty-plus" data-event="gastro-std" data-price="95" data-name="Saveurs de la Mer — Couvert" aria-label="Ajouter">+</button>
+                </div>
+              </div>
+              <div class="tarif-row">
+                <div class="tarif-info"><span class="tarif-nom">Table de 4 (−10%)</span><span class="tarif-prix tarif-promo">342 € <s>380 €</s></span></div>
+                <div class="qty-control">
+                  <button class="qty-btn qty-minus" data-event="gastro-table" data-price="342" data-name="Saveurs de la Mer — Table 4" aria-label="Retirer">−</button>
+                  <output class="qty-val" data-event="gastro-table" aria-live="polite">0</output>
+                  <button class="qty-btn qty-plus" data-event="gastro-table" data-price="342" data-name="Saveurs de la Mer — Table 4" aria-label="Ajouter">+</button>
+                </div>
+              </div>
+            </div>
+            <div class="card-dispo">
+              <span class="dispo-dot dispo-low" aria-hidden="true"></span>
+              <span>Presque complet</span>
+              <span class="dispo-count">9 restantes</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- ══ CARD 6 ══ -->
+        <article class="billet-card animate-in" data-category="concert" role="listitem" aria-labelledby="ev6-title" style="--delay:.40s">
+          <div class="billet-card-img">
+            <img src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=600&q=75"
+                 alt="Concert de musique classique à l'Opéra de Marseille" loading="lazy" width="600" height="338">
+            <div class="card-overlay">
+              <span class="card-cat-badge">🎵 Concert</span>
+            </div>
+          </div>
+          <div class="billet-card-body">
+            <div class="card-meta-row">
+              <time class="card-date" datetime="2025-05-20">📅 20 mai 2025</time>
+              <span class="card-loc">📍 Opéra de Marseille</span>
+            </div>
+            <h3 class="card-title" id="ev6-title">Symphonie Provençale — Orchestre Philharmonique</h3>
+            <p class="card-desc">Œuvres en hommage à la Provence mêlant instruments classiques et mélodies populaires méditerranéennes.</p>
+            <div class="tarifs-grid" role="group" aria-label="Tarifs">
+              <div class="tarif-row">
+                <div class="tarif-info"><span class="tarif-nom">Parterre</span><span class="tarif-prix">22 €</span></div>
+                <div class="qty-control">
+                  <button class="qty-btn qty-minus" data-event="phila-part" data-price="22" data-name="Symphonie Provençale — Parterre" aria-label="Retirer">−</button>
+                  <output class="qty-val" data-event="phila-part" aria-live="polite">0</output>
+                  <button class="qty-btn qty-plus" data-event="phila-part" data-price="22" data-name="Symphonie Provençale — Parterre" aria-label="Ajouter">+</button>
+                </div>
+              </div>
+              <div class="tarif-row">
+                <div class="tarif-info"><span class="tarif-nom">Balcon</span><span class="tarif-prix">16 €</span></div>
+                <div class="qty-control">
+                  <button class="qty-btn qty-minus" data-event="phila-balc" data-price="16" data-name="Symphonie Provençale — Balcon" aria-label="Retirer">−</button>
+                  <output class="qty-val" data-event="phila-balc" aria-live="polite">0</output>
+                  <button class="qty-btn qty-plus" data-event="phila-balc" data-price="16" data-name="Symphonie Provençale — Balcon" aria-label="Ajouter">+</button>
+                </div>
+              </div>
+            </div>
+            <div class="card-dispo">
+              <span class="dispo-dot dispo-ok" aria-hidden="true"></span>
+              <span>Places disponibles</span>
+              <span class="dispo-count">203 restantes</span>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- /events-grid -->
+    </section>
+
+  </main>
+
+  <!-- ═══ PANIER LATÉRAL ═══ -->
+  <aside class="cart-drawer" id="cart-drawer" role="complementary" aria-label="Panier" aria-hidden="true">
+    <div class="cart-drawer-inner">
+      <div class="cart-header">
+        <h2 class="cart-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          Votre sélection
+        </h2>
+        <button class="cart-close" id="cart-close" aria-label="Fermer le panier">✕</button>
+      </div>
+
+      <div class="cart-items" id="cart-items" aria-live="polite">
+        <div class="cart-empty" id="cart-empty">
+          <span class="cart-empty-icon">🎟</span>
+          <p>Votre panier est vide.<br>Sélectionnez vos billets ci-dessous.</p>
+        </div>
+      </div>
+
+      <div class="cart-footer" id="cart-footer" hidden>
+        <div class="cart-summary">
+          <div class="cart-summary-row">
+            <span>Sous-total</span>
+            <span id="cart-subtotal">0 €</span>
+          </div>
+          <div class="cart-summary-row">
+            <span>Frais de service</span>
+            <span id="cart-fees">0 €</span>
+          </div>
+          <div class="cart-summary-row cart-total-row">
+            <strong>Total</strong>
+            <strong id="cart-total">0 €</strong>
+          </div>
+        </div>
+
+        <div class="promo-row">
+          <input type="text" id="promo-input" placeholder="Code promo" aria-label="Code de réduction" class="promo-input">
+          <button class="promo-btn" id="promo-btn" aria-label="Appliquer le code promo">OK</button>
+        </div>
+
+        <button class="btn-checkout" id="btn-checkout" aria-label="Procéder au paiement">
+          Payer maintenant
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </button>
+
+        <p class="cart-secure">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+          </svg>
+          Paiement sécurisé SSL — Remboursement 48h
+        </p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══ OVERLAY PANIER ═══ -->
+  <div class="cart-overlay" id="cart-overlay" aria-hidden="true"></div>
+
+  <!-- ═══ MODAL CONFIRMATION ═══ -->
+  <div class="confirm-modal" id="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title" aria-hidden="true">
+    <div class="confirm-modal-inner">
+      <div class="confirm-confetti" id="confirm-confetti" aria-hidden="true"></div>
+      <div class="confirm-icon">🎟</div>
+      <h2 id="confirm-title" class="confirm-title">Réservation confirmée !</h2>
+      <p class="confirm-text">Vos billets vous ont été envoyés par e-mail. Bonne soirée à Marseille !</p>
+      <div class="confirm-details" id="confirm-details"></div>
+      <button class="btn-confirm-close" id="confirm-close" aria-label="Fermer la confirmation">Parfait, merci !</button>
+    </div>
+  </div>
+
+  <!-- ═══ TOASTS ═══ -->
+  <div class="toast-container" id="toast-container" aria-live="polite" role="status"></div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo" aria-label="VilleNova — Accueil">
+          <svg viewBox="0 0 32 32" fill="none" width="24" aria-hidden="true">
+            <circle cx="16" cy="16" r="14" fill="#D17B49" opacity=".2"/>
+            <path d="M8 20 L16 10 L24 20" stroke="#E6D3B3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="10" r="2.5" fill="#D17B49"/>
+          </svg>
+          Ville<span class="accent">Nova</span>
+        </a>
+        <p>L'agenda événementiel de référence pour Marseille et sa métropole.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Aide billetterie</h3>
+        <a href="#">FAQ</a>
+        <a href="#">Remboursements</a>
+        <a href="#">Accessibilité</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h3>Légal</h3>
+        <a href="#">CGV billetterie</a>
+        <a href="#">Confidentialité</a>
+        <a href="#">Mentions légales</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 VilleNova – Billetterie officielle Marseille</span>
+      <span>Paiement sécurisé · RGAA 4.1 · WCAG 2.1 AA</span>
+    </div>
+  </footer>
+
+  <script src="billetterie.js"></script>
+</body>
+</html>
