@@ -1,3 +1,7 @@
+// =========================================
+// CARTES BILLETTERIE — VilleNova
+// =========================================
+
 .billet-card {
   background: var(--blanc-casse);
   border: 1px solid var(--sable-moyen);
@@ -17,6 +21,7 @@
   }
 }
 
+// Image
 .billet-card-img {
   position: relative;
   overflow: hidden;
@@ -29,84 +34,20 @@
     object-fit: cover;
     transition: transform .5s ease;
   }
-
-  .billet-card:hover & img {
-    transform: scale(1.05);
-  }
 }
 
-.card-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(43,43,43,.45) 0%, transparent 55%);
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  padding: .75rem;
+.billet-card:hover .billet-card-img img {
+  transform: scale(1.05);
 }
 
-.card-cat-badge {
-  font-size: .72rem;
-  font-weight: 700;
-  color: var(--brun-chaud);
-  background: rgba(250,249,247,.92);
-  padding: .25rem .65rem;
-  border-radius: var(--r-pill);
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(139,94,60,.2);
+// Grille billetterie
+.events-billet-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap-cards);
 }
 
-.card-featured-badge {
-  font-size: .72rem;
-  font-weight: 700;
-  color: #fff;
-  background: var(--terracotta);
-  padding: .25rem .7rem;
-  border-radius: var(--r-pill);
-  animation: shimmer 2.5s ease infinite;
-}
-
-@keyframes shimmer {
-  0%,100% { box-shadow: 0 0 0 0 rgba(209,123,73,.4); }
-  50%     { box-shadow: 0 0 0 6px rgba(209,123,73,0); }
-}
-
-.billet-card-body {
-  padding: 1.1rem 1.2rem 1.4rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: .6rem;
-}
-
-.card-meta-row {
-  display: flex;
-  align-items: center;
-  gap: .75rem;
-  font-size: .78rem;
-  color: var(--gris-fonce);
-  flex-wrap: wrap;
-}
-
-.card-date {
-  font-weight: 600;
-  color: var(--brun-chaud);
-}
-
-.card-title {
-  font-family: var(--font-titre);
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--noir-doux);
-}
-
-.card-desc {
-  font-size: .85rem;
-  color: var(--gris-fonce);
-  line-height: 1.65;
-  @include clamp(3);
-}
-
+// Carte vedette
 .billet-featured {
   grid-column: 1 / -1;
   display: grid;
@@ -127,6 +68,6 @@
   }
 
   .card-desc {
-    @include clamp(4);
+    -webkit-line-clamp: 4;
   }
 }

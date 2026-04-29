@@ -1,0 +1,8 @@
+// =========================================
+// ÉVÉNEMENTS SIMILAIRES — Page Détail
+// =========================================
+.similar-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}

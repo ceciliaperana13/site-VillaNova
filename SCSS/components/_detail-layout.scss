@@ -1,0 +1,18 @@
+// =========================================
+// LAYOUT PRINCIPAL
+// =========================================
+
+.detail-layout {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--section-pad);
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2.5rem;
+}
+
+.detail-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}

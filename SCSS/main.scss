@@ -24,18 +24,70 @@
 @import 'components/buttons';
 @import 'components/search';
 @import 'components/filters';
+
+// Cartes — base commune
+@import 'components/cards-base';
+
+// Événementiel
 @import 'components/cards-events';
+
+// Billetterie
 @import 'components/cards-billetterie';
+
+// Hero
 @import 'components/hero';
 @import 'components/hero-billet';
+
+// Newsletter
 @import 'components/newsletter';
+
+// Modales & UI
 @import 'components/video-modal';
 @import 'components/toast';
 @import 'components/drawer';
 @import 'components/modal-confirm';
 
-// 5. Responsive
+// Stats & pagination
+@import 'components/stats';
+@import 'components/pagination';
 
+// =========================================
+// PAGE DÉTAIL — NOUVEAUX COMPOSANTS
+// =========================================
+
+// Hero détail
+@import 'components/detail-hero';
+
+// Layout 2 colonnes
+@import 'components/detail-layout';
+
+// Tags (🎷 Jazz · 🎉 Festival…)
+@import 'components/detail-tags';
+
+// Typographie éditoriale (titres, textes, listes)
+@import 'components/detail-typography';
+
+// Galerie & vidéo
+@import 'components/detail-media';
+
+// Carte
+@import 'components/detail-map';
+
+// Sidebar (info-card + boutons + badges)
+@import 'components/detail-sidebar';
+
+// Accessibilité (♿ LSF etc.)
+@import 'components/accessibility';
+
+// Météo
+@import 'components/weather';
+
+// Événements similaires
+@import 'components/similar-events';
+
+// =========================================
+// Responsive
+// =========================================
 @import 'responsive/mobile';
 @import 'responsive/tablet';
 @import 'responsive/desktop';

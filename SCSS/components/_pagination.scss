@@ -1,0 +1,46 @@
+// =========================================
+// PAGINATION — VilleNova
+// =========================================
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-family: var(--font-corps);
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--gris-fonce);
+  background: var(--blanc-casse);
+  border: 1.5px solid var(--sable-moyen);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--dur) var(--ease);
+  min-height: 40px;
+
+  &:hover:not(:disabled) {
+    background: var(--sable-moyen);
+    border-color: var(--sable-fonce);
+    color: var(--brun-chaud);
+  }
+
+  &.active,
+  &[aria-current="page"] {
+    background: var(--brun-chaud);
+    border-color: var(--brun-chaud);
+    color: var(--blanc-casse);
+  }
+
+  &:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+  }
+}

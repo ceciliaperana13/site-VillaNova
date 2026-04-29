@@ -1,7 +1,7 @@
 .section {
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: var(--section-pad);
+  padding: var(--section-padding);
 }
 
 .section-header {
@@ -31,9 +31,11 @@
   font-size: .9rem;
   font-weight: 600;
   color: var(--terracotta);
-  transition: color var(--dur) var(--ease);
+  transition: color var(--dur) var(--ease), gap var(--dur) var(--ease);
+  white-space: nowrap;
 
   &:hover {
     color: var(--brun-chaud);
+    gap: .5rem;
   }
 }

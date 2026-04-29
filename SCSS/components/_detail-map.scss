@@ -1,0 +1,14 @@
+// =========================================
+// CARTE
+// =========================================
+
+.map-placeholder {
+  background: var(--sable-clair);
+  border: 1px solid var(--sable-moyen);
+  border-radius: var(--r-md);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  text-align: center;
+}
