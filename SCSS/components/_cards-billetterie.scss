@@ -1,0 +1,132 @@
+.billet-card {
+  background: var(--blanc-casse);
+  border: 1px solid var(--sable-moyen);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease),
+              border-color var(--dur) var(--ease);
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--sable-fonce);
+  }
+}
+
+.billet-card-img {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  background: var(--sable-moyen);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .5s ease;
+  }
+
+  .billet-card:hover & img {
+    transform: scale(1.05);
+  }
+}
+
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(43,43,43,.45) 0%, transparent 55%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: .75rem;
+}
+
+.card-cat-badge {
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--brun-chaud);
+  background: rgba(250,249,247,.92);
+  padding: .25rem .65rem;
+  border-radius: var(--r-pill);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(139,94,60,.2);
+}
+
+.card-featured-badge {
+  font-size: .72rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--terracotta);
+  padding: .25rem .7rem;
+  border-radius: var(--r-pill);
+  animation: shimmer 2.5s ease infinite;
+}
+
+@keyframes shimmer {
+  0%,100% { box-shadow: 0 0 0 0 rgba(209,123,73,.4); }
+  50%     { box-shadow: 0 0 0 6px rgba(209,123,73,0); }
+}
+
+.billet-card-body {
+  padding: 1.1rem 1.2rem 1.4rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+}
+
+.card-meta-row {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  font-size: .78rem;
+  color: var(--gris-fonce);
+  flex-wrap: wrap;
+}
+
+.card-date {
+  font-weight: 600;
+  color: var(--brun-chaud);
+}
+
+.card-title {
+  font-family: var(--font-titre);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--noir-doux);
+}
+
+.card-desc {
+  font-size: .85rem;
+  color: var(--gris-fonce);
+  line-height: 1.65;
+  @include clamp(3);
+}
+
+.billet-featured {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+
+  .billet-card-img {
+    aspect-ratio: unset;
+    min-height: 260px;
+  }
+
+  .billet-card-body {
+    padding: 1.6rem 1.8rem;
+    justify-content: center;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+  }
+
+  .card-desc {
+    @include clamp(4);
+  }
+}

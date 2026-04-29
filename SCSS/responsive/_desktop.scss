@@ -1,0 +1,13 @@
+@include tablet {
+  body {
+    font-size: 1.125rem;
+  }
+
+  .container {
+    max-width: 80%;
+  }
+
+  header {
+    padding: 2rem 0;
+  }
+}

@@ -1,0 +1,41 @@
+.hero {
+  min-height: clamp(360px, 55vh, 560px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: clamp(2.5rem, 6vw, 5rem) clamp(1rem, 4vw, 2rem);
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 120%, rgba(209,123,73,.18) 0%, transparent 70%),
+    linear-gradient(160deg, var(--sable-clair) 0%, var(--sable-moyen) 100%);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(209,123,73,.07) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+  }
+}
+
+.hero-content {
+  position: relative;
+  max-width: 720px;
+  animation: fadeUp .7s ease both;
+}
+
+.hero-eyebrow {
+  display: inline-block;
+  font-size: .85rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  background: rgba(209,123,73,.1);
+  padding: .35rem .9rem;
+  border-radius: var(--r-pill);
+  margin-bottom: 1.2rem;
+}

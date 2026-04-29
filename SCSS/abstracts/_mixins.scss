@@ -1,0 +1,143 @@
+// =========================================
+// MIXINS — VilleNova
+// =========================================
+
+// -----------------------------------------
+// BREAKPOINTS (mobile-first, unités relatives)
+// -----------------------------------------
+
+$break-small-mobile: 30rem;   // 480px
+$break-mobile:       48rem;   // 768px
+$break-tablet:       64rem;   // 1024px
+$break-desktop:      90rem;   // 1440px
+$break-large:        105rem;  // 1680px (optionnel)
+
+// -----------------------------------------
+// MAX-WIDTH BREAKPOINTS (ton système actuel)
+// -----------------------------------------
+
+@mixin small-mobile {
+  @media (max-width: $break-small-mobile) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: $break-mobile) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: $break-tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (max-width: $break-desktop) {
+    @content;
+  }
+}
+
+@mixin large {
+  @media (max-width: $break-large) {
+    @content;
+  }
+}
+
+// -----------------------------------------
+// MIN-WIDTH BREAKPOINTS (si tu veux évoluer plus tard)
+// -----------------------------------------
+
+@mixin up-tablet {
+  @media (min-width: $break-tablet) {
+    @content;
+  }
+}
+
+@mixin up-desktop {
+  @media (min-width: $break-desktop) {
+    @content;
+  }
+}
+
+@mixin up-large {
+  @media (min-width: $break-large) {
+    @content;
+  }
+}
+
+// -----------------------------------------
+// FLEX UTILITIES
+// -----------------------------------------
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// -----------------------------------------
+// TEXT CLAMP
+// -----------------------------------------
+
+@mixin clamp($lines) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// -----------------------------------------
+// FLUID TYPOGRAPHY
+// -----------------------------------------
+
+@mixin fluid-type($min, $max) {
+  font-size: clamp(#{$min}, 2vw, #{$max});
+}
+
+// -----------------------------------------
+// CONTAINER RESPONSIVE
+// -----------------------------------------
+
+@mixin container {
+  width: 100%;
+  max-width: 90%;
+  margin-inline: auto;
+
+  @include up-tablet {
+    max-width: 80%;
+  }
+
+  @include up-desktop {
+    max-width: 70%;
+  }
+
+  @include up-large {
+    max-width: 60%;
+  }
+}
+
+// -----------------------------------------
+// HIDE / SHOW
+// -----------------------------------------
+
+@mixin hide {
+  display: none !important;
+}
+
+@mixin show {
+  display: block !important;
+}

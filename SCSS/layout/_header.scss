@@ -1,0 +1,20 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  background: rgba(250,249,247,.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--sable-moyen);
+  box-shadow: var(--shadow-header);
+  height: var(--header-h);
+}
+
+.nav-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 2rem);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

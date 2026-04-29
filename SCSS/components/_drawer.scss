@@ -1,0 +1,101 @@
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(43,43,43,.4);
+  z-index: 600;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .35s ease, visibility .35s ease;
+  backdrop-filter: blur(2px);
+
+  &.open {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(420px, 100vw);
+  background: var(--blanc-casse);
+  z-index: 700;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform .4s var(--anim-easing);
+  box-shadow: var(--shadow-drawer);
+
+  &.open {
+    transform: translateX(0);
+  }
+}
+
+.cart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1.4rem;
+  border-bottom: 1px solid var(--sable-moyen);
+}
+
+.cart-title {
+  font-family: var(--font-titre);
+  font-size: 1.2rem;
+  color: var(--brun-chaud);
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+}
+
+.cart-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--sable-clair);
+  color: var(--gris-fonce);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--dur) var(--ease);
+
+  &:hover {
+    background: var(--sable-moyen);
+    color: var(--brun-chaud);
+  }
+}
+
+.cart-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.4rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--sable-fonce) var(--sable-clair);
+}
+
+.cart-item {
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+  padding: .85rem 0;
+  border-bottom: 1px solid var(--sable-moyen);
+  animation: slideIn .3s var(--anim-easing) both;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.cart-footer {
+  border-top: 2px solid var(--sable-moyen);
+  padding: 1.2rem 1.4rem;
+  background: var(--blanc-casse);
+}

@@ -1,0 +1,42 @@
+// =========================================
+// VilleNova — main.scss
+// =========================================
+
+// 1. Abstracts
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
+@import 'abstracts/functions';
+
+// 2. Base
+@import 'base/reset';
+@import 'base/typography';
+@import 'base/accessibility';
+@import 'base/animations';
+@import 'base/utilities';
+
+// 3. Layout
+@import 'layout/header';
+@import 'layout/footer';
+@import 'layout/sections';
+@import 'layout/grid';
+
+// 4. Components
+@import 'components/buttons';
+@import 'components/search';
+@import 'components/filters';
+@import 'components/cards-events';
+@import 'components/cards-billetterie';
+@import 'components/hero';
+@import 'components/hero-billet';
+@import 'components/newsletter';
+@import 'components/video-modal';
+@import 'components/toast';
+@import 'components/drawer';
+@import 'components/modal-confirm';
+
+// 5. Responsive
+
+@import 'responsive/mobile';
+@import 'responsive/tablet';
+@import 'responsive/desktop';
+@import 'responsive/large';
