@@ -1,33 +1,42 @@
 @charset "UTF-8";
 :root {
+  /* Couleurs principales */
   --sable-clair: #F4EDE4;
   --sable-moyen: #E6D3B3;
   --sable-fonce: #C2A27C;
   --terracotta: #D17B49;
   --brun-chaud: #8B5E3C;
+  /* Neutres */
   --blanc-casse: #FAF9F7;
   --gris-clair: #D1D1D1;
   --gris-fonce: #4A4A4A;
   --noir-doux: #2B2B2B;
+  /* Statuts */
   --ok: #2a7d4f;
   --warn: #b45309;
   --low: #be123c;
+  /* Typographie */
   --font-titre: 'Playfair Display', Georgia, serif;
   --font-corps: 'DM Sans', 'Helvetica Neue', sans-serif;
+  /* Layout */
   --header-h: 64px;
   --container-max: 1200px;
   --section-pad: clamp(2.5rem, 5vw, 4.5rem) clamp(1rem, 4vw, 2rem);
   --gap-cards: 1.5rem;
+  /* Rayons */
   --r-sm: 8px;
   --r-md: 12px;
   --r-lg: 18px;
   --r-pill: 50px;
+  /* Ombres */
   --shadow-card: 0 4px 24px rgba(43,43,43,.09);
   --shadow-hover: 0 10px 40px rgba(43,43,43,.16);
   --shadow-header: 0 2px 16px rgba(43,43,43,.08);
   --shadow-drawer: 0 0 60px rgba(43,43,43,.22);
+  /* Transitions */
   --dur: .25s;
   --ease: cubic-bezier(.4,0,.2,1);
+  /* Animations */
   --anim-duration: 600ms;
   --anim-easing: cubic-bezier(0.22, 1, 0.36, 1);
   --anim-stagger: 80ms;
@@ -715,6 +724,12 @@ p {
 .card-cta:hover {
   background: var(--brun-chaud);
   transform: translateX(2px);
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap-cards);
 }
 
 .event-card {
@@ -1670,7 +1685,9 @@ p {
 }
 
 @media (max-width: 768px) {
-  /* Nav → burger */
+  /* ============================
+     NAVIGATION
+  ============================ */
   .nav-links {
     position: fixed;
     top: var(--header-h);
@@ -1696,21 +1713,21 @@ p {
   .nav-links a {
     display: block;
     padding: 0.85rem 1.5rem;
-    border-radius: 0;
     width: 100%;
     border-bottom: 1px solid var(--sable-clair);
     font-size: 1rem;
   }
   .nav-links .nav-cta {
     margin: 0.75rem 1.5rem 0;
-    border-radius: var(--radius-pill);
-    text-align: center;
     width: calc(100% - 3rem);
+    text-align: center;
   }
   .nav-burger {
     display: flex;
   }
-  /* Hero */
+  /* ============================
+     HERO
+  ============================ */
   .hero {
     min-height: 320px;
   }
@@ -1721,22 +1738,40 @@ p {
   .hero-actions .btn {
     width: 100%;
     max-width: 300px;
-    justify-content: center;
   }
-  /* Stats */
+  /* ============================
+     HERO BILLETTERIE
+  ============================ */
+  .hero-billet {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 2.2rem 1.4rem;
+    text-align: center;
+  }
+  .hero-billet .hero-billet-img {
+    order: -1;
+  }
+  .hero-billet .hero-billet-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  /* ============================
+     STATS
+  ============================ */
   .stats-inner {
     grid-template-columns: repeat(2, 1fr);
   }
-  /* Section */
-  .section-header {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  /* Filtres — scroll horizontal */
+  /* ============================
+     FILTRES — scroll visible
+  ============================ */
   .filters-inner {
+    display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
-    padding-bottom: 0.4rem;
+    gap: 0.6rem;
+    padding: 0.4rem 0.2rem 0.6rem;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
@@ -1745,26 +1780,124 @@ p {
   }
   .filter-tag {
     flex-shrink: 0;
+    white-space: nowrap;
+    padding: 0.55rem 1.1rem;
+    font-size: 0.9rem;
   }
-  /* Grille événements → 1 colonne */
-  .events-grid {
-    grid-template-columns: 1fr;
+  /* ============================
+     UNIVERSAL CARDS GRID
+  ============================ */
+  .cards-grid,
+  .events-grid,
+  .events-billet-grid,
+  .agenda-grid,
+  .similar-grid,
+  .access-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.2rem;
   }
-  /* Carte vedette → empilement */
+  /* ============================
+     ÉVÉNEMENTIEL — CARDS
+  ============================ */
+  .card-img-wrap {
+    aspect-ratio: 4/3;
+  }
   .event-featured {
-    grid-column: 1;
     grid-template-columns: 1fr;
     display: flex;
     flex-direction: column;
   }
   .event-featured .card-img-wrap {
     min-height: 200px;
-    aspect-ratio: 16/9;
+    aspect-ratio: unset;
   }
   .event-featured .card-body {
     padding: 1.2rem 1rem;
   }
-  /* Footer → 2 colonnes compactes */
+  /* ============================
+     BILLETERIE — CARDS
+  ============================ */
+  .billet-featured {
+    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+  }
+  .billet-featured .billet-card-img {
+    min-height: 200px;
+    aspect-ratio: unset;
+  }
+  .billet-featured .billet-card-body {
+    padding: 1.2rem 1rem;
+  }
+  /* ============================
+     BADGES & ACCESSIBILITÉ
+  ============================ */
+  .billet-card-img,
+  .card-img-wrap {
+    position: relative;
+  }
+  .card-badge {
+    top: 0.6rem;
+    left: 0.6rem;
+    font-size: 0.68rem;
+    padding: 0.22rem 0.55rem;
+    z-index: 20;
+  }
+  .card-accessibility {
+    top: 0.6rem;
+    right: 0.6rem;
+  }
+  .card-accessibility span {
+    width: 24px;
+    height: 24px;
+    font-size: 0.75rem;
+  }
+  /* ============================
+     PAGE DÉTAIL ÉVÉNEMENTIEL
+     (MÉTÉO + FAVORI + SIDEBAR)
+  ============================ */
+  .detail-layout {
+    display: grid;
+    grid-template-columns: 1fr !important;
+    gap: 2rem;
+  }
+  .detail-sidebar {
+    position: static !important;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  .detail-content {
+    width: 100%;
+  }
+  /* Météo */
+  .weather-widget {
+    margin-top: 1rem;
+    border-radius: var(--r-lg);
+    padding: 1rem 1.2rem;
+  }
+  .weather-days {
+    gap: 0.6rem;
+    justify-content: space-between;
+  }
+  /* Bouton Favori */
+  .favorite-btn,
+  .add-favorite {
+    width: 100%;
+    justify-content: center;
+    padding: 0.9rem 1rem;
+    font-size: 0.95rem;
+  }
+  /* Programme */
+  .event-programme ul {
+    padding-left: 1rem;
+  }
+  .event-programme li {
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+  }
+  /* ============================
+     FOOTER
+  ============================ */
   .footer-inner {
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
@@ -1772,27 +1905,36 @@ p {
   .footer-brand {
     grid-column: 1/-1;
   }
-  /* Toast container */
+  /* ============================
+     TOAST
+  ============================ */
   .toast-container {
     bottom: 1rem;
     right: 1rem;
   }
 }
-@media (max-width: 768px) {
-  .access-grid {
-    grid-template-columns: 1fr;
-  }
-  .similar-grid {
-    grid-template-columns: 1fr;
-  }
-  .detail-layout {
-    grid-template-columns: 1fr !important;
-  }
-  .detail-sidebar {
-    position: static !important;
-  }
-}
+/* =========================================
+// EXTRA SMALL (≤ 480px)
+// ========================================= */
 @media (max-width: 480px) {
+  .card-body,
+  .billet-card-body {
+    padding: 0.9rem 0.85rem;
+  }
+  .card-title {
+    font-size: 0.95rem;
+  }
+  .card-desc {
+    font-size: 0.8rem;
+  }
+  .card-img-wrap,
+  .billet-card-img {
+    aspect-ratio: 1/1;
+  }
+  .filter-tag {
+    padding: 0.45rem 0.9rem;
+    font-size: 0.82rem;
+  }
   .breadcrumb-list {
     font-size: 0.78rem;
   }

@@ -1,77 +1,10 @@
-// =========================================
+// =============================================
 // MIXINS — VilleNova
-// =========================================
+// =============================================
 
-// -----------------------------------------
-// BREAKPOINTS (mobile-first, unités relatives)
-// -----------------------------------------
-
-$break-small-mobile: 30rem;   // 480px
-$break-mobile:       48rem;   // 768px
-$break-tablet:       64rem;   // 1024px
-$break-desktop:      90rem;   // 1440px
-$break-large:        105rem;  // 1680px 
-
-// -----------------------------------------
-// MAX-WIDTH BREAKPOINTS 
-// -----------------------------------------
-
-@mixin small-mobile {
-  @media (max-width: $break-small-mobile) {
-    @content;
-  }
-}
-
-@mixin mobile {
-  @media (max-width: $break-mobile) {
-    @content;
-  }
-}
-
-@mixin tablet {
-  @media (max-width: $break-tablet) {
-    @content;
-  }
-}
-
-@mixin desktop {
-  @media (max-width: $break-desktop) {
-    @content;
-  }
-}
-
-@mixin large {
-  @media (max-width: $break-large) {
-    @content;
-  }
-}
-
-// -----------------------------------------
-// MIN-WIDTH BREAKPOINTS (evolution possible)
-// -----------------------------------------
-
-@mixin up-tablet {
-  @media (min-width: $break-tablet) {
-    @content;
-  }
-}
-
-@mixin up-desktop {
-  @media (min-width: $break-desktop) {
-    @content;
-  }
-}
-
-@mixin up-large {
-  @media (min-width: $break-large) {
-    @content;
-  }
-}
-
-// -----------------------------------------
-// FLEX UTILITIES
-// -----------------------------------------
-
+// ------------------------------
+// Flex helpers
+// ------------------------------
 @mixin flex-center {
   display: flex;
   align-items: center;
@@ -80,64 +13,139 @@ $break-large:        105rem;  // 1680px
 
 @mixin flex-between {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
-@mixin flex-column {
+@mixin flex-col($gap: 0) {
   display: flex;
   flex-direction: column;
+  gap: $gap;
 }
 
-// -----------------------------------------
-// TEXT CLAMP
-// -----------------------------------------
 
-@mixin clamp($lines) {
+// ------------------------------
+// Grid helpers
+// ------------------------------
+@mixin grid-cols($cols, $gap: var(--gap-cards)) {
+  display: grid;
+  grid-template-columns: repeat($cols, 1fr);
+  gap: $gap;
+}
+
+@mixin grid-auto($min, $gap: var(--gap-cards)) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min, 1fr));
+  gap: $gap;
+}
+
+
+// ------------------------------
+// Container
+// ------------------------------
+@mixin container {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+
+// ------------------------------
+// Text helpers
+// ------------------------------
+@mixin ellipsis($lines: 1) {
   display: -webkit-box;
   -webkit-line-clamp: $lines;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-// -----------------------------------------
-// FLUID TYPOGRAPHY
-// -----------------------------------------
-
-@mixin fluid-type($min, $max) {
-  font-size: clamp(#{$min}, 2vw, #{$max});
+@mixin title-shadow {
+  text-shadow: 0 2px 8px rgba(0,0,0,.18);
 }
 
-// -----------------------------------------
-// CONTAINER RESPONSIVE
-// -----------------------------------------
 
-@mixin container {
-  width: 100%;
-  max-width: 90%;
-  margin-inline: auto;
+// ------------------------------
+// Transitions & animations
+// ------------------------------
+@mixin smooth {
+  transition: all var(--dur) var(--ease);
+}
 
-  @include up-tablet {
-    max-width: 80%;
-  }
+@mixin hover-lift($y: -3px) {
+  transition: transform var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease);
 
-  @include up-desktop {
-    max-width: 70%;
-  }
-
-  @include up-large {
-    max-width: 60%;
+  &:hover {
+    transform: translateY($y);
+    box-shadow: var(--shadow-hover);
   }
 }
 
-// -----------------------------------------
-// HIDE / SHOW
-// -----------------------------------------
 
-@mixin hide {
-  display: none !important;
+// ------------------------------
+// Shimmer skeleton
+// ------------------------------
+@mixin shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--sable-moyen) 25%,
+    var(--sable-clair) 50%,
+    var(--sable-moyen) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
 }
 
-@mixin show {
-  display: block !important;
+
+// ------------------------------
+// Focus ring
+// ------------------------------
+@mixin focus-ring {
+  &:focus-visible {
+    outline: 3px solid var(--terracotta);
+    outline-offset: 3px;
+    border-radius: var(--r-sm);
+  }
+}
+
+
+// ------------------------------
+// Card base
+// ------------------------------
+@mixin card-base {
+  background: var(--blanc-casse);
+  border: 1px solid var(--sable-moyen);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  @include smooth;
+}
+
+
+// ------------------------------
+// Responsive breakpoints
+// ------------------------------
+@mixin mobile {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin xs {
+  @media (max-width: 480px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: 900px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1200px) {
+    @content;
+  }
 }

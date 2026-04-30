@@ -4,7 +4,9 @@
 
 @media (max-width: 768px) {
 
-  /* Nav → burger */
+  /* ============================
+     NAVIGATION
+  ============================ */
   .nav-links {
     position: fixed;
     top: var(--header-h);
@@ -31,7 +33,6 @@
     a {
       display: block;
       padding: .85rem 1.5rem;
-      border-radius: 0;
       width: 100%;
       border-bottom: 1px solid var(--sable-clair);
       font-size: 1rem;
@@ -39,44 +40,90 @@
 
     .nav-cta {
       margin: .75rem 1.5rem 0;
-      border-radius: var(--radius-pill);
-      text-align: center;
       width: calc(100% - 3rem);
+      text-align: center;
     }
   }
 
   .nav-burger { display: flex; }
 
-  /* Hero */
+
+  /* ============================
+     HERO
+  ============================ */
   .hero { min-height: 320px; }
   .hero-actions { flex-direction: column; align-items: center; }
-  .hero-actions .btn { width: 100%; max-width: 300px; justify-content: center; }
+  .hero-actions .btn { width: 100%; max-width: 300px; }
 
-  /* Stats */
+
+  /* ============================
+     HERO BILLETTERIE
+  ============================ */
+  .hero-billet {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 2.2rem 1.4rem;
+    text-align: center;
+  }
+
+  .hero-billet .hero-billet-img { order: -1; }
+
+  .hero-billet .hero-billet-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .8rem;
+  }
+
+
+  /* ============================
+     STATS
+  ============================ */
   .stats-inner { grid-template-columns: repeat(2, 1fr); }
 
-  /* Section */
-  .section-header { flex-direction: column; gap: .5rem; }
 
-  /* Filtres — scroll horizontal */
+  /* ============================
+     FILTRES — scroll visible
+  ============================ */
   .filters-inner {
+    display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
-    padding-bottom: .4rem;
+    gap: .6rem;
+    padding: .4rem .2rem .6rem;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
   .filters-inner::-webkit-scrollbar { display: none; }
-  .filter-tag { flex-shrink: 0; }
 
-  /* Grille événements → 1 colonne */
-  .events-grid {
-    grid-template-columns: 1fr;
+  .filter-tag {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: .55rem 1.1rem;
+    font-size: .9rem;
   }
 
-  /* Carte vedette → empilement */
+
+  /* ============================
+     UNIVERSAL CARDS GRID
+  ============================ */
+  .cards-grid,
+  .events-grid,
+  .events-billet-grid,
+  .agenda-grid,
+  .similar-grid,
+  .access-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.2rem;
+  }
+
+
+  /* ============================
+     ÉVÉNEMENTIEL — CARDS
+  ============================ */
+  .card-img-wrap { aspect-ratio: 4 / 3; }
+
   .event-featured {
-    grid-column: 1;
     grid-template-columns: 1fr;
     display: flex;
     flex-direction: column;
@@ -84,37 +131,146 @@
 
   .event-featured .card-img-wrap {
     min-height: 200px;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: unset;
   }
 
-  .event-featured .card-body {
-    padding: 1.2rem 1rem;
+  .event-featured .card-body { padding: 1.2rem 1rem; }
+
+
+  /* ============================
+     BILLETERIE — CARDS
+  ============================ */
+  .billet-featured {
+    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
   }
 
-  /* Footer → 2 colonnes compactes */
+  .billet-featured .billet-card-img {
+    min-height: 200px;
+    aspect-ratio: unset;
+  }
+
+  .billet-featured .billet-card-body { padding: 1.2rem 1rem; }
+
+
+  /* ============================
+     BADGES & ACCESSIBILITÉ
+  ============================ */
+  .billet-card-img,
+  .card-img-wrap { position: relative; }
+
+  .card-badge {
+    top: .6rem;
+    left: .6rem;
+    font-size: .68rem;
+    padding: .22rem .55rem;
+    z-index: 20;
+  }
+
+  .card-accessibility {
+    top: .6rem;
+    right: .6rem;
+
+    span {
+      width: 24px;
+      height: 24px;
+      font-size: .75rem;
+    }
+  }
+
+
+  /* ============================
+     PAGE DÉTAIL ÉVÉNEMENTIEL
+     (MÉTÉO + FAVORI + SIDEBAR)
+  ============================ */
+
+  .detail-layout {
+    display: grid;
+    grid-template-columns: 1fr !important;
+    gap: 2rem;
+  }
+
+  .detail-sidebar {
+    position: static !important;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .detail-content { width: 100%; }
+
+  /* Météo */
+  .weather-widget {
+    margin-top: 1rem;
+    border-radius: var(--r-lg);
+    padding: 1rem 1.2rem;
+  }
+
+  .weather-days {
+    gap: .6rem;
+    justify-content: space-between;
+  }
+
+  /* Bouton Favori */
+  .favorite-btn,
+  .add-favorite {
+    width: 100%;
+    justify-content: center;
+    padding: .9rem 1rem;
+    font-size: .95rem;
+  }
+
+  /* Programme */
+  .event-programme ul { padding-left: 1rem; }
+  .event-programme li {
+    font-size: .9rem;
+    margin-bottom: .4rem;
+  }
+
+
+  /* ============================
+     FOOTER
+  ============================ */
   .footer-inner {
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
   }
 
-  .footer-brand {
-    grid-column: 1 / -1;
-  }
+  .footer-brand { grid-column: 1 / -1; }
 
-  /* Toast container */
+
+  /* ============================
+     TOAST
+  ============================ */
   .toast-container {
     bottom: 1rem;
     right: 1rem;
   }
 }
-@media (max-width: 768px) {
-  .access-grid { grid-template-columns: 1fr; }
-  .similar-grid { grid-template-columns: 1fr; }
-  .detail-layout { grid-template-columns: 1fr !important; }
-  .detail-sidebar { position: static !important; }
-}
+
+
+/* =========================================
+// EXTRA SMALL (≤ 480px)
+// ========================================= */
 
 @media (max-width: 480px) {
+
+  .card-body,
+  .billet-card-body { padding: .9rem .85rem; }
+
+  .card-title { font-size: .95rem; }
+
+  .card-desc { font-size: .8rem; }
+
+  .card-img-wrap,
+  .billet-card-img { aspect-ratio: 1 / 1; }
+
+  .filter-tag {
+    padding: .45rem .9rem;
+    font-size: .82rem;
+  }
+
   .breadcrumb-list { font-size: .78rem; }
+
   .weather-days { gap: .5rem; }
 }
