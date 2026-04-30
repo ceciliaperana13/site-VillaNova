@@ -21,7 +21,9 @@
   }
 }
 
-// Image
+// -----------------------------------------
+// IMAGE
+// -----------------------------------------
 .billet-card-img {
   position: relative;
   overflow: hidden;
@@ -40,14 +42,18 @@
   transform: scale(1.05);
 }
 
-// Grille billetterie
+// -----------------------------------------
+// GRILLE BILLETERIE
+// -----------------------------------------
 .events-billet-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--gap-cards);
 }
 
-// Carte vedette
+// -----------------------------------------
+// CARTE VEDETTE
+// -----------------------------------------
 .billet-featured {
   grid-column: 1 / -1;
   display: grid;
@@ -70,4 +76,77 @@
   .card-desc {
     -webkit-line-clamp: 4;
   }
+}
+
+// =========================================
+// QUANTITÉS — Boutons - / +
+// (UNIQUEMENT les boutons, rien d'autre)
+// =========================================
+
+.ticket-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .8rem 0;
+  border-bottom: 1px solid var(--sable-moyen);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.ticket-info {
+  display: flex;
+  flex-direction: column;
+  gap: .15rem;
+
+  strong {
+    font-size: .95rem;
+    color: var(--brun-chaud);
+  }
+
+  .ticket-price {
+    font-size: .85rem;
+    color: var(--gris-fonce);
+  }
+}
+
+/* --- TON CONTENEUR RÉEL --- */
+.qty-control {
+  display: flex;
+  align-items: center;
+  gap: .5rem; /* espace entre - / nombre / + */
+}
+
+/* --- Boutons – et + --- */
+.qty-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--sable-moyen);
+  background: var(--sable-clair);
+  color: var(--brun-chaud);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--dur) var(--ease);
+
+  &:hover {
+    background: var(--sable-moyen);
+    border-color: var(--sable-fonce);
+    transform: translateY(-2px);
+  }
+}
+
+/* --- Le nombre au centre --- */
+.qty-val {
+  min-width: 22px;
+  text-align: center;
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--brun-chaud);
+  display: inline-block; /* IMPORTANT pour l’alignement */
 }

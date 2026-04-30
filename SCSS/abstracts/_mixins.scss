@@ -10,10 +10,10 @@ $break-small-mobile: 30rem;   // 480px
 $break-mobile:       48rem;   // 768px
 $break-tablet:       64rem;   // 1024px
 $break-desktop:      90rem;   // 1440px
-$break-large:        105rem;  // 1680px (optionnel)
+$break-large:        105rem;  // 1680px 
 
 // -----------------------------------------
-// MAX-WIDTH BREAKPOINTS (ton système actuel)
+// MAX-WIDTH BREAKPOINTS 
 // -----------------------------------------
 
 @mixin small-mobile {
@@ -47,7 +47,7 @@ $break-large:        105rem;  // 1680px (optionnel)
 }
 
 // -----------------------------------------
-// MIN-WIDTH BREAKPOINTS (si tu veux évoluer plus tard)
+// MIN-WIDTH BREAKPOINTS (evolution possible)
 // -----------------------------------------
 
 @mixin up-tablet {

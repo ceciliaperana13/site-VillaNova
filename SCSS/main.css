@@ -844,6 +844,70 @@ p {
   -webkit-line-clamp: 4;
 }
 
+.ticket-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--sable-moyen);
+}
+.ticket-line:last-child {
+  border-bottom: none;
+}
+
+.ticket-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.ticket-info strong {
+  font-size: 0.95rem;
+  color: var(--brun-chaud);
+}
+.ticket-info .ticket-price {
+  font-size: 0.85rem;
+  color: var(--gris-fonce);
+}
+
+/* --- TON CONTENEUR RÉEL --- */
+.qty-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* espace entre - / nombre / + */
+}
+
+/* --- Boutons – et + --- */
+.qty-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--sable-moyen);
+  background: var(--sable-clair);
+  color: var(--brun-chaud);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--dur) var(--ease);
+}
+.qty-btn:hover {
+  background: var(--sable-moyen);
+  border-color: var(--sable-fonce);
+  transform: translateY(-2px);
+}
+
+/* --- Le nombre au centre --- */
+.qty-val {
+  min-width: 22px;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--brun-chaud);
+  display: inline-block; /* IMPORTANT pour l’alignement */
+}
+
 .hero {
   min-height: clamp(360px, 55vh, 560px);
   display: flex;
