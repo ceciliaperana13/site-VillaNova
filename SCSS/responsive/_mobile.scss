@@ -1,6 +1,6 @@
-// =========================================
-// RESPONSIVE — MOBILE (≤ 768px)
-// =========================================
+/* =========================================
+   RESPONSIVE — MOBILE (≤ 768px)
+   ========================================= */
 
 @media (max-width: 768px) {
 
@@ -47,14 +47,12 @@
 
   .nav-burger { display: flex; }
 
-
   /* ============================
      HERO
   ============================ */
   .hero { min-height: 320px; }
   .hero-actions { flex-direction: column; align-items: center; }
   .hero-actions .btn { width: 100%; max-width: 300px; }
-
 
   /* ============================
      HERO BILLETTERIE
@@ -75,12 +73,10 @@
     gap: .8rem;
   }
 
-
   /* ============================
      STATS
   ============================ */
   .stats-inner { grid-template-columns: repeat(2, 1fr); }
-
 
   /* ============================
      FILTRES — scroll visible
@@ -103,7 +99,6 @@
     font-size: .9rem;
   }
 
-
   /* ============================
      UNIVERSAL CARDS GRID
   ============================ */
@@ -117,6 +112,38 @@
     gap: 1.2rem;
   }
 
+  /* ============================
+     CARDS — STRUCTURE MOBILE
+  ============================ */
+  .card,
+  .event-card,
+  .billet-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .card-img-wrap,
+  .billet-card-img {
+    width: 100%;
+    flex: 0 0 auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  .card-body,
+  .billet-card-body {
+    width: 100%;
+    flex: 1 1 auto;
+    padding: 1rem .9rem;
+  }
+
+  .card-footer,
+  .billet-card-footer {
+    width: 100%;
+    margin-top: auto;
+    padding: .8rem .9rem 1rem;
+  }
 
   /* ============================
      ÉVÉNEMENTIEL — CARDS
@@ -136,7 +163,6 @@
 
   .event-featured .card-body { padding: 1.2rem 1rem; }
 
-
   /* ============================
      BILLETERIE — CARDS
   ============================ */
@@ -152,7 +178,6 @@
   }
 
   .billet-featured .billet-card-body { padding: 1.2rem 1rem; }
-
 
   /* ============================
      BADGES & ACCESSIBILITÉ
@@ -179,12 +204,10 @@
     }
   }
 
-
   /* ============================
      PAGE DÉTAIL ÉVÉNEMENTIEL
      (MÉTÉO + FAVORI + SIDEBAR)
   ============================ */
-
   .detail-layout {
     display: grid;
     grid-template-columns: 1fr !important;
@@ -227,7 +250,6 @@
     margin-bottom: .4rem;
   }
 
-
   /* ============================
      FOOTER
   ============================ */
@@ -238,7 +260,6 @@
 
   .footer-brand { grid-column: 1 / -1; }
 
-
   /* ============================
      TOAST
   ============================ */
@@ -248,22 +269,37 @@
   }
 }
 
-
 /* =========================================
-// EXTRA SMALL (≤ 480px)
-// ========================================= */
+   EXTRA SMALL (≤ 480px)
+   ========================================= */
 
 @media (max-width: 480px) {
 
+  .card,
+  .event-card,
+  .billet-card {
+    display: flex;
+    flex-direction: column;
+  }
+
   .card-body,
-  .billet-card-body { padding: .9rem .85rem; }
+  .billet-card-body {
+    padding: .9rem .85rem;
+  }
+
+  .card-footer,
+  .billet-card-footer {
+    padding: .7rem .85rem .85rem;
+  }
 
   .card-title { font-size: .95rem; }
-
   .card-desc { font-size: .8rem; }
 
   .card-img-wrap,
-  .billet-card-img { aspect-ratio: 1 / 1; }
+  .billet-card-img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
 
   .filter-tag {
     padding: .45rem .9rem;
@@ -271,16 +307,16 @@
   }
 
   .breadcrumb-list { font-size: .78rem; }
-
   .weather-days { gap: .5rem; }
 }
+
 @include mobile {
   .cal-body {
     grid-template-columns: repeat(2, 1fr);
   }
 
   .cal-weekdays {
-    display: none; // trop serré en mobile
+    display: none;
   }
 
   .cal-cell {

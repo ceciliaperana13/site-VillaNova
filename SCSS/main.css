@@ -2735,6 +2735,9 @@ p {
   margin-top: auto;
 }
 
+/* =========================================
+   RESPONSIVE — MOBILE (≤ 768px)
+   ========================================= */
 @media (max-width: 768px) {
   /* ============================
      NAVIGATION
@@ -2846,6 +2849,35 @@ p {
   .access-grid {
     grid-template-columns: 1fr !important;
     gap: 1.2rem;
+  }
+  /* ============================
+     CARDS — STRUCTURE MOBILE
+  ============================ */
+  .card,
+  .event-card,
+  .billet-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+  }
+  .card-img-wrap,
+  .billet-card-img {
+    width: 100%;
+    flex: 0 0 auto;
+    aspect-ratio: 4/3;
+  }
+  .card-body,
+  .billet-card-body {
+    width: 100%;
+    flex: 1 1 auto;
+    padding: 1rem 0.9rem;
+  }
+  .card-footer,
+  .billet-card-footer {
+    width: 100%;
+    margin-top: auto;
+    padding: 0.8rem 0.9rem 1rem;
   }
   /* ============================
      ÉVÉNEMENTIEL — CARDS
@@ -2965,12 +2997,22 @@ p {
   }
 }
 /* =========================================
-// EXTRA SMALL (≤ 480px)
-// ========================================= */
+   EXTRA SMALL (≤ 480px)
+   ========================================= */
 @media (max-width: 480px) {
+  .card,
+  .event-card,
+  .billet-card {
+    display: flex;
+    flex-direction: column;
+  }
   .card-body,
   .billet-card-body {
     padding: 0.9rem 0.85rem;
+  }
+  .card-footer,
+  .billet-card-footer {
+    padding: 0.7rem 0.85rem 0.85rem;
   }
   .card-title {
     font-size: 0.95rem;
@@ -2980,6 +3022,7 @@ p {
   }
   .card-img-wrap,
   .billet-card-img {
+    width: 100%;
     aspect-ratio: 1/1;
   }
   .filter-tag {
@@ -3024,15 +3067,120 @@ p {
     grid-column: 1/-1;
   }
 }
-@media (max-width: 900px) {
+@media (min-width: 1200px) {
   body {
-    font-size: 1.125rem;
+    font-size: 1.15rem;
   }
   .container {
-    max-width: 80%;
+    max-width: 1320px;
   }
   header {
-    padding: 2rem 0;
+    padding: 2.5rem 0;
+  }
+  /* ============================
+     GRILLES
+  ============================ */
+  .cards-grid,
+  .events-grid,
+  .events-billet-grid,
+  .agenda-grid,
+  .similar-grid,
+  .access-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  /* ============================
+     CARTES CLASSIQUES
+     image en haut / texte en dessous
+  ============================ */
+  .card,
+  .event-card,
+  .billet-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+  }
+  .card-img-wrap,
+  .billet-card-img {
+    width: 100%;
+    flex: 0 0 auto;
+    aspect-ratio: 4/3;
+  }
+  .card-body,
+  .billet-card-body {
+    width: 100%;
+    flex: 1 1 auto;
+    padding: 1rem 1rem 0.9rem;
+  }
+  .card-footer,
+  .billet-card-footer {
+    width: 100%;
+    padding: 0.8rem 1rem 1rem;
+    margin-top: auto;
+  }
+  /* ============================
+     CARTE PLEIN ÉCRAN
+     image à gauche / texte à droite
+  ============================ */
+  .event-featured {
+    grid-column: 1/-1;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    overflow: hidden;
+    align-items: stretch;
+  }
+  .event-featured .card-img-wrap {
+    width: 42%;
+    flex: 0 0 42%;
+    aspect-ratio: auto;
+    min-height: 100%;
+  }
+  .event-featured .card-body {
+    width: 58%;
+    flex: 1 1 58%;
+    padding: 1.6rem 1.4rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .event-featured .card-footer {
+    width: 58%;
+    flex: 1 1 58%;
+    padding: 0 1.4rem 1.4rem;
+  }
+  /* Si ton footer doit rester dans la colonne de droite */
+  .event-featured .card-content {
+    width: 58%;
+    display: flex;
+    flex-direction: column;
+  }
+  /* ============================
+     BILLETERIE
+  ============================ */
+  .billet-featured {
+    grid-column: 1/-1;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    align-items: stretch;
+  }
+  .billet-featured .billet-card-img {
+    width: 42%;
+    flex: 0 0 42%;
+    aspect-ratio: auto;
+    min-height: 100%;
+  }
+  .billet-featured .billet-card-body {
+    width: 58%;
+    flex: 1 1 58%;
+    padding: 1.6rem 1.4rem 1rem;
+  }
+  .billet-featured .billet-card-footer {
+    width: 58%;
+    flex: 1 1 58%;
+    padding: 0 1.4rem 1.4rem;
   }
 }
 @media (min-width: 1400px) {
