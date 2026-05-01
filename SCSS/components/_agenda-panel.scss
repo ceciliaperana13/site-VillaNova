@@ -1,0 +1,196 @@
+/* ============================================================
+   PANNEAU LATÉRAL — VilleNova
+   ============================================================ */
+
+.panel-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(43,43,43,.45);
+  backdrop-filter: blur(3px);
+  z-index: 300;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-slow);
+}
+
+.panel-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.event-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(480px, 100vw);
+  background: var(--blanc-casse);
+  z-index: 400;
+  transform: translateX(100%);
+  transition: transform var(--t-slow) var(--ease-out);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+}
+
+.event-panel.is-open {
+  transform: translateX(0);
+}
+
+.event-panel-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--sable-moyen) transparent;
+}
+
+.panel-close {
+  position: absolute;
+  top: var(--gap-md);
+  right: var(--gap-md);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-full);
+  background: rgba(43,43,43,.55);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background var(--t-fast), transform var(--t-fast);
+}
+
+.panel-close:hover {
+  background: var(--terracotta);
+  transform: scale(1.1);
+}
+
+.panel-img-wrap {
+  position: relative;
+  height: 240px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.panel-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--t-slow);
+}
+
+.event-panel.is-open .panel-img-wrap img {
+  transform: scale(1);
+}
+
+.panel-badge {
+  position: absolute;
+  bottom: var(--gap-md);
+  left: var(--gap-md);
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  padding: .3rem .9rem;
+  border-radius: var(--r-full);
+  font-size: .78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: #fff;
+  backdrop-filter: blur(6px);
+}
+
+.panel-badge[data-cat="festival"] { background: rgba(209,123,73,.88); }
+.panel-badge[data-cat="concert"]  { background: rgba(139,94,60,.88); }
+.panel-badge[data-cat="expo"]     { background: rgba(194,162,124,.88); }
+.panel-badge[data-cat="theatre"]  { background: rgba(107,140,110,.88); }
+.panel-badge[data-cat="gastro"]   { background: rgba(176,93,93,.88); }
+.panel-badge[data-cat="sport"]    { background: rgba(74,120,156,.88); }
+
+.panel-body {
+  padding: var(--gap-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  animation: panelBodyReveal var(--t-slow) .1s var(--ease-out) both;
+}
+
+@keyframes panelBodyReveal {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.panel-title {
+  font-family: var(--font-titre);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--brun-chaud);
+  line-height: 1.25;
+}
+
+.panel-meta-list {
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+  background: var(--sable-clair);
+  border-radius: var(--r-md);
+  padding: var(--gap-md);
+}
+
+.panel-meta-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+  font-size: .9rem;
+  color: var(--gris-fonce);
+}
+
+.panel-icon {
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+}
+
+.panel-desc {
+  font-size: .95rem;
+  color: var(--gris-fonce);
+  line-height: 1.65;
+}
+
+.panel-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+}
+
+.btn-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  padding: .85rem 1.75rem;
+  background: var(--terracotta);
+  color: #fff;
+  border-radius: var(--r-full);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: .02em;
+  transition: background var(--t-fast), transform var(--t-base) var(--ease-out),
+              box-shadow var(--t-base);
+  box-shadow: 0 4px 18px rgba(209,123,73,.3);
+}
+
+.btn-cta:hover {
+  background: var(--brun-chaud);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(139,94,60,.35);
+}
+
+.panel-cta {
+  width: 100%;
+  margin-top: auto;
+}

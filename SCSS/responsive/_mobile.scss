@@ -274,3 +274,16 @@
 
   .weather-days { gap: .5rem; }
 }
+@include mobile {
+  .cal-body {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cal-weekdays {
+    display: none; // trop serré en mobile
+  }
+
+  .cal-cell {
+    min-height: 70px;
+  }
+}

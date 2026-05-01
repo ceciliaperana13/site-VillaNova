@@ -1684,6 +1684,1057 @@ p {
   gap: 1.2rem;
 }
 
+/* ============================================================
+   PAGE AGENDA — VilleNova
+   ============================================================ */
+/* ── HERO ─────────────────────────────────────────────────── */
+.agenda-hero {
+  position: relative;
+  background: linear-gradient(135deg, var(--brun-chaud) 0%, #6B4428 50%, #4E2E18 100%);
+  color: #fff;
+  padding: var(--gap-2xl) var(--gap-lg) calc(var(--gap-xl) + 40px);
+  overflow: hidden;
+  text-align: center;
+}
+
+.agenda-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' ...");
+  opacity: 0.04;
+}
+
+.agenda-hero::after {
+  content: "";
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(209, 123, 73, 0.25) 0%, transparent 70%);
+}
+
+.agenda-hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+  margin: 0 auto;
+  animation: heroReveal 0.8s var(--ease-out) both;
+}
+
+@keyframes heroReveal {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.hero-eyebrow {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--r-pill);
+  padding: 0.35rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--gap-md);
+}
+
+.agenda-hero h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  color: var(--sable-clair);
+  margin-bottom: var(--gap-md);
+}
+
+.agenda-hero p {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: rgba(244, 237, 228, 0.75);
+  line-height: 1.65;
+}
+
+/* ── WAVE ─────────────────────────────────────────────────── */
+.agenda-hero-wave {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 60px;
+  pointer-events: none;
+}
+
+/* ── CONTROLS BAR ─────────────────────────────────────────── */
+.agenda-controls {
+  background: var(--blanc-casse);
+  border-bottom: 1px solid var(--sable-moyen);
+  position: sticky;
+  top: var(--header-h);
+  z-index: 100;
+  box-shadow: var(--shadow-xs);
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity var(--t-slow), transform var(--t-slow);
+}
+
+.agenda-controls.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+.controls-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--gap-md) var(--gap-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+  flex-wrap: wrap;
+}
+
+/* Navigation mensuelle */
+.month-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.month-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-pill);
+  background: var(--sable-moyen);
+  color: var(--brun-chaud);
+  font-size: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--t-fast), transform var(--t-fast);
+}
+
+.month-btn:hover {
+  background: var(--terracotta);
+  color: #fff;
+  transform: scale(1.08);
+}
+
+.month-title {
+  font-family: var(--font-titre);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--brun-chaud);
+  min-width: 150px;
+  text-align: center;
+}
+
+/* Toggle vue */
+.view-toggle {
+  display: flex;
+  gap: 0.25rem;
+  background: var(--sable-clair);
+  padding: 3px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--sable-moyen);
+}
+
+.view-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: calc(var(--r-md) - 3px);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gris-fonce);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.view-btn.active {
+  background: var(--blanc-casse);
+  color: var(--brun-chaud);
+  box-shadow: var(--shadow-xs);
+}
+
+/* Barre de recherche */
+.agenda-search {
+  display: flex;
+  align-items: center;
+  background: var(--sable-clair);
+  border: 1.5px solid var(--sable-moyen);
+  border-radius: var(--r-pill);
+  padding: 0 0.5rem 0 1rem;
+  gap: 0.5rem;
+  flex: 1;
+  max-width: 320px;
+}
+
+.agenda-search input {
+  border: none;
+  background: transparent;
+  font-size: 0.9rem;
+  color: var(--noir-doux);
+  flex: 1;
+}
+
+#agenda-search-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-pill);
+  background: var(--terracotta);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--t-fast), transform var(--t-fast);
+}
+
+#agenda-search-btn:hover {
+  background: var(--brun-chaud);
+  transform: scale(1.1);
+}
+
+/* ── FILTRES ─────────────────────────────────────────────── */
+.filters-bar {
+  border-top: 1px solid var(--sable-moyen);
+}
+
+.filters-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0.65rem var(--gap-lg);
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.filters-inner::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 1rem;
+  border-radius: var(--r-pill);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gris-fonce);
+  background: var(--sable-clair);
+  border: 1.5px solid var(--sable-moyen);
+  white-space: nowrap;
+  transition: all var(--t-fast);
+}
+
+.filter-tag:hover {
+  border-color: var(--terracotta);
+  color: var(--terracotta);
+  background: rgba(209, 123, 73, 0.06);
+}
+
+.filter-tag.active {
+  background: var(--terracotta);
+  color: #fff;
+  border-color: var(--terracotta);
+  box-shadow: 0 2px 10px rgba(209, 123, 73, 0.35);
+}
+
+.filter-count {
+  font-size: 0.75rem;
+  opacity: 0.75;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: var(--r-pill);
+  padding: 0 0.4em;
+}
+
+/* ── RÉSULTATS ───────────────────────────────────────────── */
+.results-summary {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--gap-sm) var(--gap-lg);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--gris-fonce);
+}
+
+#results-count {
+  font-weight: 700;
+  color: var(--brun-chaud);
+}
+
+/* ── SECTIONS ─────────────────────────────────────────────── */
+.agenda-section {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--gap-lg) var(--gap-lg) var(--gap-2xl);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--t-slow), transform var(--t-slow);
+}
+
+.agenda-section.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+.agenda-section.hidden {
+  display: none;
+}
+
+/* ── SHIMMER SKELETON ─────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(90deg, var(--sable-moyen) 25%, var(--sable-clair) 50%, var(--sable-moyen) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--r-sm);
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+/* ── RESPONSIVE TABLETTE (≤ 900px) ───────────────────────── */
+@media (max-width: 900px) {
+  :root {
+    --gap-lg: 1.25rem;
+    --gap-xl: 2rem;
+    --gap-2xl: 3rem;
+  }
+  .controls-inner {
+    gap: var(--gap-sm);
+  }
+  .month-title {
+    min-width: 120px;
+    font-size: 1rem;
+  }
+}
+/* ── RESPONSIVE MOBILE (≤ 640px) ─────────────────────────── */
+@media (max-width: 640px) {
+  :root {
+    --header-h: 60px;
+    --gap-lg: 1rem;
+  }
+  .controls-inner {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--gap-sm) var(--gap-md);
+    gap: 0.65rem;
+  }
+  .month-nav {
+    justify-content: center;
+  }
+  .view-toggle {
+    justify-content: center;
+  }
+  .agenda-search {
+    max-width: none;
+  }
+  .filters-inner {
+    padding: 0.5rem var(--gap-md);
+  }
+  .filter-tag {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.8rem;
+  }
+  .agenda-hero {
+    padding: var(--gap-xl) var(--gap-lg) calc(var(--gap-xl) + 30px);
+  }
+  .agenda-hero h1 {
+    font-size: 1.8rem;
+  }
+  .agenda-hero p {
+    font-size: 0.9rem;
+  }
+  .results-summary {
+    justify-content: center;
+  }
+}
+/* ============================================================
+   CALENDRIER — VilleNova
+   ============================================================ */
+/* Grille principale */
+.calendar-grid {
+  background: var(--blanc-casse);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--sable-moyen);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+/* Jours de la semaine */
+.cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: var(--brun-chaud);
+}
+
+.cal-weekdays [role=columnheader] {
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sable-moyen);
+}
+
+/* Corps du calendrier */
+.cal-body {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+/* Case */
+.cal-cell {
+  min-height: 95px;
+  padding: 0.5rem;
+  border-right: 1px solid var(--sable-moyen);
+  border-bottom: 1px solid var(--sable-moyen);
+  position: relative;
+  transition: background var(--dur);
+  animation: cellFadeIn var(--anim-duration) var(--anim-easing) both;
+}
+
+.cal-cell:nth-child(7n) {
+  border-right: none;
+}
+
+@keyframes cellFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.cal-cell {
+  animation-delay: calc(var(--i, 0) * var(--anim-stagger));
+}
+
+/* Cases vides */
+.cal-cell--empty {
+  background: rgba(244, 237, 228, 0.4);
+}
+
+/* Aujourd’hui */
+.cal-cell--today {
+  background: rgba(209, 123, 73, 0.07);
+}
+
+.cal-cell--today .cal-day-num {
+  background: var(--terracotta);
+  color: #fff;
+}
+
+/* Cases avec événements */
+.cal-cell--has-events {
+  cursor: pointer;
+}
+
+.cal-cell--has-events:hover {
+  background: rgba(209, 123, 73, 0.05);
+  z-index: 1;
+}
+
+.cal-cell--has-events:hover .cal-day-num {
+  color: var(--terracotta);
+}
+
+/* Numéro du jour */
+.cal-day-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-pill);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gris-fonce);
+  transition: background var(--dur), color var(--dur);
+}
+
+/* Points (dots) */
+.cal-dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 0.4rem;
+}
+
+.cal-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--r-pill);
+  flex-shrink: 0;
+}
+
+.cal-dot[data-cat=festival] {
+  background: var(--cat-festival);
+}
+
+.cal-dot[data-cat=concert] {
+  background: var(--cat-concert);
+}
+
+.cal-dot[data-cat=expo] {
+  background: var(--cat-expo);
+}
+
+.cal-dot[data-cat=theatre] {
+  background: var(--cat-theatre);
+}
+
+.cal-dot[data-cat=gastro] {
+  background: var(--cat-gastro);
+}
+
+.cal-dot[data-cat=sport] {
+  background: var(--cat-sport);
+}
+
+.cal-dot-more {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--gris-fonce);
+  line-height: 7px;
+}
+
+/* ============================================================
+   ÉTIQUETTES D'ÉVÉNEMENTS (PILLS)
+   ============================================================ */
+.cal-ev-pills {
+  margin-top: 0.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cal-ev-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--r-pill);
+  color: #fff;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* Couleurs par catégorie */
+.cal-ev-pill[data-cat=festival] {
+  background: var(--cat-festival);
+}
+
+.cal-ev-pill[data-cat=concert] {
+  background: var(--cat-concert);
+}
+
+.cal-ev-pill[data-cat=expo] {
+  background: var(--cat-expo);
+}
+
+.cal-ev-pill[data-cat=theatre] {
+  background: var(--cat-theatre);
+}
+
+.cal-ev-pill[data-cat=gastro] {
+  background: var(--cat-gastro);
+}
+
+.cal-ev-pill[data-cat=sport] {
+  background: var(--cat-sport);
+}
+
+/* ============================================================
+   LÉGENDE
+   ============================================================ */
+.cal-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-md);
+  padding: var(--gap-md) 0 0;
+  justify-content: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--gris-fonce);
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--r-pill);
+}
+
+.legend-dot[data-cat=festival] {
+  background: var(--cat-festival);
+}
+
+.legend-dot[data-cat=concert] {
+  background: var(--cat-concert);
+}
+
+.legend-dot[data-cat=expo] {
+  background: var(--cat-expo);
+}
+
+.legend-dot[data-cat=theatre] {
+  background: var(--cat-theatre);
+}
+
+.legend-dot[data-cat=gastro] {
+  background: var(--cat-gastro);
+}
+
+.legend-dot[data-cat=sport] {
+  background: var(--cat-sport);
+}
+
+/* ============================================================
+   LISTE AGENDA — VilleNova
+   ============================================================ */
+.list-group {
+  margin-bottom: var(--gap-xl);
+}
+
+.list-group-heading {
+  font-family: var(--font-titre);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--brun-chaud);
+  margin-bottom: var(--gap-md);
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid var(--sable-moyen);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.list-group-heading::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 1.2em;
+  background: var(--terracotta);
+  border-radius: 2px;
+}
+
+/* Carte événement */
+.event-card {
+  display: grid;
+  grid-template-columns: 220px 1fr auto;
+  gap: 0;
+  background: var(--blanc-casse);
+  border: 1px solid var(--sable-moyen);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-bottom: var(--gap-md);
+  box-shadow: var(--shadow-xs);
+  transition: transform var(--t-base) var(--ease-out), box-shadow var(--t-base);
+  animation: cardSlideIn var(--t-slow) var(--ease-out) both;
+  animation-delay: calc(var(--idx, 0) * 60ms);
+}
+
+@keyframes cardSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.event-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.event-card-img {
+  background-size: cover;
+  background-position: center;
+  min-height: 180px;
+  position: relative;
+  overflow: hidden;
+}
+
+.event-card-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent 60%, rgba(244, 237, 228, 0.12));
+}
+
+.event-card-body {
+  padding: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.event-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.event-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.75rem;
+  border-radius: var(--r-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.event-badge[data-cat=festival] {
+  background: var(--cat-festival);
+}
+
+.event-badge[data-cat=concert] {
+  background: var(--cat-concert);
+}
+
+.event-badge[data-cat=expo] {
+  background: var(--cat-expo);
+}
+
+.event-badge[data-cat=theatre] {
+  background: var(--cat-theatre);
+}
+
+.event-badge[data-cat=gastro] {
+  background: var(--cat-gastro);
+}
+
+.event-badge[data-cat=sport] {
+  background: var(--cat-sport);
+}
+
+.event-card-price {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--brun-chaud);
+  background: rgba(139, 94, 60, 0.1);
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--r-full);
+  margin-left: auto;
+}
+
+.event-card-title {
+  font-family: var(--font-titre);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--noir-doux);
+  line-height: 1.3;
+}
+
+.event-card-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem var(--gap-sm);
+  font-size: 0.83rem;
+  color: var(--gris-fonce);
+}
+
+.event-card-desc {
+  font-size: 0.88rem;
+  color: var(--gris-fonce);
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.event-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: auto;
+}
+
+.tag {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.15rem 0.65rem;
+  background: var(--sable-clair);
+  border: 1px solid var(--sable-fonce);
+  border-radius: var(--r-full);
+  color: var(--brun-chaud);
+}
+
+.event-card-actions {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--gap-md);
+  border-left: 1px solid var(--sable-moyen);
+}
+
+.btn-detail {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  padding: var(--gap-md) 0.5rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--terracotta);
+  border-radius: var(--r-sm);
+  transition: color var(--t-fast), letter-spacing var(--t-base);
+  letter-spacing: 0.05em;
+}
+
+.btn-detail:hover {
+  color: var(--brun-chaud);
+  letter-spacing: 0.12em;
+}
+
+/* ============================================================
+   PANNEAU LATÉRAL — VilleNova
+   ============================================================ */
+.panel-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(43, 43, 43, 0.45);
+  backdrop-filter: blur(3px);
+  z-index: 300;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-slow);
+}
+
+.panel-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.event-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(480px, 100vw);
+  background: var(--blanc-casse);
+  z-index: 400;
+  transform: translateX(100%);
+  transition: transform var(--t-slow) var(--ease-out);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+}
+
+.event-panel.is-open {
+  transform: translateX(0);
+}
+
+.event-panel-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--sable-moyen) transparent;
+}
+
+.panel-close {
+  position: absolute;
+  top: var(--gap-md);
+  right: var(--gap-md);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-full);
+  background: rgba(43, 43, 43, 0.55);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background var(--t-fast), transform var(--t-fast);
+}
+
+.panel-close:hover {
+  background: var(--terracotta);
+  transform: scale(1.1);
+}
+
+.panel-img-wrap {
+  position: relative;
+  height: 240px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.panel-img-wrap img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: transform var(--t-slow);
+}
+
+.event-panel.is-open .panel-img-wrap img {
+  transform: scale(1);
+}
+
+.panel-badge {
+  position: absolute;
+  bottom: var(--gap-md);
+  left: var(--gap-md);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.9rem;
+  border-radius: var(--r-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #fff;
+  backdrop-filter: blur(6px);
+}
+
+.panel-badge[data-cat=festival] {
+  background: rgba(209, 123, 73, 0.88);
+}
+
+.panel-badge[data-cat=concert] {
+  background: rgba(139, 94, 60, 0.88);
+}
+
+.panel-badge[data-cat=expo] {
+  background: rgba(194, 162, 124, 0.88);
+}
+
+.panel-badge[data-cat=theatre] {
+  background: rgba(107, 140, 110, 0.88);
+}
+
+.panel-badge[data-cat=gastro] {
+  background: rgba(176, 93, 93, 0.88);
+}
+
+.panel-badge[data-cat=sport] {
+  background: rgba(74, 120, 156, 0.88);
+}
+
+.panel-body {
+  padding: var(--gap-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  animation: panelBodyReveal var(--t-slow) 0.1s var(--ease-out) both;
+}
+
+@keyframes panelBodyReveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.panel-title {
+  font-family: var(--font-titre);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--brun-chaud);
+  line-height: 1.25;
+}
+
+.panel-meta-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  background: var(--sable-clair);
+  border-radius: var(--r-md);
+  padding: var(--gap-md);
+}
+
+.panel-meta-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--gris-fonce);
+}
+
+.panel-icon {
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+}
+
+.panel-desc {
+  font-size: 0.95rem;
+  color: var(--gris-fonce);
+  line-height: 1.65;
+}
+
+.panel-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.btn-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.85rem 1.75rem;
+  background: var(--terracotta);
+  color: #fff;
+  border-radius: var(--r-full);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  transition: background var(--t-fast), transform var(--t-base) var(--ease-out), box-shadow var(--t-base);
+  box-shadow: 0 4px 18px rgba(209, 123, 73, 0.3);
+}
+
+.btn-cta:hover {
+  background: var(--brun-chaud);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(139, 94, 60, 0.35);
+}
+
+.panel-cta {
+  width: 100%;
+  margin-top: auto;
+}
+
 @media (max-width: 768px) {
   /* ============================
      NAVIGATION
@@ -1942,6 +2993,17 @@ p {
     gap: 0.5rem;
   }
 }
+@media (max-width: 768px) {
+  .cal-body {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cal-weekdays {
+    display: none;
+  }
+  .cal-cell {
+    min-height: 70px;
+  }
+}
 @media (max-width: 1024px) {
   .events-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1962,7 +3024,7 @@ p {
     grid-column: 1/-1;
   }
 }
-@media (max-width: 64rem) {
+@media (max-width: 900px) {
   body {
     font-size: 1.125rem;
   }
@@ -1973,7 +3035,7 @@ p {
     padding: 2rem 0;
   }
 }
-@media (max-width: 105rem) {
+@media (min-width: 1400px) {
   body {
     font-size: 1.375rem;
   }

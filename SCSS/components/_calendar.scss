@@ -1,0 +1,193 @@
+/* ============================================================
+   CALENDRIER — VilleNova
+   ============================================================ */
+
+/* Grille principale */
+.calendar-grid {
+  background: var(--blanc-casse);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--sable-moyen);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+/* Jours de la semaine */
+.cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: var(--brun-chaud);
+}
+
+.cal-weekdays [role="columnheader"] {
+  padding: .75rem .5rem;
+  text-align: center;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--sable-moyen);
+}
+
+/* Corps du calendrier */
+.cal-body {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+/* Case */
+.cal-cell {
+  min-height: 95px;
+  padding: .5rem;
+  border-right: 1px solid var(--sable-moyen);
+  border-bottom: 1px solid var(--sable-moyen);
+  position: relative;
+  transition: background var(--dur);
+  animation: cellFadeIn var(--anim-duration) var(--anim-easing) both;
+}
+
+.cal-cell:nth-child(7n) {
+  border-right: none;
+}
+
+@keyframes cellFadeIn {
+  from { opacity: 0; transform: scale(.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.cal-cell { animation-delay: calc(var(--i, 0) * var(--anim-stagger)); }
+
+/* Cases vides */
+.cal-cell--empty {
+  background: rgba(244,237,228,.4);
+}
+
+/* Aujourd’hui */
+.cal-cell--today {
+  background: rgba(209,123,73,.07);
+}
+
+.cal-cell--today .cal-day-num {
+  background: var(--terracotta);
+  color: #fff;
+}
+
+/* Cases avec événements */
+.cal-cell--has-events {
+  cursor: pointer;
+}
+
+.cal-cell--has-events:hover {
+  background: rgba(209,123,73,.05);
+  z-index: 1;
+}
+
+.cal-cell--has-events:hover .cal-day-num {
+  color: var(--terracotta);
+}
+
+/* Numéro du jour */
+.cal-day-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-pill);
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--gris-fonce);
+  transition: background var(--dur), color var(--dur);
+}
+
+/* Points (dots) */
+.cal-dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: .4rem;
+}
+
+.cal-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--r-pill);
+  flex-shrink: 0;
+}
+
+.cal-dot[data-cat="festival"] { background: var(--cat-festival); }
+.cal-dot[data-cat="concert"]  { background: var(--cat-concert); }
+.cal-dot[data-cat="expo"]     { background: var(--cat-expo); }
+.cal-dot[data-cat="theatre"]  { background: var(--cat-theatre); }
+.cal-dot[data-cat="gastro"]   { background: var(--cat-gastro); }
+.cal-dot[data-cat="sport"]    { background: var(--cat-sport); }
+
+.cal-dot-more {
+  font-size: .65rem;
+  font-weight: 700;
+  color: var(--gris-fonce);
+  line-height: 7px;
+}
+
+/* ============================================================
+   ÉTIQUETTES D'ÉVÉNEMENTS (PILLS)
+   ============================================================ */
+
+.cal-ev-pills {
+  margin-top: .35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cal-ev-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: .68rem;
+  font-weight: 600;
+  padding: .15rem .45rem;
+  border-radius: var(--r-pill);
+  color: #fff;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* Couleurs par catégorie */
+.cal-ev-pill[data-cat="festival"] { background: var(--cat-festival); }
+.cal-ev-pill[data-cat="concert"]  { background: var(--cat-concert); }
+.cal-ev-pill[data-cat="expo"]     { background: var(--cat-expo); }
+.cal-ev-pill[data-cat="theatre"]  { background: var(--cat-theatre); }
+.cal-ev-pill[data-cat="gastro"]   { background: var(--cat-gastro); }
+.cal-ev-pill[data-cat="sport"]    { background: var(--cat-sport); }
+
+/* ============================================================
+   LÉGENDE
+   ============================================================ */
+
+.cal-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-md);
+  padding: var(--gap-md) 0 0;
+  justify-content: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .82rem;
+  color: var(--gris-fonce);
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--r-pill);
+}
+
+.legend-dot[data-cat="festival"] { background: var(--cat-festival); }
+.legend-dot[data-cat="concert"]  { background: var(--cat-concert); }
+.legend-dot[data-cat="expo"]     { background: var(--cat-expo); }
+.legend-dot[data-cat="theatre"]  { background: var(--cat-theatre); }
+.legend-dot[data-cat="gastro"]   { background: var(--cat-gastro); }
+.legend-dot[data-cat="sport"]    { background: var(--cat-sport); }

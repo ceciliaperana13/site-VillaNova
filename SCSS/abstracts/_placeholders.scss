@@ -1,0 +1,124 @@
+// =============================================
+// PLACEHOLDERS — VilleNova
+// =============================================
+
+// ------------------------------
+// Base card
+// ------------------------------
+%card-base {
+  background: var(--blanc-casse);
+  border: 1px solid var(--sable-moyen);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: all var(--dur) var(--ease);
+}
+
+// Hover premium
+%card-hover {
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--sable-fonce);
+  }
+}
+
+
+// ------------------------------
+// Base badge
+// ------------------------------
+%badge-base {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  padding: .25rem .75rem;
+  border-radius: var(--r-pill);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+
+// ------------------------------
+// Base button
+// ------------------------------
+%btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  padding: .75rem 1.4rem;
+  border-radius: var(--r-pill);
+  font-weight: 600;
+  font-size: .95rem;
+  transition: all var(--dur) var(--ease);
+  cursor: pointer;
+}
+
+
+// ------------------------------
+// Base section wrapper
+// ------------------------------
+%section-base {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--section-pad);
+}
+
+
+// ------------------------------
+// Base image wrapper
+// ------------------------------
+%img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+
+// ------------------------------
+// Skeleton shimmer
+// ------------------------------
+%skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--sable-moyen) 25%,
+    var(--sable-clair) 50%,
+    var(--sable-moyen) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--r-sm);
+}
+
+
+// ------------------------------
+// Title base
+// ------------------------------
+%title-base {
+  font-family: var(--font-titre);
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--brun-chaud);
+}
+
+
+// ------------------------------
+// Text clamp
+// ------------------------------
+%clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+%clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
