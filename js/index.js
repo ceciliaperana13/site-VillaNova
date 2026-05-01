@@ -642,3 +642,100 @@ document.addEventListener('DOMContentLoaded', () => {
 if (typeof module !== 'undefined') {
   module.exports = { apiFetch, loadEvents, buildEventCard, loadAnimationConfig };
 }
+
+
+/*api opengenda* carte 1*/
+const API_KEY = "832ecfba688a4dda9e6beb28922ee893";
+const AGENDA_UID = "24882772";
+
+function formatDateFr(value) {
+  if (!value) return "Date non précisée";
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return "Date non précisée";
+
+  const datePart = d.toLocaleDateString("fr-FR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long"
+  });
+
+  const timePart = d.toLocaleTimeString("fr-FR", {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+
+  return `${datePart}, ${timePart}`;
+}
+
+function getFirstTimingDate(ev) {
+  const t = ev?.timings?.[0];
+  return t?.begin || t?.beginDate || t?.date || null;
+}
+
+async function loadEventCard1() {
+  try {
+    const url =
+      `https://api.openagenda.com/v2/agendas/${AGENDA_UID}/events?` +
+      new URLSearchParams({
+        key: API_KEY,
+        "relative[]": "upcoming",
+        limit: 20
+      });
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    console.log("Réponse OpenAgenda:", data);
+
+    const events = Array.isArray(data.events) ? data.events : [];
+    if (!events.length) {
+      console.warn("Aucun événement dans data.events");
+      return;
+    }
+
+    const ev = events.find(e => e.image?.src && (e.timings?.length || e.begin)) || events[0];
+
+    console.log("Événement choisi:", ev);
+    console.log("Timings:", ev.timings);
+
+    const title = ev.title?.fr || ev.title || "Événement";
+    const desc = ev.description?.fr || ev.description || "";
+    const image = ev.image?.src || "";
+    const place = ev.location?.name || ev.location?.address?.name || "Lieu non précisé";
+    const category = ev.keywords?.[0] || ev.keywords?.fr?.[0] || "Événement";
+
+    const dateValue = getFirstTimingDate(ev);
+    const dateText = dateValue ? formatDateFr(dateValue) : "Date non précisée";
+
+    const imgEl = document.getElementById("ev1-img");
+    if (imgEl) {
+      if (image) imgEl.src = image;
+      imgEl.alt = title;
+    }
+
+    const titleEl = document.getElementById("ev1-title");
+    if (titleEl) titleEl.textContent = title;
+
+    const descEl = document.getElementById("ev1-desc");
+    if (descEl) descEl.textContent = desc;
+
+    const dateEl = document.getElementById("ev1-date");
+    if (dateEl) dateEl.textContent = "📅 " + dateText;
+
+    const placeEl = document.getElementById("ev1-place");
+    if (placeEl) placeEl.textContent = "📍 " + place;
+
+    const categoryEl = document.getElementById("ev1-category");
+    if (categoryEl) categoryEl.textContent = category;
+
+    const badgeEl = document.getElementById("ev1-badge");
+    if (badgeEl) badgeEl.textContent = category;
+
+    const linkEl = document.getElementById("ev1-link");
+    if (linkEl) linkEl.href = `/html/evenement-detail.html?id=${ev.uid}`;
+  } catch (error) {
+    console.error("Erreur OpenAgenda :", error);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadEventCard1);

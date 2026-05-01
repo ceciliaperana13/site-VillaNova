@@ -171,29 +171,33 @@
 
         <!-- Carte 1 -->
         <article class="event-card" data-category="concert" role="listitem" aria-labelledby="ev1-title">
-          <div class="card-img-wrap">
-            <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&q=75"
-                 alt="Concert de musique électronique, lumières bleues et violettes sur la scène"
-                 loading="lazy" width="600" height="338">
-            <span class="card-badge">Concert</span>
-            <div class="card-accessibility" aria-label="Accessibilité">
-              <span title="Accessible PMR" aria-label="Accès fauteuil roulant">♿</span>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span>📅 3 mai 2025</span>
-              <span class="dot" aria-hidden="true"></span>
-              <span>📍 Le Dôme, Marseille</span>
-            </div>
-            <h3 class="card-title" id="ev1-title">Nuit Électronique — Kollektif Sound</h3>
-            <p class="card-desc">Une nuit de sets électroniques avec les meilleurs DJs de la scène marseillaise et internationale. Son Dolby Surround, lasers et mapping vidéo.</p>
-          </div>
-          <div class="card-footer">
-            <span class="card-price">À partir de <strong>18 €</strong></span>
-            <a href="/html/evenement-detail.html" class="card-cta" aria-label="Voir le concert Nuit Électronique">Voir →</a>
-          </div>
-        </article>
+  <div class="card-img-wrap">
+    <img id="ev1-img"
+         src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&q=75"
+         alt="Événement"
+         loading="lazy" width="600" height="338">
+    <span id="ev1-badge" class="card-badge">Concert</span>
+    <div class="card-accessibility" aria-label="Accessibilité">
+      <span title="Accessible PMR" aria-label="Accès fauteuil roulant">♿</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="card-meta">
+      <span id="ev1-date">📅 ...</span>
+      <span class="dot" aria-hidden="true"></span>
+      <span id="ev1-place">📍 ...</span>
+    </div>
+
+    <h3 class="card-title" id="ev1-title">Chargement...</h3>
+    <p class="card-desc" id="ev1-desc">Chargement de l’événement…</p>
+  </div>
+
+  <div class="card-footer">
+    <span class="card-price" id="ev1-category">Événement</span>
+    <a id="ev1-link" href="/html/evenement-detail.html" class="card-cta" aria-label="Voir l'événement">Voir →</a>
+  </div>
+</article>
 
         <!-- Carte 2 -->
         <article class="event-card" data-category="expo" role="listitem" aria-labelledby="ev2-title">
