@@ -172,11 +172,15 @@
         <!-- Carte 1 -->
         <article class="event-card" data-category="concert" role="listitem" aria-labelledby="ev1-title">
   <div class="card-img-wrap">
-    <img id="ev1-img"
-         src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&q=75"
-         alt="Événement"
-         loading="lazy" width="600" height="338">
-    <span id="ev1-badge" class="card-badge">Concert</span>
+    <!-- image en picture -->
+    <picture>
+      <source srcset="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&q=75" media="(max-width: 768px)">
+      <img id="ev1-img"
+           src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&q=75"
+           alt="Événement"
+           loading="lazy" width="600" height="338">
+    </picture>
+    <span id="ev1-badge" class="card-badge">Concerts</span>
     <div class="card-accessibility" aria-label="Accessibilité">
       <span title="Accessible PMR" aria-label="Accès fauteuil roulant">♿</span>
     </div>
@@ -194,7 +198,7 @@
   </div>
 
   <div class="card-footer">
-    <span class="card-price" id="ev1-category">Événement</span>
+    <span class="card-price" id="ev1-category">Concerts</span>
     <a id="ev1-link" href="/html/evenement-detail.html" class="card-cta" aria-label="Voir l'événement">Voir →</a>
   </div>
 </article>
