@@ -1,97 +1,11 @@
-
-
 'use strict';
 
 /* ══════════════════════════════════════════
-   0. CONFIGURATION API
+   0. CONFIGURATION OPENAGENDA
    ══════════════════════════════════════════ */
-const API_CONFIG = {
-  baseURL:    'https://api.villenova.fr/v1',   // ← adapter à votre endpoint
-  timeout:    8000,                            // ms avant abandon
-  retryMax:   2,                               // tentatives en cas d'erreur réseau
-  retryDelay: 1200,                            // ms entre chaque tentative
-  headers: {
-    'Content-Type': 'application/json',
-    'Accept':       'application/json',
-    // 'Authorization': `Bearer ${TOKEN}`,     // ← décommenter si auth requise
-  },
-};
-
-/* Cache simple en mémoire (évite les re-fetch inutiles) */
-const _cache = new Map();
-
-/**
- * Requête AJAX universelle avec retry automatique, timeout et cache.
- * @param {string} endpoint   — chemin relatif, ex. '/events'
- * @param {object} [options]  — fetch options étendues (method, body, cache…)
- * @returns {Promise<any>}    — données JSON désérialisées
- */
-async function apiFetch(endpoint, options = {}) {
-  const { useCache = true, cacheTTL = 60_000, ...fetchOptions } = options;
-  const url       = `${API_CONFIG.baseURL}${endpoint}`;
-  const cacheKey  = url + JSON.stringify(fetchOptions.body ?? '');
-
-  /* ── Lecture cache ── */
-  if (useCache && fetchOptions.method !== 'POST') {
-    const cached = _cache.get(cacheKey);
-    if (cached && Date.now() - cached.ts < cacheTTL) {
-      return cached.data;
-    }
-  }
-
-  let lastError;
-
-  for (let attempt = 0; attempt <= API_CONFIG.retryMax; attempt++) {
-    const controller = new AbortController();
-    const timer      = setTimeout(() => controller.abort(), API_CONFIG.timeout);
-
-    try {
-      const res = await fetch(url, {
-        headers: API_CONFIG.headers,
-        signal:  controller.signal,
-        ...fetchOptions,
-      });
-
-      clearTimeout(timer);
-
-      if (!res.ok) {
-        const body = await res.text().catch(() => '');
-        throw new ApiError(res.status, body || res.statusText, url);
-      }
-
-      const data = await res.json();
-
-      /* ── Écriture cache ── */
-      if (useCache && fetchOptions.method !== 'POST') {
-        _cache.set(cacheKey, { data, ts: Date.now() });
-      }
-
-      return data;
-
-    } catch (err) {
-      clearTimeout(timer);
-      lastError = err;
-
-      if (err instanceof ApiError) throw err;          // Erreur HTTP → pas de retry
-      if (attempt < API_CONFIG.retryMax) {
-        await sleep(API_CONFIG.retryDelay * (attempt + 1));
-      }
-    }
-  }
-
-  throw lastError;
-}
-
-class ApiError extends Error {
-  constructor(status, message, url) {
-    super(message);
-    this.name   = 'ApiError';
-    this.status = status;
-    this.url    = url;
-  }
-}
-
-const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+const OA_KEY       = "832ecfba688a4dda9e6beb28922ee893";
+const OA_AGENDA_UID = "24882772";
+const OA_BASE      = "https://api.openagenda.com/v2";
 
 /* ══════════════════════════════════════════
    1. LOADER
@@ -217,10 +131,10 @@ function initSearch() {
 }
 
 /* ══════════════════════════════════════════
-   6. COMPTEURS ANIMÉS — section stats
+   6. COMPTEURS ANIMÉS
    ══════════════════════════════════════════ */
 function animateCount(el, target, duration = 1400) {
-  const start = performance.now();
+  const start  = performance.now();
   const update = (now) => {
     const progress = Math.min((now - start) / duration, 1);
     const eased    = 1 - Math.pow(1 - progress, 3);
@@ -297,27 +211,20 @@ function initVideoModal() {
 }
 
 /* ══════════════════════════════════════════
-   9. PAGINATION AVEC CHARGEMENT API
+   9. PAGINATION (statique)
    ══════════════════════════════════════════ */
 function initPagination() {
   document.querySelectorAll('.page-btn').forEach(btn => {
-    const label = btn.textContent.trim();
+    btn.addEventListener('click', function () {
+      const label = this.textContent.trim();
+      if (label === '←' || label === '→') return;
 
-    if (label === '←' || label === '→') {
-      btn.addEventListener('click', () => showToast('Navigation entre les pages', 'info'));
-      return;
-    }
-
-    btn.addEventListener('click', async function () {
       document.querySelectorAll('.page-btn').forEach(b => {
         b.classList.remove('active');
         b.removeAttribute('aria-current');
       });
       this.classList.add('active');
       this.setAttribute('aria-current', 'page');
-
-      const page = parseInt(this.textContent, 10);
-      await loadEvents({ page });
 
       const section = document.getElementById('evenements');
       if (section) window.scrollTo({ top: section.offsetTop - 80, behavior: 'smooth' });
@@ -326,48 +233,38 @@ function initPagination() {
 }
 
 /* ══════════════════════════════════════════
-   10. NEWSLETTER
+   10. NEWSLETTER (sans API VilleNova)
    ══════════════════════════════════════════ */
-async function handleNewsletter(e) {
+function handleNewsletter(e) {
   e.preventDefault();
   const emailInput = document.getElementById('newsletter-email');
-  const email      = emailInput.value;
+  const email      = emailInput?.value?.trim();
   const btn        = e.target.querySelector('[type="submit"]');
 
-  /* État chargement */
+  if (!email) {
+    showToast('Veuillez entrer une adresse email valide.', 'error');
+    return;
+  }
+
   const originalText = btn.textContent;
   btn.textContent    = 'Envoi…';
   btn.disabled       = true;
 
-  try {
-    await apiFetch('/newsletter/subscribe', {
-      method:   'POST',
-      useCache: false,
-      body:     JSON.stringify({ email }),
-    });
+  /* Simuler une inscription (à remplacer par votre propre endpoint si disponible) */
+  setTimeout(() => {
     showToast(`Inscription confirmée pour ${email} ! 🎉`, 'success');
     e.target.reset();
-  } catch (err) {
-    const msg = err instanceof ApiError && err.status === 409
-      ? 'Cette adresse est déjà inscrite.'
-      : 'Erreur lors de l\'inscription. Réessayez.';
-    showToast(msg, 'error');
-  } finally {
     btn.textContent = originalText;
     btn.disabled    = false;
-  }
+  }, 800);
 }
 
 /* ══════════════════════════════════════════
-   A. ANIMATIONS API — chargement des configs
+   A. UTILITAIRES UI GRILLE
    ══════════════════════════════════════════ */
 
-/**
- * Squelette de chargement (skeleton screen) affiché pendant le fetch.
- * @param {HTMLElement} grid  — conteneur cible
- * @param {number}      count — nombre de cartes squelette
- */
-function showSkeletons(grid, count = 6) {
+/** Affiche des cartes squelette pendant un chargement. */
+function showSkeletons(grid, count = 3) {
   grid.innerHTML = Array.from({ length: count }, () => `
     <article class="event-card skeleton" aria-hidden="true">
       <div class="skeleton-img"></div>
@@ -378,11 +275,7 @@ function showSkeletons(grid, count = 6) {
   `).join('');
 }
 
-/**
- * Vide le contenu et affiche un état "vide" ou "erreur".
- * @param {HTMLElement} grid
- * @param {string}      type  — 'empty' | 'error'
- */
+/** Affiche un état vide ou erreur dans la grille. */
 function showGridState(grid, type) {
   const config = {
     empty: { icon: '🗓️', title: 'Aucun événement', text: 'Revenez bientôt !' },
@@ -399,208 +292,352 @@ function showGridState(grid, type) {
   `;
 
   if (type === 'error') {
-    grid.querySelector('#retry-btn')?.addEventListener('click', () => loadEvents());
+    grid.querySelector('#retry-btn')?.addEventListener('click', () => loadOpenAgendaCards());
   }
 }
 
-/**
- * Construit une carte événement depuis les données API.
- * @param {object} event — payload normalisé depuis l'API
- * @returns {string}     — HTML de la carte
- */
-function buildEventCard(event) {
-  const date = new Intl.DateTimeFormat('fr-FR', {
-    day: 'numeric', month: 'long', year: 'numeric',
-  }).format(new Date(event.date));
+/* Helpers anti-XSS */
+const _el = document.createElement('div');
+function escapeHtml(str) {
+  _el.textContent = String(str ?? '');
+  return _el.innerHTML;
+}
+function escapeAttr(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;').replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
 
-  const badge = event.isFree
-    ? '<span class="badge badge-free">Gratuit</span>'
-    : (event.price ? `<span class="badge badge-paid">${event.price} €</span>` : '');
+/* ══════════════════════════════════════════
+   B. OPENAGENDA — UTILITAIRES
+   ══════════════════════════════════════════ */
+
+/**
+ * Formate une date ISO en "lundi 5 mai, 19h00".
+ */
+function formatDateFr(value) {
+  if (!value) return 'Date non précisée';
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return 'Date non précisée';
+
+  const datePart = d.toLocaleDateString('fr-FR', {
+    weekday: 'long',
+    day:     'numeric',
+    month:   'long',
+  });
+  const timePart = d.toLocaleTimeString('fr-FR', {
+    hour:   '2-digit',
+    minute: '2-digit',
+  });
+  return `${datePart}, ${timePart}`;
+}
+
+/**
+ * Retourne la date de début du premier timing d'un événement OpenAgenda.
+ */
+function getFirstTimingDate(ev) {
+  const t = ev?.timings?.[0];
+  return t?.begin || t?.beginDate || t?.date || null;
+}
+
+/**
+ * Retourne la date de fin du dernier timing (pour les événements multi-jours).
+ */
+function getLastTimingDate(ev) {
+  const timings = ev?.timings;
+  if (!timings?.length) return null;
+  const t = timings[timings.length - 1];
+  return t?.end || t?.endDate || null;
+}
+
+/**
+ * Construit un label de prix depuis les conditions OpenAgenda.
+ * Retourne "Gratuit", "X €" ou "Voir détails".
+ */
+function getPrix(ev) {
+  if (ev.free === 1 || ev.free === true) return 'Gratuit';
+  const cond = ev.conditions?.fr || ev.conditions?.en || '';
+  return cond || 'Voir détails';
+}
+
+/**
+ * Extrait le premier mot-clé significatif comme catégorie.
+ */
+function getCategory(ev) {
+  const kws = ev.keywords?.fr || ev.keywords || [];
+  return Array.isArray(kws) ? (kws[0] || 'Événement') : 'Événement';
+}
+
+/**
+ * Choisit la meilleure URL d'image disponible dans un événement OpenAgenda.
+ */
+function getImage(ev) {
+  return (
+    ev.image?.['1000x625'] ||
+    ev.image?.['800x500']  ||
+    ev.image?.['400x250']  ||
+    ev.image?.base         ||
+    ev.image?.src          ||
+    ev.thumbnail           ||
+    ''
+  );
+}
+
+/* ══════════════════════════════════════════
+   C. OPENAGENDA — FETCH CENTRAL
+   ══════════════════════════════════════════ */
+
+/**
+ * Récupère N événements à venir depuis OpenAgenda.
+ * @param {number} limit — nombre max d'événements voulus
+ * @returns {Promise<object[]>} — tableau d'événements bruts
+ */
+async function fetchOAEvents(limit = 6) {
+  const params = new URLSearchParams({
+    key:          OA_KEY,
+    'relative[]': 'upcoming',
+    limit,
+    sort:         'timings.asc',
+    lang:         'fr',
+  });
+
+  const url = `${OA_BASE}/agendas/${OA_AGENDA_UID}/events?${params}`;
+  const res  = await fetch(url);
+
+  if (!res.ok) {
+    const txt = await res.text().catch(() => '');
+    throw new Error(`OpenAgenda HTTP ${res.status} — ${txt.slice(0, 200)}`);
+  }
+
+  const data = await res.json();
+
+  if (!Array.isArray(data.events) || !data.events.length) {
+    throw new Error('Aucun événement retourné par OpenAgenda.');
+  }
+
+  return data.events;
+}
+
+/* ══════════════════════════════════════════
+   D. OPENAGENDA — CARTE 1  (ciblage par IDs)
+   Remplit les éléments #ev1-* avec le 1er événement
+   ══════════════════════════════════════════ */
+
+/**
+ * Injecte les données d'un événement dans un bloc de carte (ev1, ev2, ev3…).
+ * @param {string} prefix — "ev1" | "ev2" | "ev3"
+ * @param {object} ev     — événement brut OpenAgenda
+ */
+function fillCardBlock(prefix, ev) {
+  const get = (id) => document.getElementById(`${prefix}-${id}`);
+
+  const title    = ev.title?.fr    || ev.title    || 'Événement';
+  const desc     = ev.description?.fr || ev.description || '';
+  const image    = getImage(ev);
+  const place    = ev.location?.name || ev.location?.address?.name || 'Lieu non précisé';
+  const category = getCategory(ev);
+  const prix     = getPrix(ev);
+
+  const dateBegin = getFirstTimingDate(ev);
+  const dateEnd   = getLastTimingDate(ev);
+  const dateText  = dateBegin ? formatDateFr(dateBegin) : 'Date non précisée';
+
+  /* Période : multi-jours ou simple date */
+  let periodText = dateText;
+  if (dateEnd && dateBegin) {
+    const dBegin = new Date(dateBegin);
+    const dEnd   = new Date(dateEnd);
+    if (dEnd.toDateString() !== dBegin.toDateString()) {
+      periodText = `Du ${formatDateFr(dateBegin)} au ${formatDateFr(dateEnd)}`;
+    }
+  }
+
+  /* ── Image ── */
+  const imgEl = get('img');
+  if (imgEl) {
+    imgEl.src   = image || '/assets/img/placeholder.webp';
+    imgEl.alt   = escapeAttr(title);
+    imgEl.onerror = () => { imgEl.src = '/assets/img/placeholder.webp'; };
+  }
+
+  /* ── Textes ── */
+  const titleEl = get('title');
+  if (titleEl) titleEl.textContent = title;
+
+  const descEl = get('desc');
+  if (descEl) descEl.textContent = desc;
+
+  const dateEl = get('date');
+  if (dateEl) dateEl.textContent = '📅 ' + periodText;
+
+  const placeEl = get('place');
+  if (placeEl) placeEl.textContent = '📍 ' + place;
+
+  const prixEl = get('prix');
+  if (prixEl) prixEl.textContent = '💶 ' + prix;
+
+  const categoryEl = get('category');
+  if (categoryEl) categoryEl.textContent = category;
+
+  const badgeEl = get('badge');
+  if (badgeEl) {
+    badgeEl.textContent = category;
+    badgeEl.className   = `badge badge-category badge--${category.toLowerCase().replace(/\s+/g, '-')}`;
+  }
+
+  /* ── Lien vers la page détail ── */
+  const linkEl = get('link');
+  if (linkEl) {
+    linkEl.href = `/html/evenement-detail.html?id=${ev.uid}`;
+    linkEl.setAttribute('aria-label', `Voir les détails : ${title}`);
+  }
+
+  /* ── Lien externe OpenAgenda (si disponible) ── */
+  const externalLinkEl = get('external');
+  if (externalLinkEl) {
+    const oaLink = (ev.links || []).find(l => l.link)?.link;
+    if (oaLink) {
+      externalLinkEl.href    = oaLink;
+      externalLinkEl.target  = '_blank';
+      externalLinkEl.rel     = 'noopener noreferrer';
+    } else {
+      externalLinkEl.style.display = 'none';
+    }
+  }
+
+  /* ── Animation ── */
+  const cardEl = get('card') || document.getElementById(`card-${prefix}`);
+  if (cardEl) {
+    cardEl.classList.add('animate-in');
+    setTimeout(() => cardEl.classList.add('visible'), 100);
+  }
+}
+
+/* ══════════════════════════════════════════
+   E. OPENAGENDA — GRILLE COMPLÈTE
+   Charge N événements dans #events-grid
+   (chaque carte est construite dynamiquement)
+   ══════════════════════════════════════════ */
+
+/**
+ * Construit le HTML d'une carte événement pour la grille.
+ */
+function buildOAEventCard(ev, index = 0) {
+  const title    = escapeHtml(ev.title?.fr || ev.title || 'Événement');
+  const desc     = escapeHtml((ev.description?.fr || ev.description || '').substring(0, 120));
+  const image    = escapeAttr(getImage(ev));
+  const place    = escapeHtml(ev.location?.name || 'Lieu non précisé');
+  const category = escapeHtml(getCategory(ev));
+  const prix     = escapeHtml(getPrix(ev));
+  const dateText = escapeHtml(formatDateFr(getFirstTimingDate(ev)));
+  const slug     = encodeURIComponent(ev.uid || index);
+  const isFree   = ev.free === 1 || ev.free === true;
 
   return `
     <article
       class="event-card animate-in"
-      data-category="${escapeAttr(event.category)}"
-      data-id="${escapeAttr(String(event.id))}"
+      data-category="${escapeAttr(getCategory(ev).toLowerCase())}"
+      data-id="${escapeAttr(String(ev.uid ?? index))}"
       tabindex="0"
+      aria-label="${title}, ${dateText}"
     >
       <div class="card-img-wrap">
         <img
-          src="${escapeAttr(event.imageUrl)}"
-          alt="${escapeAttr(event.title)}"
+          src="${image || '/assets/img/placeholder.webp'}"
+          alt="${escapeAttr(ev.title?.fr || '')}"
           loading="lazy"
           width="400" height="240"
           onerror="this.src='/assets/img/placeholder.webp'"
         />
-        ${badge}
+        <span class="badge ${isFree ? 'badge-free' : 'badge-category'}">${isFree ? 'Gratuit' : category}</span>
       </div>
       <div class="card-body">
-        <p class="card-date">${date}</p>
-        <h3 class="card-title">${escapeHtml(event.title)}</h3>
-        <p class="card-location">📍 ${escapeHtml(event.location)}</p>
+        <p class="card-date">📅 ${dateText}</p>
+        <h3 class="card-title">${title}</h3>
+        <p class="card-location">📍 ${place}</p>
+        <p class="card-desc">${desc}${(ev.description?.fr || '').length > 120 ? '…' : ''}</p>
+        <p class="card-price">💶 ${prix}</p>
         <a
-          href="/event/${encodeURIComponent(event.slug)}"
+          href="/html/evenement-detail.html?id=${slug}"
           class="btn btn-sm btn-primary"
-          aria-label="Voir les détails : ${escapeAttr(event.title)}"
-        >Voir les détails</a>
+          aria-label="Voir les détails : ${escapeAttr(ev.title?.fr || '')}"
+        >Voir les détails →</a>
       </div>
     </article>
   `;
 }
 
-/* Helpers XSS */
-const _el = document.createElement('div');
-function escapeHtml(str) {
-  _el.textContent = String(str);
-  return _el.innerHTML;
-}
-function escapeAttr(str) {
-  return String(str)
-    .replace(/&/g, '&amp;').replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
 /**
- * Charge les événements depuis l'API et met à jour la grille.
- * Si l'API est indisponible, le contenu HTML statique existant est conservé.
- *
- * @param {object} [params]          — filtres optionnels
- * @param {number} [params.page=1]
- * @param {string} [params.category]
- * @param {string} [params.q]        — terme de recherche
- * @param {boolean} [params.force]   — forcer le rechargement même si contenu statique présent
+ * Charge et affiche les événements OpenAgenda dans #events-grid.
+ * Compatible avec le contenu HTML statique existant
+ * (remplace uniquement si la grille est vide ou si force=true).
  */
-async function loadEvents(params = {}) {
-  const grid = document.getElementById('events-grid');
+async function loadOpenAgendaGrid(options = {}) {
+  const grid  = document.getElementById('events-grid');
   if (!grid) return;
 
-  /* ── Vérification : y a-t-il déjà du contenu HTML statique ? ── */
-  const hasStaticContent = grid.querySelectorAll('.event-card:not(.skeleton)').length > 0;
-
-  /* Sans forçage ET avec contenu statique → ne pas toucher au DOM, API pas encore branchée */
-  if (hasStaticContent && !params.force) {
-    console.info('[VilleNova] Contenu statique détecté — chargement API ignoré. Définissez params.force=true pour remplacer.');
+  const hasStatic = grid.querySelectorAll('.event-card:not(.skeleton)').length > 0;
+  if (hasStatic && !options.force) {
+    console.info('[VilleNova] Grille statique conservée. Passez force:true pour remplacer.');
     return;
   }
 
-  /* ── Sauvegarde du contenu existant (filet de sécurité) ── */
-  const backup = grid.innerHTML;
-
-  /* Construire la query string */
-  const qs = new URLSearchParams({
-    page:     params.page     ?? 1,
-    per_page: params.perPage  ?? 9,
-    ...(params.category && params.category !== 'all' ? { category: params.category } : {}),
-    ...(params.q ? { q: params.q } : {}),
-  }).toString();
-
-  showSkeletons(grid);
+  showSkeletons(grid, options.limit ?? 6);
 
   try {
-    const { data: events, meta } = await apiFetch(`/events?${qs}`);
-
-    if (!events?.length) {
-      showGridState(grid, 'empty');
-      return;
-    }
-
-    /* Injection HTML + ré-observation pour les animations scroll */
-    grid.innerHTML = events.map(buildEventCard).join('');
+    const events = await fetchOAEvents(options.limit ?? 6);
+    grid.innerHTML = events.map((ev, i) => buildOAEventCard(ev, i)).join('');
     initScrollAnimations();
-    updatePaginationMeta(meta);
-
   } catch (err) {
-    console.warn('[VilleNova] loadEvents — API indisponible, restauration du contenu statique.', err.message);
-
-    /* ── Restauration du contenu HTML de secours ── */
-    grid.innerHTML = backup;
-    initScrollAnimations();
-
-    /* Toast discret uniquement sur les rechargements explicites (page > 1) */
-    if (params.page > 1) {
-      showToast('Impossible de charger la page suivante.', 'error');
-    }
-  }
-}
-
-/**
- * Met à jour les boutons de pagination avec les métadonnées renvoyées par l'API.
- * Structure attendue : { currentPage, totalPages, totalItems }
- */
-function updatePaginationMeta(meta) {
-  if (!meta) return;
-  const info = document.querySelector('.pagination-info');
-  if (info) {
-    info.textContent = `Page ${meta.currentPage} / ${meta.totalPages} — ${meta.totalItems} événements`;
+    console.error('[VilleNova] Grille OpenAgenda :', err.message);
+    showGridState(grid, 'error');
   }
 }
 
 /* ══════════════════════════════════════════
-   B. ANIMATIONS CONFIG API
-      Charge des paramètres d'animation définis
-      côté serveur (durées, courbes, thèmes…)
+   F. OPENAGENDA — CARTES NOMMÉES (ev1, ev2, ev3…)
+   Remplit les blocs HTML ciblés par IDs #ev1-*, #ev2-*, etc.
    ══════════════════════════════════════════ */
 
 /**
- * Applique les variables CSS d'animation fournies par l'API.
- * Payload attendu : { duration, easing, stagger, theme }
- *
- * Exemple de réponse :
- * {
- *   "duration": 600,
- *   "easing": "cubic-bezier(0.22, 1, 0.36, 1)",
- *   "stagger": 80,
- *   "theme": { "accentColor": "#e63946", "cardRadius": "12px" }
- * }
+ * Point d'entrée principal pour toutes les cartes nommées de la page.
+ * Détecte automatiquement combien de blocs ev1/ev2/ev3 existent dans le DOM,
+ * puis injecte les données OpenAgenda dans chacun.
  */
-async function loadAnimationConfig() {
-  try {
-    const config = await apiFetch('/animations/config', { cacheTTL: 300_000 /* 5 min */ });
-
-    const root = document.documentElement;
-
-    if (config.duration)    root.style.setProperty('--anim-duration',  `${config.duration}ms`);
-    if (config.easing)      root.style.setProperty('--anim-easing',     config.easing);
-    if (config.stagger)     root.style.setProperty('--anim-stagger',   `${config.stagger}ms`);
-
-    if (config.theme) {
-      Object.entries(config.theme).forEach(([key, val]) => {
-        /* Convertit camelCase → --kebab-case */
-        const prop = '--' + key.replace(/([A-Z])/g, m => `-${m.toLowerCase()}`);
-        root.style.setProperty(prop, val);
-      });
+async function loadOpenAgendaCards() {
+  /* Trouver tous les préfixes présents dans le DOM (ev1, ev2, ev3…) */
+  const prefixes = [];
+  for (let i = 1; i <= 9; i++) {
+    const prefix = `ev${i}`;
+    /* Un bloc est "présent" s'il contient au moins un élément avec un id ev{n}-* */
+    if (document.querySelector(`[id^="${prefix}-"]`)) {
+      prefixes.push(prefix);
     }
-
-    console.info('[VilleNova] Animation config applied:', config);
-  } catch (err) {
-    /* Non-bloquant : on garde les valeurs CSS par défaut */
-    console.warn('[VilleNova] Animation config unavailable, using defaults.', err.message);
   }
-}
 
-/* ══════════════════════════════════════════
-   C. STATS API — compteurs depuis le serveur
-   ══════════════════════════════════════════ */
+  if (!prefixes.length) return; // aucune carte nommée dans la page
 
-/**
- * Remplace les valeurs statiques [data-count] par celles de l'API,
- * puis déclenche l'animation habituelle.
- */
-async function loadStatsFromAPI() {
+  /* Afficher un état squelette par carte pendant le chargement */
+  prefixes.forEach(prefix => {
+    const imgEl = document.getElementById(`${prefix}-img`);
+    if (imgEl) imgEl.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICRAEAOw=='; // pixel transparent
+  });
+
   try {
-    const stats = await apiFetch('/stats');
-    /* Exemple : { events: 1240, participants: 45000, partners: 38 } */
+    const events = await fetchOAEvents(prefixes.length);
 
-    Object.entries(stats).forEach(([key, value]) => {
-      const el = document.querySelector(`[data-stat="${key}"]`);
-      if (el && typeof value === 'number') {
-        el.dataset.count = value;          // mis à jour avant que l'observer ne déclenche
+    prefixes.forEach((prefix, index) => {
+      const ev = events[index];
+      if (ev) {
+        fillCardBlock(prefix, ev);
+      } else {
+        console.warn(`[VilleNova] Pas d'événement pour ${prefix}`);
       }
     });
 
   } catch (err) {
-    /* Non-bloquant : les valeurs data-count statiques du HTML restent intactes */
-    console.info('[VilleNova] Stats API indisponible — valeurs statiques conservées.');
+    console.error('[VilleNova] Erreur chargement des cartes :', err.message);
+    showToast('Impossible de charger certains événements.', 'error');
   }
 }
 
@@ -616,126 +653,28 @@ document.addEventListener('DOMContentLoaded', async () => {
   initScrollAnimations();
   initVideoModal();
   initPagination();
-
-  /* ── Appels API en parallèle (non-bloquants) ── */
-  await Promise.allSettled([
-    loadAnimationConfig(),   // Paramètres d'animation server-side
-    loadStatsFromAPI(),      // Compteurs dynamiques
-    loadEvents(),            // Grille d'événements
-  ]);
-
-  /* Compteurs démarrés après que les valeurs API sont injectées */
   initCounters();
-});
 
-/* ══════════════════════════════════════════
-   NEWSLETTER
-   ══════════════════════════════════════════ */
-document.addEventListener('DOMContentLoaded', () => {
+  /* ── Newsletter ── */
   const form = document.getElementById('newsletter-form');
   if (form) form.addEventListener('submit', handleNewsletter);
+
+  /* ── OpenAgenda : cartes nommées ET grille en parallèle ── */
+  await Promise.allSettled([
+    loadOpenAgendaCards(),   // ev1-img, ev2-title, etc.
+    loadOpenAgendaGrid(),    // #events-grid (seulement si vide)
+  ]);
 });
 
 /* ══════════════════════════════════════════
-   EXPORT (pour les tests unitaires / modules)
+   EXPORT (tests / modules ES)
    ══════════════════════════════════════════ */
 if (typeof module !== 'undefined') {
-  module.exports = { apiFetch, loadEvents, buildEventCard, loadAnimationConfig };
+  module.exports = {
+    fetchOAEvents,
+    fillCardBlock,
+    buildOAEventCard,
+    loadOpenAgendaCards,
+    loadOpenAgendaGrid,
+  };
 }
-
-
-/*api opengenda* carte 1*/
-const API_KEY = "832ecfba688a4dda9e6beb28922ee893";
-const AGENDA_UID = "24882772";
-
-function formatDateFr(value) {
-  if (!value) return "Date non précisée";
-  const d = new Date(value);
-  if (Number.isNaN(d.getTime())) return "Date non précisée";
-
-  const datePart = d.toLocaleDateString("fr-FR", {
-    weekday: "long",
-    day: "numeric",
-    month: "long"
-  });
-
-  const timePart = d.toLocaleTimeString("fr-FR", {
-    hour: "2-digit",
-    minute: "2-digit"
-  });
-
-  return `${datePart}, ${timePart}`;
-}
-
-function getFirstTimingDate(ev) {
-  const t = ev?.timings?.[0];
-  return t?.begin || t?.beginDate || t?.date || null;
-}
-
-async function loadEventCard1() {
-  try {
-    const url =
-      `https://api.openagenda.com/v2/agendas/${AGENDA_UID}/events?` +
-      new URLSearchParams({
-        key: API_KEY,
-        "relative[]": "upcoming",
-        limit: 20
-      });
-
-    const res = await fetch(url);
-    const data = await res.json();
-
-    console.log("Réponse OpenAgenda:", data);
-
-    const events = Array.isArray(data.events) ? data.events : [];
-    if (!events.length) {
-      console.warn("Aucun événement dans data.events");
-      return;
-    }
-
-    const ev = events.find(e => e.image?.src && (e.timings?.length || e.begin)) || events[0];
-
-    console.log("Événement choisi:", ev);
-    console.log("Timings:", ev.timings);
-
-    const title = ev.title?.fr || ev.title || "Événement";
-    const desc = ev.description?.fr || ev.description || "";
-    const image = ev.image?.src || "";
-    const place = ev.location?.name || ev.location?.address?.name || "Lieu non précisé";
-    const category = ev.keywords?.[0] || ev.keywords?.fr?.[0] || "Événement";
-
-    const dateValue = getFirstTimingDate(ev);
-    const dateText = dateValue ? formatDateFr(dateValue) : "Date non précisée";
-
-    const imgEl = document.getElementById("ev1-img");
-    if (imgEl) {
-      if (image) imgEl.src = image;
-      imgEl.alt = title;
-    }
-
-    const titleEl = document.getElementById("ev1-title");
-    if (titleEl) titleEl.textContent = title;
-
-    const descEl = document.getElementById("ev1-desc");
-    if (descEl) descEl.textContent = desc;
-
-    const dateEl = document.getElementById("ev1-date");
-    if (dateEl) dateEl.textContent = "📅 " + dateText;
-
-    const placeEl = document.getElementById("ev1-place");
-    if (placeEl) placeEl.textContent = "📍 " + place;
-
-    const categoryEl = document.getElementById("ev1-category");
-    if (categoryEl) categoryEl.textContent = category;
-
-    const badgeEl = document.getElementById("ev1-badge");
-    if (badgeEl) badgeEl.textContent = category;
-
-    const linkEl = document.getElementById("ev1-link");
-    if (linkEl) linkEl.href = `/html/evenement-detail.html?id=${ev.uid}`;
-  } catch (error) {
-    console.error("Erreur OpenAgenda :", error);
-  }
-}
-
-document.addEventListener("DOMContentLoaded", loadEventCard1);
