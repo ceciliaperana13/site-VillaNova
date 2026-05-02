@@ -171,7 +171,8 @@ function initStickyHeader() {
 const OA_KEY        = "832ecfba688a4dda9e6beb28922ee893";
 const OA_AGENDA_UID = "24882772";   // Agenda principal
 const OA_THEATRE_UID = "65855330";  // Théâtre
-const OA_FESTIVAL_UID = "46290899"; // NOUVEL AGENDA ev5
+const OA_FESTIVAL_UID = "46290899"; // Festival
+const OA_SPORT_UID = "94552197";    // SPORT (ev6)
 const OA_BASE       = "https://api.openagenda.com/v2";
 
 /* ---- FETCH API 1 ---- */
@@ -208,7 +209,7 @@ async function fetchOAEventsTheatre(limit = 2) {
   return data.events || [];
 }
 
-/* ---- FETCH API 3 (FESTIVAL — PREND TOUT) ---- */
+/* ---- FETCH API 3 (FESTIVAL) ---- */
 async function fetchOAEventsFestival(limit = 5) {
   const params = new URLSearchParams({
     key: OA_KEY,
@@ -218,6 +219,25 @@ async function fetchOAEventsFestival(limit = 5) {
 
   const url = `${OA_BASE}/agendas/${OA_FESTIVAL_UID}/events?${params}`;
   console.log("[VilleNova] Fetch Festival :", url);
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  return data.events || [];
+}
+
+/* ---- FETCH API 4 (SPORT) ---- */
+async function fetchOAEventsSport(limit = 2) {
+  const params = new URLSearchParams({
+    key: OA_KEY,
+    lang: 'fr',
+    "relative[0]": "current",
+    "relative[1]": "upcoming",
+    limit: limit
+  });
+
+  const url = `${OA_BASE}/agendas/${OA_SPORT_UID}/events?${params}`;
+  console.log("[VilleNova] Fetch Sport :", url);
 
   const res = await fetch(url);
   const data = await res.json();
@@ -248,9 +268,18 @@ function fillCard(prefix, ev) {
   const lieu  = ev.location?.name || "";
   const prix  = ev.free ? "Gratuit 🎟" : "Voir détails";
 
-  const img   = ev.image?.base && ev.image?.filename
-                ? ev.image.base + ev.image.filename
-                : "/assets/img/placeholder.webp";
+  /* ---- IMAGE FIX ---- */
+  let img = "/assets/img/placeholder.webp";
+
+  if (ev.image) {
+    if (ev.image.base && ev.image.filename) {
+      img = ev.image.base + ev.image.filename;
+    } else if (ev.image.variants && ev.image.variants.length > 0) {
+      const full = ev.image.variants.find(v => v.type === "full");
+      if (full) img = ev.image.base + full.filename;
+      else img = ev.image.base + ev.image.variants[0].filename;
+    }
+  }
 
   const imgEl = $('img');
   if (imgEl) imgEl.src = img;
@@ -280,9 +309,14 @@ function fillCard(prefix, ev) {
     const badge = document.getElementById("ev5-badge");
     if (badge) badge.textContent = "Festival";
   }
+
+  if (prefix === "ev6") {
+    const badge = document.getElementById("ev6-badge");
+    if (badge) badge.textContent = "Sport";
+  }
 }
 
-/* ---- CHARGER LES 5 CARTES ---- */
+/* ---- CHARGER LES 6 CARTES ---- */
 async function loadOpenAgendaCards() {
 
   const eventsMain = await fetchOAEvents(2);
@@ -293,9 +327,11 @@ async function loadOpenAgendaCards() {
   if (eventsTheatre[0]) fillCard("ev3", eventsTheatre[0]);
   if (eventsTheatre[1]) fillCard("ev4", eventsTheatre[1]);
 
-  /* ---- ev5 : PREND LE PREMIER ÉVÉNEMENT ---- */
   const eventsFestival = await fetchOAEventsFestival(5);
   if (eventsFestival[0]) fillCard("ev5", eventsFestival[0]);
+
+  const eventsSport = await fetchOAEventsSport(2);
+  if (eventsSport[0]) fillCard("ev6", eventsSport[0]);
 }
 
 /* ---- INIT ---- */
