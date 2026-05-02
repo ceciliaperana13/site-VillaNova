@@ -163,162 +163,165 @@
           Texte : titre, desc, date, lieu, prix, badge → injectés par main.js via #ev1-*
         -->
         <article class="event-card" data-category="concert" role="listitem" aria-labelledby="ev1-title">
-          <div class="card-img-wrap">
-            <picture>
-              <source srcset="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&q=75" media="(max-width:768px)">
-              <img id="ev1-img"
-                   src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&q=75"
-                   alt="Concert"
-                   loading="lazy" width="600" height="338">
-            </picture>
-            <span id="ev1-badge" class="card-badge">Concert</span>
-            <div class="card-accessibility" aria-label="Accessibilité">
-              <span title="Accessible PMR" aria-label="Accès fauteuil roulant">♿</span>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span id="ev1-date">📅 Chargement…</span>
-              <span class="dot" aria-hidden="true"></span>
-              <span id="ev1-place">📍 …</span>
-            </div>
-            <h3 class="card-title" id="ev1-title">Chargement…</h3>
-            <p class="card-desc" id="ev1-desc"></p>
-          </div>
-          <div class="card-footer">
-            <span class="card-price" id="ev1-prix">…</span>
-            <a id="ev1-link" href="/html/evenement-detail.html" class="card-cta" aria-label="Voir l'événement">Voir →</a>
-          </div>
-        </article>
+  <div class="card-img-wrap">
+    <picture>
+      <source srcset="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&q=75" media="(max-width:768px)">
+      <img id="ev1-img"
+           src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&q=75"
+           alt="Concert"
+           loading="lazy" width="600" height="338">
+    </picture>
+    <span id="ev1-badge" class="card-badge">Concert</span>
+    <div class="card-accessibility" aria-label="Accessibilité">
+      <span title="Accessible PMR" aria-label="Accès fauteuil roulant">♿</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="card-meta">
+      <span id="ev1-date">📅 Chargement…</span>
+      <span class="dot" aria-hidden="true"></span>
+      <span id="ev1-place">📍 …</span>
+    </div>
+    <h3 class="card-title" id="ev1-title">Chargement…</h3>
+    <p class="card-desc" id="ev1-desc"></p>
+  </div>
+  <div class="card-footer">
+    <span class="card-price" id="ev1-prix">…</span>
+    <a id="ev1-link" href="/html/evenement-detail.html" class="card-cta">Voir →</a>
+  </div>
+</article>
 
         <!-- ── CARTE 2 — OpenAgenda ev2 ── -->
         <article class="event-card" data-category="expo" role="listitem" aria-labelledby="ev2-title">
-          <div class="card-img-wrap">
-            <img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=600&q=75"
-                 alt="Exposition d'art contemporain" loading="lazy" width="600" height="338">
-            <span id="ev2-badge" class="card-badge">Exposition</span>
-            <div class="card-accessibility" aria-label="Accessibilité">
-              <span title="Audiodescription disponible" aria-label="Audiodescription">🔊</span>
-              <span title="Accessible PMR" aria-label="Accès fauteuil roulant">♿</span>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span id="ev2-date">📅 Chargement…</span>
-              <span class="dot" aria-hidden="true"></span>
-              <span id="ev2-place">📍 …</span>
-            </div>
-            <h3 class="card-title" id="ev2-title">Chargement…</h3>
-            <p class="card-desc" id="ev2-desc"></p>
-          </div>
-          <div class="card-footer">
-            <span class="card-price" id="ev2-prix">…</span>
-            <a id="ev2-link" href="/html/evenement-detail.html" class="card-cta" aria-label="Voir l'exposition">Voir →</a>
-          </div>
-        </article>
+  <div class="card-img-wrap">
+    <img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=600&q=75"
+         alt="Exposition d'art contemporain" loading="lazy" width="600" height="338">
+    <span id="ev2-badge" class="card-badge">Exposition</span>
+    <div class="card-accessibility" aria-label="Accessibilité">
+      <span title="Audiodescription disponible">🔊</span>
+      <span title="Accessible PMR">♿</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="card-meta">
+      <span id="ev2-date">📅 Chargement…</span>
+      <span class="dot"></span>
+      <span id="ev2-place">📍 …</span>
+    </div>
+    <h3 class="card-title" id="ev2-title">Chargement…</h3>
+    <p class="card-desc" id="ev2-desc"></p>
+  </div>
+  <div class="card-footer">
+    <span class="card-price" id="ev2-prix">…</span>
+    <a id="ev2-link" href="/html/evenement-detail.html" class="card-cta">Voir →</a>
+  </div>
+</article>
 
         <!-- ── CARTE 3 — OpenAgenda ev3 ── -->
         <article class="event-card" data-category="theatre" role="listitem" aria-labelledby="ev3-title">
-          <div class="card-img-wrap">
-            <img src="https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=600&q=75"
-                 alt="Représentation de théâtre contemporain" loading="lazy" width="600" height="338">
-            <span id="ev3-badge" class="card-badge">Théâtre</span>
-            <div class="card-accessibility" aria-label="Accessibilité">
-              <span title="Sous-titrage" aria-label="Sous-titrage">💬</span>
-              <span title="Langue des signes" aria-label="LSF">🤟</span>
-              <span title="Accessible PMR" aria-label="PMR">♿</span>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span id="ev3-date">📅 Chargement…</span>
-              <span class="dot" aria-hidden="true"></span>
-              <span id="ev3-place">📍 …</span>
-            </div>
-            <h3 class="card-title" id="ev3-title">Chargement…</h3>
-            <p class="card-desc" id="ev3-desc"></p>
-          </div>
-          <div class="card-footer">
-            <span class="card-price" id="ev3-prix">…</span>
-            <a id="ev3-link" href="/html/evenement-detail.html" class="card-cta" aria-label="Voir la pièce">Voir →</a>
-          </div>
-        </article>
+  <div class="card-img-wrap">
+    <img src="https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=600&q=75"
+         alt="Représentation de théâtre contemporain" loading="lazy" width="600" height="338">
+    <span id="ev3-badge" class="card-badge">Théâtre</span>
+    <div class="card-accessibility">
+      <span title="Sous-titrage">💬</span>
+      <span title="Langue des signes">🤟</span>
+      <span title="Accessible PMR">♿</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="card-meta">
+      <span id="ev3-date">📅 Chargement…</span>
+      <span class="dot"></span>
+      <span id="ev3-place">📍 …</span>
+    </div>
+    <h3 class="card-title" id="ev3-title">Chargement…</h3>
+    <p class="card-desc" id="ev3-desc"></p>
+  </div>
+  <div class="card-footer">
+    <span class="card-price" id="ev3-prix">…</span>
+    <a id="ev3-link" href="/html/evenement-detail.html" class="card-cta">Voir →</a>
+  </div>
+</article>
+
 
         <!-- ── CARTE 4 — OpenAgenda ev4 ── -->
-        <article class="event-card" data-category="gastro" role="listitem" aria-labelledby="ev4-title">
-          <div class="card-img-wrap">
-            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=75"
-                 alt="Table gastronomique méditerranéenne" loading="lazy" width="600" height="338">
-            <span id="ev4-badge" class="card-badge">Gastronomie</span>
-            <div class="card-accessibility" aria-label="Accessibilité">
-              <span title="Accessible PMR" aria-label="PMR">♿</span>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span id="ev4-date">📅 Chargement…</span>
-              <span class="dot" aria-hidden="true"></span>
-              <span id="ev4-place">📍 …</span>
-            </div>
-            <h3 class="card-title" id="ev4-title">Chargement…</h3>
-            <p class="card-desc" id="ev4-desc"></p>
-          </div>
-          <div class="card-footer">
-            <span class="card-price" id="ev4-prix">…</span>
-            <a id="ev4-link" href="/html/evenement-detail.html" class="card-cta" aria-label="Voir l'événement gastronomique">Voir →</a>
-          </div>
-        </article>
+        <article class="event-card" data-category="theatre" role="listitem" aria-labelledby="ev4-title">
+  <div class="card-img-wrap">
+    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=75"
+         alt="Spectacle ou représentation" loading="lazy" width="600" height="338">
+    <span id="ev4-badge" class="card-badge">Théâtre</span>
+    <div class="card-accessibility">
+      <span title="Accessible PMR">♿</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="card-meta">
+      <span id="ev4-date">📅 Chargement…</span>
+      <span class="dot"></span>
+      <span id="ev4-place">📍 …</span>
+    </div>
+    <h3 class="card-title" id="ev4-title">Chargement…</h3>
+    <p class="card-desc" id="ev4-desc"></p>
+  </div>
+  <div class="card-footer">
+    <span class="card-price" id="ev4-prix">…</span>
+    <a id="ev4-link" href="/html/evenement-detail.html" class="card-cta">Voir →</a>
+  </div>
+</article>
+
 
         <!-- ── CARTE 5 — OpenAgenda ev5 ── -->
-        <article class="event-card" data-category="concert" role="listitem" aria-labelledby="ev5-title">
-          <div class="card-img-wrap">
-            <img src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=600&q=75"
-                 alt="Concert de musique classique" loading="lazy" width="600" height="338">
-            <span id="ev5-badge" class="card-badge">Concert</span>
-            <div class="card-accessibility" aria-label="Accessibilité">
-              <span title="Audiodescription" aria-label="Audiodescription">🔊</span>
-              <span title="Accessible PMR" aria-label="PMR">♿</span>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span id="ev5-date">📅 Chargement…</span>
-              <span class="dot" aria-hidden="true"></span>
-              <span id="ev5-place">📍 …</span>
-            </div>
-            <h3 class="card-title" id="ev5-title">Chargement…</h3>
-            <p class="card-desc" id="ev5-desc"></p>
-          </div>
-          <div class="card-footer">
-            <span class="card-price" id="ev5-prix">…</span>
-            <a id="ev5-link" href="/html/evenement-detail.html" class="card-cta" aria-label="Voir le concert">Voir →</a>
-          </div>
-        </article>
+        <article class="event-card" data-category="festival" role="listitem" aria-labelledby="ev5-title">
+  <div class="card-img-wrap">
+    <img id="ev5-img"
+         src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=600&q=75"
+         alt="Festival" loading="lazy" width="600" height="338">
+    <span id="ev5-badge" class="card-badge">Festival</span>
+    <div class="card-accessibility">
+      <span title="Audiodescription">🔊</span>
+      <span title="Accessible PMR">♿</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="card-meta">
+      <span id="ev5-date">📅 Chargement…</span>
+      <span class="dot"></span>
+      <span id="ev5-place">📍 …</span>
+    </div>
+    <h3 class="card-title" id="ev5-title">Chargement…</h3>
+    <p class="card-desc" id="ev5-desc"></p>
+  </div>
+  <div class="card-footer">
+    <span class="card-price" id="ev5-prix">…</span>
+    <a id="ev5-link" href="/html/evenement-detail.html" class="card-cta">Voir →</a>
+  </div>
+</article>
 
         <!-- ── CARTE 6 — OpenAgenda ev6 ── -->
         <article class="event-card" data-category="sport" role="listitem" aria-labelledby="ev6-title">
-          <div class="card-img-wrap">
-            <img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&q=75"
-                 alt="Course à pied dans les Calanques de Marseille" loading="lazy" width="600" height="338">
-            <span id="ev6-badge" class="card-badge">Sport</span>
-            <div class="card-accessibility" aria-label="Accessibilité">
-              <span title="Accessible PMR" aria-label="PMR">♿</span>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span id="ev6-date">📅 Chargement…</span>
-              <span class="dot" aria-hidden="true"></span>
-              <span id="ev6-place">📍 …</span>
-            </div>
-            <h3 class="card-title" id="ev6-title">Chargement…</h3>
-            <p class="card-desc" id="ev6-desc"></p>
-          </div>
-          <div class="card-footer">
-            <span class="card-price" id="ev6-prix">…</span>
-            <a id="ev6-link" href="/html/evenement-detail.html" class="card-cta" aria-label="Voir l'événement sportif">Voir →</a>
-          </div>
-        </article>
+  <div class="card-img-wrap">
+    <img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&q=75"
+         alt="Événement sportif" loading="lazy" width="600" height="338">
+    <span id="ev6-badge" class="card-badge">Sport</span>
+    <div class="card-accessibility">
+      <span title="Accessible PMR">♿</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="card-meta">
+      <span id="ev6-date">📅 Chargement…</span>
+      <span class="dot"></span>
+      <span id="ev6-place">📍 …</span>
+    </div>
+    <h3 class="card-title" id="ev6-title">Chargement…</h3>
+    <p class="card-desc" id="ev6-desc"></p>
+  </div>
+  <div class="card-footer">
+    <span class="card-price" id="ev6-prix">…</span>
+    <a id="ev6-link" href="/html/evenement-detail.html" class="card-cta">Voir →</a>
+  </div>
+</article>
 
       </div><!-- /events-grid -->
 
@@ -429,5 +432,6 @@
   <div class="toast-container" aria-live="polite" aria-atomic="true" role="status"></div>
 
   <script src="../js/main.js"></script>
+  <script src="../js/index.js"></script>
 </body>
 </html>
