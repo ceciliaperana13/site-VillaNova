@@ -25,7 +25,6 @@ function initNav() {
     navLinks.setAttribute('aria-hidden', String(expanded));
   });
 
-  // Fermer sur clic extérieur
   document.addEventListener('click', (e) => {
     if (!burger.contains(e.target) && !navLinks.contains(e.target)) {
       burger.setAttribute('aria-expanded', 'false');
@@ -34,7 +33,6 @@ function initNav() {
     }
   });
 
-  // Fermer sur Escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       burger.setAttribute('aria-expanded', 'false');
@@ -53,7 +51,6 @@ function initFilters() {
 
   filterTags.forEach(tag => {
     tag.addEventListener('click', () => {
-      // Mettre à jour l'état actif
       filterTags.forEach(t => {
         t.classList.remove('active');
         t.setAttribute('aria-pressed', 'false');
@@ -76,18 +73,11 @@ function initFilters() {
           setTimeout(() => { card.style.display = 'none'; }, 280);
         }
       });
-
-      // Annonce pour lecteurs d'écran
-      announceToScreenReader(`Filtre : ${tag.textContent}. ${countVisible(cards)} événements affichés.`);
     });
   });
 }
 
-function countVisible(cards) {
-  return Array.from(cards).filter(c => c.style.display !== 'none').length;
-}
-
-/* ---- BARRE DE RECHERCHE ASYNCHRONE ---- */
+/* ---- BARRE DE RECHERCHE ---- */
 function initSearch() {
   const searchInput = document.getElementById('search-input');
   const searchBtn = document.getElementById('search-btn');
@@ -120,18 +110,15 @@ function initSearch() {
 
 function filterCardsBySearch(query) {
   const cards = document.querySelectorAll('.event-card');
-  let count = 0;
   cards.forEach(card => {
     const title = card.querySelector('.card-title')?.textContent.toLowerCase() || '';
     const desc  = card.querySelector('.card-desc')?.textContent.toLowerCase() || '';
     const match = !query || title.includes(query) || desc.includes(query);
     card.style.display = match ? '' : 'none';
-    if (match) count++;
   });
-  announceToScreenReader(`${count} événement(s) trouvé(s) pour « ${query} »`);
 }
 
-/* ---- INTERSECTION OBSERVER (animations scroll) ---- */
+/* ---- ANIMATIONS SCROLL ---- */
 function initScrollAnimations() {
   if (!('IntersectionObserver' in window)) return;
   const targets = document.querySelectorAll('.animate-in');
@@ -152,8 +139,6 @@ function showToast(message, type = 'info') {
   const container = document.querySelector('.toast-container') || createToastContainer();
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
-  toast.setAttribute('role', 'alert');
-  toast.setAttribute('aria-live', 'polite');
   toast.innerHTML = `<span>${icons[type]}</span> ${message}`;
   container.appendChild(toast);
   setTimeout(() => toast.remove(), 3400);
@@ -166,82 +151,7 @@ function createToastContainer() {
   return c;
 }
 
-/* ---- ACCESSIBILITÉ : annonce écran ---- */
-function announceToScreenReader(msg) {
-  let live = document.getElementById('sr-announce');
-  if (!live) {
-    live = document.createElement('div');
-    live.id = 'sr-announce';
-    live.setAttribute('aria-live', 'polite');
-    live.setAttribute('aria-atomic', 'true');
-    Object.assign(live.style, {
-      position: 'absolute', width: '1px', height: '1px',
-      overflow: 'hidden', clip: 'rect(0 0 0 0)',
-      whiteSpace: 'nowrap'
-    });
-    document.body.appendChild(live);
-  }
-  live.textContent = '';
-  requestAnimationFrame(() => { live.textContent = msg; });
-}
-
-/* ---- COMPTEUR ANIMÉ (stats) ---- */
-function animateCounter(el, target, duration = 1600) {
-  const start = performance.now();
-  const update = (time) => {
-    const progress = Math.min((time - start) / duration, 1);
-    const ease = 1 - Math.pow(1 - progress, 3);
-    el.textContent = Math.floor(ease * target).toLocaleString('fr-FR');
-    if (progress < 1) requestAnimationFrame(update);
-    else el.textContent = target.toLocaleString('fr-FR');
-  };
-  requestAnimationFrame(update);
-}
-
-function initCounters() {
-  if (!('IntersectionObserver' in window)) return;
-  const counters = document.querySelectorAll('[data-count]');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        animateCounter(entry.target, parseInt(entry.target.dataset.count));
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.5 });
-  counters.forEach(c => observer.observe(c));
-}
-
-/* ---- MODAL VIDÉO ---- */
-function initVideoModal() {
-  const triggers = document.querySelectorAll('[data-video-trigger]');
-  const modal = document.getElementById('video-modal');
-  const videoEl = modal?.querySelector('video');
-  const closeBtn = modal?.querySelector('.video-modal-close');
-  if (!modal) return;
-
-  triggers.forEach(trigger => {
-    trigger.addEventListener('click', () => {
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
-      if (videoEl) videoEl.play().catch(() => {});
-      closeBtn?.focus();
-    });
-  });
-
-  function closeModal() {
-    modal.classList.remove('open');
-    modal.setAttribute('aria-hidden', 'true');
-    if (videoEl) { videoEl.pause(); videoEl.currentTime = 0; }
-    triggers[0]?.focus();
-  }
-
-  closeBtn?.addEventListener('click', closeModal);
-  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
-}
-
-/* ---- STICKY HEADER SHADOW ---- */
+/* ---- STICKY HEADER ---- */
 function initStickyHeader() {
   const header = document.querySelector('.site-header');
   if (!header) return;
@@ -255,13 +165,146 @@ function initStickyHeader() {
   observer.observe(sentinel);
 }
 
+/* ============================================================
+   OPENAGENDA — CONFIG
+   ============================================================ */
+const OA_KEY        = "832ecfba688a4dda9e6beb28922ee893";
+const OA_AGENDA_UID = "24882772";   // Agenda principal
+const OA_THEATRE_UID = "65855330";  // Théâtre
+const OA_FESTIVAL_UID = "46290899"; // NOUVEL AGENDA ev5
+const OA_BASE       = "https://api.openagenda.com/v2";
+
+/* ---- FETCH API 1 ---- */
+async function fetchOAEvents(limit = 2) {
+  const params = new URLSearchParams({
+    key: OA_KEY,
+    limit: limit,
+    lang: 'fr'
+  });
+
+  const url = `${OA_BASE}/agendas/${OA_AGENDA_UID}/events?${params}`;
+  console.log("[VilleNova] Fetch Agenda 1 :", url);
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  return data.events || [];
+}
+
+/* ---- FETCH API 2 (THÉÂTRE) ---- */
+async function fetchOAEventsTheatre(limit = 2) {
+  const params = new URLSearchParams({
+    key: OA_KEY,
+    lang: 'fr',
+    limit: limit
+  });
+
+  const url = `${OA_BASE}/agendas/${OA_THEATRE_UID}/events?${params}`;
+  console.log("[VilleNova] Fetch Théâtre :", url);
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  return data.events || [];
+}
+
+/* ---- FETCH API 3 (FESTIVAL — PREND TOUT) ---- */
+async function fetchOAEventsFestival(limit = 5) {
+  const params = new URLSearchParams({
+    key: OA_KEY,
+    lang: 'fr',
+    limit: limit
+  });
+
+  const url = `${OA_BASE}/agendas/${OA_FESTIVAL_UID}/events?${params}`;
+  console.log("[VilleNova] Fetch Festival :", url);
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  return data.events || [];
+}
+
+/* ---- REMPLIR UNE CARTE ---- */
+function fillCard(prefix, ev) {
+  const $ = (id) => document.getElementById(`${prefix}-${id}`);
+
+  const titre = ev.title?.fr || "Événement";
+
+  let desc =
+    ev.description?.fr ||
+    ev.longDescription?.fr ||
+    ev.summary?.fr ||
+    ev.body?.fr ||
+    "";
+
+  if (!desc || desc.trim().length < 5) {
+    desc = "Un événement à ne pas manquer !";
+  }
+
+  const shortDesc = desc.length > 150 ? desc.substring(0, 150) + "…" : desc;
+
+  const date  = ev.dateRange?.fr || "";
+  const lieu  = ev.location?.name || "";
+  const prix  = ev.free ? "Gratuit 🎟" : "Voir détails";
+
+  const img   = ev.image?.base && ev.image?.filename
+                ? ev.image.base + ev.image.filename
+                : "/assets/img/placeholder.webp";
+
+  const imgEl = $('img');
+  if (imgEl) imgEl.src = img;
+
+  const titleEl = $('title');
+  if (titleEl) titleEl.textContent = titre;
+
+  const descEl = $('desc');
+  if (descEl) descEl.textContent = shortDesc;
+
+  const dateEl = $('date');
+  if (dateEl) dateEl.textContent = "📅 " + date;
+
+  const placeEl = $('place');
+  if (placeEl) placeEl.textContent = "📍 " + lieu;
+
+  const prixEl = $('prix');
+  if (prixEl) prixEl.textContent = prix;
+
+  const linkEl = $('link');
+  if (linkEl) {
+    const eventId = ev.uid || ev.slug;
+    linkEl.href = `/html/evenement-detail.html?id=${encodeURIComponent(eventId)}`;
+  }
+
+  if (prefix === "ev5") {
+    const badge = document.getElementById("ev5-badge");
+    if (badge) badge.textContent = "Festival";
+  }
+}
+
+/* ---- CHARGER LES 5 CARTES ---- */
+async function loadOpenAgendaCards() {
+
+  const eventsMain = await fetchOAEvents(2);
+  if (eventsMain[0]) fillCard("ev1", eventsMain[0]);
+  if (eventsMain[1]) fillCard("ev2", eventsMain[1]);
+
+  const eventsTheatre = await fetchOAEventsTheatre(2);
+  if (eventsTheatre[0]) fillCard("ev3", eventsTheatre[0]);
+  if (eventsTheatre[1]) fillCard("ev4", eventsTheatre[1]);
+
+  /* ---- ev5 : PREND LE PREMIER ÉVÉNEMENT ---- */
+  const eventsFestival = await fetchOAEventsFestival(5);
+  if (eventsFestival[0]) fillCard("ev5", eventsFestival[0]);
+}
+
 /* ---- INIT ---- */
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initFilters();
   initSearch();
   initScrollAnimations();
-  initCounters();
-  initVideoModal();
   initStickyHeader();
+
+  loadOpenAgendaCards();
 });

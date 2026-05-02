@@ -6,16 +6,13 @@
   <title>VilleNova – Événements à Marseille</title>
   <meta name="description" content="Découvrez tous les événements culturels, concerts, expositions et festivals à Marseille avec VilleNova, votre agenda événementiel marseillais.">
   <meta name="theme-color" content="#D17B49">
-  <!-- Open Graph -->
   <meta property="og:title" content="VilleNova – Événements à Marseille">
   <meta property="og:description" content="Agenda événementiel marseillais : culture, concerts, expos, gastronomie.">
   <meta property="og:type" content="website">
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/SCSS/main.css">
-  
 </head>
 <body>
 
@@ -25,14 +22,12 @@
     <span style="font-family:var(--font-titre);color:var(--brun-chaud);font-size:1.1rem;">VilleNova</span>
   </div>
 
-  <!-- Lien d'évitement (accessibilité) -->
   <a class="skip-link" href="#main-content">Aller au contenu principal</a>
 
-  <!-- ======= EN-TÊTE / NAV ======= -->
+  <!-- ======= HEADER ======= -->
   <header class="site-header" role="banner">
     <div class="nav-inner">
       <a href="index.html" class="logo" aria-label="VilleNova - Accueil">
-        <!-- Icône SVG -->
         <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <circle cx="16" cy="16" r="14" fill="#D17B49" opacity=".15"/>
           <path d="M8 20 L16 10 L24 20" stroke="#8B5E3C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -41,9 +36,8 @@
         </svg>
         Ville<span class="accent">Nova</span>
       </a>
-
       <nav aria-label="Navigation principale">
-        <ul class="nav-links" role="list" aria-hidden="false">
+        <ul class="nav-links" role="list">
           <li><a href="index.html" aria-current="page">Accueil</a></li>
           <li><a href="/html/evenement-detail.html">Événements</a></li>
           <li><a href="/html/agenda.html">Agenda</a></li>
@@ -52,7 +46,6 @@
           <li><a href="/html/billetterie.html" class="nav-cta">Billetterie</a></li>
         </ul>
       </nav>
-
       <button class="nav-burger" aria-expanded="false" aria-controls="nav-links" aria-label="Ouvrir le menu">
         <span></span><span></span><span></span>
       </button>
@@ -101,42 +94,37 @@
     <!-- ======= SECTION ÉVÉNEMENTS ======= -->
     <section id="evenements" class="section" aria-labelledby="section-events-title">
 
-      <!-- En-tête section -->
       <div class="section-header">
         <h2 class="section-title" id="section-events-title">Événements à venir</h2>
         <a href="pages/agenda.html" class="section-link" aria-label="Voir tous les événements">Tout voir →</a>
       </div>
 
-      <!-- Barre de recherche -->
+      <!-- Recherche -->
       <div class="search-bar" role="search" style="margin-bottom:1.5rem;">
         <span aria-hidden="true">🔍</span>
-        <input
-          type="search"
-          id="search-input"
-          placeholder="Rechercher un événement, un lieu…"
-          aria-label="Rechercher un événement"
-          autocomplete="off"
-        >
+        <input type="search" id="search-input" placeholder="Rechercher un événement, un lieu…"
+          aria-label="Rechercher un événement" autocomplete="off">
         <button id="search-btn" aria-label="Lancer la recherche">→</button>
       </div>
 
       <!-- Filtres -->
-      <div class="filters-bar" role="group" aria-label="Filtrer par catégorie" style="position:static;background:transparent;border:none;padding:0 0 1.5rem;">
+      <div class="filters-bar" role="group" aria-label="Filtrer par catégorie"
+        style="position:static;background:transparent;border:none;padding:0 0 1.5rem;">
         <div class="filters-inner" style="padding:0;">
-          <button class="filter-tag active" data-filter="all" aria-pressed="true">Tous</button>
-          <button class="filter-tag" data-filter="concert" aria-pressed="false">🎵 Concerts</button>
-          <button class="filter-tag" data-filter="expo" aria-pressed="false">🖼 Expositions</button>
-          <button class="filter-tag" data-filter="festival" aria-pressed="false">🎉 Festivals</button>
-          <button class="filter-tag" data-filter="theatre" aria-pressed="false">🎭 Théâtre</button>
-          <button class="filter-tag" data-filter="gastro" aria-pressed="false">🍽 Gastronomie</button>
-          <button class="filter-tag" data-filter="sport" aria-pressed="false">⚽ Sport</button>
+          <button class="filter-tag active" data-filter="all"      aria-pressed="true">Tous</button>
+          <button class="filter-tag"        data-filter="concert"  aria-pressed="false">🎵 Concerts</button>
+          <button class="filter-tag"        data-filter="expo"     aria-pressed="false">🖼 Expositions</button>
+          <button class="filter-tag"        data-filter="festival" aria-pressed="false">🎉 Festivals</button>
+          <button class="filter-tag"        data-filter="theatre"  aria-pressed="false">🎭 Théâtre</button>
+          <button class="filter-tag"        data-filter="gastro"   aria-pressed="false">🍽 Gastronomie</button>
+          <button class="filter-tag"        data-filter="sport"    aria-pressed="false">⚽ Sport</button>
         </div>
       </div>
 
-      <!-- Grille Événements -->
+      <!-- ======= GRILLE ÉVÉNEMENTS ======= -->
       <div class="events-grid" id="events-grid" role="list">
 
-        <!-- Événement vedette -->
+        <!-- ── ÉVÉNEMENT VEDETTE (statique, non connecté OA) ── -->
         <article class="event-card event-featured" data-category="festival" role="listitem" aria-labelledby="ev-feat-title">
           <div class="card-img-wrap">
             <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80"
@@ -156,7 +144,7 @@
               <span>📍 Vieux-Port, Marseille</span>
             </div>
             <h3 class="card-title" id="ev-feat-title">Jazz au Vieux-Port — Festival International</h3>
-            <p class="card-desc">Trois jours de jazz live face à la Méditerranée. Plus de 30 artistes internationaux se succèdent sur la grande scène flottante du Vieux-Port pour un festival unique en son genre.</p>
+            <p class="card-desc">Trois jours de jazz live face à la Méditerranée. Plus de 30 artistes internationaux se succèdent sur la grande scène flottante du Vieux-Port.</p>
             <div class="detail-tags" style="margin-top:.8rem;">
               <span class="detail-tag">Jazz</span>
               <span class="detail-tag">Gratuit</span>
@@ -169,47 +157,46 @@
           </div>
         </article>
 
-        <!-- Carte 1 -->
+        <!-- ── CARTE 1 — OpenAgenda ev1 ── -->
+        <!--
+          Image : conservée statique (Unsplash)
+          Texte : titre, desc, date, lieu, prix, badge → injectés par main.js via #ev1-*
+        -->
         <article class="event-card" data-category="concert" role="listitem" aria-labelledby="ev1-title">
-  <div class="card-img-wrap">
-    <!-- image en picture -->
-    <picture>
-      <source srcset="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&q=75" media="(max-width: 768px)">
-      <img id="ev1-img"
-           src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&q=75"
-           alt="Événement"
-           loading="lazy" width="600" height="338">
-    </picture>
-    <span id="ev1-badge" class="card-badge">Concerts</span>
-    <div class="card-accessibility" aria-label="Accessibilité">
-      <span title="Accessible PMR" aria-label="Accès fauteuil roulant">♿</span>
-    </div>
-  </div>
+          <div class="card-img-wrap">
+            <picture>
+              <source srcset="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&q=75" media="(max-width:768px)">
+              <img id="ev1-img"
+                   src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&q=75"
+                   alt="Concert"
+                   loading="lazy" width="600" height="338">
+            </picture>
+            <span id="ev1-badge" class="card-badge">Concert</span>
+            <div class="card-accessibility" aria-label="Accessibilité">
+              <span title="Accessible PMR" aria-label="Accès fauteuil roulant">♿</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span id="ev1-date">📅 Chargement…</span>
+              <span class="dot" aria-hidden="true"></span>
+              <span id="ev1-place">📍 …</span>
+            </div>
+            <h3 class="card-title" id="ev1-title">Chargement…</h3>
+            <p class="card-desc" id="ev1-desc"></p>
+          </div>
+          <div class="card-footer">
+            <span class="card-price" id="ev1-prix">…</span>
+            <a id="ev1-link" href="/html/evenement-detail.html" class="card-cta" aria-label="Voir l'événement">Voir →</a>
+          </div>
+        </article>
 
-  <div class="card-body">
-    <div class="card-meta">
-      <span id="ev1-date">📅 ...</span>
-      <span class="dot" aria-hidden="true"></span>
-      <span id="ev1-place">📍 ...</span>
-    </div>
-
-    <h3 class="card-title" id="ev1-title">Chargement...</h3>
-    <p class="card-desc" id="ev1-desc">Chargement de l’événement…</p>
-  </div>
-
-  <div class="card-footer">
-    <span class="card-price" id="ev1-category">Concerts</span>
-    <a id="ev1-link" href="/html/evenement-detail.html" class="card-cta" aria-label="Voir l'événement">Voir →</a>
-  </div>
-</article>
-
-        <!-- Carte 2 -->
+        <!-- ── CARTE 2 — OpenAgenda ev2 ── -->
         <article class="event-card" data-category="expo" role="listitem" aria-labelledby="ev2-title">
           <div class="card-img-wrap">
             <img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=600&q=75"
-                 alt="Exposition d'art contemporain, grandes toiles abstraites dans une galerie lumineuse"
-                 loading="lazy" width="600" height="338">
-            <span class="card-badge">Exposition</span>
+                 alt="Exposition d'art contemporain" loading="lazy" width="600" height="338">
+            <span id="ev2-badge" class="card-badge">Exposition</span>
             <div class="card-accessibility" aria-label="Accessibilité">
               <span title="Audiodescription disponible" aria-label="Audiodescription">🔊</span>
               <span title="Accessible PMR" aria-label="Accès fauteuil roulant">♿</span>
@@ -217,26 +204,25 @@
           </div>
           <div class="card-body">
             <div class="card-meta">
-              <span>📅 Jusqu'au 30 juin 2025</span>
+              <span id="ev2-date">📅 Chargement…</span>
               <span class="dot" aria-hidden="true"></span>
-              <span>📍 MUCEM, Marseille</span>
+              <span id="ev2-place">📍 …</span>
             </div>
-            <h3 class="card-title" id="ev2-title">Méditerranée — Mémoires Croisées</h3>
-            <p class="card-desc">Une exposition immersive sur les cultures méditerranéennes, alliant photographies, installations et archives sonores au cœur du MUCEM.</p>
+            <h3 class="card-title" id="ev2-title">Chargement…</h3>
+            <p class="card-desc" id="ev2-desc"></p>
           </div>
           <div class="card-footer">
-            <span class="card-price">À partir de <strong>12 €</strong></span>
-            <a href="/html/evenement-detail.html" class="card-cta" aria-label="Voir l'exposition Méditerranée">Voir →</a>
+            <span class="card-price" id="ev2-prix">…</span>
+            <a id="ev2-link" href="/html/evenement-detail.html" class="card-cta" aria-label="Voir l'exposition">Voir →</a>
           </div>
         </article>
 
-        <!-- Carte 3 -->
+        <!-- ── CARTE 3 — OpenAgenda ev3 ── -->
         <article class="event-card" data-category="theatre" role="listitem" aria-labelledby="ev3-title">
           <div class="card-img-wrap">
             <img src="https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=600&q=75"
-                 alt="Représentation de théâtre contemporain, acteurs sur scène sous éclairage dramatique"
-                 loading="lazy" width="600" height="338">
-            <span class="card-badge">Théâtre</span>
+                 alt="Représentation de théâtre contemporain" loading="lazy" width="600" height="338">
+            <span id="ev3-badge" class="card-badge">Théâtre</span>
             <div class="card-accessibility" aria-label="Accessibilité">
               <span title="Sous-titrage" aria-label="Sous-titrage">💬</span>
               <span title="Langue des signes" aria-label="LSF">🤟</span>
@@ -245,52 +231,50 @@
           </div>
           <div class="card-body">
             <div class="card-meta">
-              <span>📅 10–25 mai 2025</span>
+              <span id="ev3-date">📅 Chargement…</span>
               <span class="dot" aria-hidden="true"></span>
-              <span>📍 Théâtre du Gymnase</span>
+              <span id="ev3-place">📍 …</span>
             </div>
-            <h3 class="card-title" id="ev3-title">Les Nouvelles Libertés — Cie Lucioles</h3>
-            <p class="card-desc">Une pièce contemporaine sur la liberté d'expression, jouée avec LSF intégrée à la mise en scène. Représentations sous-titrées disponibles.</p>
+            <h3 class="card-title" id="ev3-title">Chargement…</h3>
+            <p class="card-desc" id="ev3-desc"></p>
           </div>
           <div class="card-footer">
-            <span class="card-price">À partir de <strong>15 €</strong></span>
-            <a href="pages/evenement-detail.html" class="card-cta" aria-label="Voir la pièce Les Nouvelles Libertés">Voir →</a>
+            <span class="card-price" id="ev3-prix">…</span>
+            <a id="ev3-link" href="/html/evenement-detail.html" class="card-cta" aria-label="Voir la pièce">Voir →</a>
           </div>
         </article>
 
-        <!-- Carte 4 -->
+        <!-- ── CARTE 4 — OpenAgenda ev4 ── -->
         <article class="event-card" data-category="gastro" role="listitem" aria-labelledby="ev4-title">
           <div class="card-img-wrap">
             <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=75"
-                 alt="Table gastronomique dressée avec des plats méditerranéens colorés"
-                 loading="lazy" width="600" height="338">
-            <span class="card-badge">Gastronomie</span>
+                 alt="Table gastronomique méditerranéenne" loading="lazy" width="600" height="338">
+            <span id="ev4-badge" class="card-badge">Gastronomie</span>
             <div class="card-accessibility" aria-label="Accessibilité">
               <span title="Accessible PMR" aria-label="PMR">♿</span>
             </div>
           </div>
           <div class="card-body">
             <div class="card-meta">
-              <span>📅 8 juin 2025</span>
+              <span id="ev4-date">📅 Chargement…</span>
               <span class="dot" aria-hidden="true"></span>
-              <span>📍 Vallon des Auffes</span>
+              <span id="ev4-place">📍 …</span>
             </div>
-            <h3 class="card-title" id="ev4-title">Saveurs de la Mer — Dîner de Chefs</h3>
-            <p class="card-desc">Cinq chefs étoilés marsaillais revisitent la bouillabaisse lors d'un dîner gastronomique face à la Méditerranée. Une expérience culinaire unique.</p>
+            <h3 class="card-title" id="ev4-title">Chargement…</h3>
+            <p class="card-desc" id="ev4-desc"></p>
           </div>
           <div class="card-footer">
-            <span class="card-price">À partir de <strong>95 €</strong></span>
-            <a href="pages/evenement-detail.html" class="card-cta" aria-label="Voir le dîner Saveurs de la Mer">Voir →</a>
+            <span class="card-price" id="ev4-prix">…</span>
+            <a id="ev4-link" href="/html/evenement-detail.html" class="card-cta" aria-label="Voir l'événement gastronomique">Voir →</a>
           </div>
         </article>
 
-        <!-- Carte 5 -->
+        <!-- ── CARTE 5 — OpenAgenda ev5 ── -->
         <article class="event-card" data-category="concert" role="listitem" aria-labelledby="ev5-title">
           <div class="card-img-wrap">
             <img src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=600&q=75"
-                 alt="Concert de musique classique dans une salle de concert baroque dorée"
-                 loading="lazy" width="600" height="338">
-            <span class="card-badge">Concert</span>
+                 alt="Concert de musique classique" loading="lazy" width="600" height="338">
+            <span id="ev5-badge" class="card-badge">Concert</span>
             <div class="card-accessibility" aria-label="Accessibilité">
               <span title="Audiodescription" aria-label="Audiodescription">🔊</span>
               <span title="Accessible PMR" aria-label="PMR">♿</span>
@@ -298,42 +282,41 @@
           </div>
           <div class="card-body">
             <div class="card-meta">
-              <span>📅 20 mai 2025</span>
+              <span id="ev5-date">📅 Chargement…</span>
               <span class="dot" aria-hidden="true"></span>
-              <span>📍 Opéra de Marseille</span>
+              <span id="ev5-place">📍 …</span>
             </div>
-            <h3 class="card-title" id="ev5-title">Symphonie Provençale — Orchestre Philharmonique</h3>
-            <p class="card-desc">Le Philharmonique de Marseille joue des œuvres composées en hommage à la Provence, mêlant instruments classiques et mélodies populaires.</p>
+            <h3 class="card-title" id="ev5-title">Chargement…</h3>
+            <p class="card-desc" id="ev5-desc"></p>
           </div>
           <div class="card-footer">
-            <span class="card-price">À partir de <strong>22 €</strong></span>
-            <a href="pages/evenement-detail.html" class="card-cta" aria-label="Voir la Symphonie Provençale">Voir →</a>
+            <span class="card-price" id="ev5-prix">…</span>
+            <a id="ev5-link" href="/html/evenement-detail.html" class="card-cta" aria-label="Voir le concert">Voir →</a>
           </div>
         </article>
 
-        <!-- Carte 6 -->
+        <!-- ── CARTE 6 — OpenAgenda ev6 ── -->
         <article class="event-card" data-category="sport" role="listitem" aria-labelledby="ev6-title">
           <div class="card-img-wrap">
             <img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&q=75"
-                 alt="Course à pied dans les Calanques de Marseille, paysage côtier ensoleillé"
-                 loading="lazy" width="600" height="338">
-            <span class="card-badge">Sport</span>
+                 alt="Course à pied dans les Calanques de Marseille" loading="lazy" width="600" height="338">
+            <span id="ev6-badge" class="card-badge">Sport</span>
             <div class="card-accessibility" aria-label="Accessibilité">
               <span title="Accessible PMR" aria-label="PMR">♿</span>
             </div>
           </div>
           <div class="card-body">
             <div class="card-meta">
-              <span>📅 1er juin 2025</span>
+              <span id="ev6-date">📅 Chargement…</span>
               <span class="dot" aria-hidden="true"></span>
-              <span>📍 Calanques, Marseille</span>
+              <span id="ev6-place">📍 …</span>
             </div>
-            <h3 class="card-title" id="ev6-title">Trail des Calanques — 22 km</h3>
-            <p class="card-desc">Course trail dans les calanques de Marseille. Parcours de 22 km entre falaises calcaires et crique méditerranéenne. Ouvert à tous niveaux.</p>
+            <h3 class="card-title" id="ev6-title">Chargement…</h3>
+            <p class="card-desc" id="ev6-desc"></p>
           </div>
           <div class="card-footer">
-            <span class="card-price"><span class="free">Gratuit</span></span>
-            <a href="pages/evenement-detail.html" class="card-cta" aria-label="Voir le Trail des Calanques">Voir →</a>
+            <span class="card-price" id="ev6-prix">…</span>
+            <a id="ev6-link" href="/html/evenement-detail.html" class="card-cta" aria-label="Voir l'événement sportif">Voir →</a>
           </div>
         </article>
 
@@ -352,29 +335,29 @@
 
     </section>
 
-    <!-- ======= SECTION VIDÉO HIGHLIGHT ======= -->
-    <section class="section animate-in" aria-labelledby="video-section-title" style="background:var(--sable-moyen);max-width:100%;padding:3rem 1.5rem;">
+    <!-- ======= SECTION VIDÉO ======= -->
+    <section class="section animate-in" aria-labelledby="video-section-title"
+      style="background:var(--sable-moyen);max-width:100%;padding:3rem 1.5rem;">
       <div style="max-width:1200px;margin:0 auto;">
         <div class="section-header">
           <h2 class="section-title" id="video-section-title">Marseille en vidéo</h2>
         </div>
         <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;align-items:center;">
-          <div
-            class="media-item has-video"
+          <div class="media-item has-video"
             style="border-radius:var(--radius-lg);aspect-ratio:16/9;overflow:hidden;background:var(--sable-fonce);"
-            data-video-trigger
-            tabindex="0"
-            role="button"
-            aria-label="Lire la vidéo de présentation de Marseille"
-          >
+            data-video-trigger tabindex="0" role="button" aria-label="Lire la vidéo de présentation de Marseille">
             <img src="https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&q=75"
-                 alt="Vue aérienne de Marseille, Notre-Dame de la Garde et le port"
-                 loading="lazy" width="800" height="450">
+                 alt="Vue aérienne de Marseille" loading="lazy" width="800" height="450">
           </div>
           <div>
             <p class="hero-eyebrow" style="text-align:left;">À propos</p>
-            <h3 style="font-family:var(--font-titre);font-size:1.8rem;color:var(--brun-chaud);margin-bottom:1rem;line-height:1.25;">Marseille,<br>ville de tous les événements</h3>
-            <p style="color:var(--gris-fonce);line-height:1.75;margin-bottom:1.2rem;">De la Bonne Mère au Vieux-Port, Marseille déborde de culture, de saveurs et de festivités toute l'année. VilleNova centralise tous les événements de la cité phocéenne.</p>
+            <h3 style="font-family:var(--font-titre);font-size:1.8rem;color:var(--brun-chaud);margin-bottom:1rem;line-height:1.25;">
+              Marseille,<br>ville de tous les événements
+            </h3>
+            <p style="color:var(--gris-fonce);line-height:1.75;margin-bottom:1.2rem;">
+              De la Bonne Mère au Vieux-Port, Marseille déborde de culture, de saveurs et de festivités toute l'année.
+              VilleNova centralise tous les événements de la cité phocéenne.
+            </p>
             <a href="pages/agenda.html" class="btn btn-outline">Découvrir l'agenda</a>
           </div>
         </div>
@@ -391,13 +374,14 @@
       </video>
     </div>
 
-    <!-- ======= NEWSLETTER / CTA ======= -->
+    <!-- ======= NEWSLETTER ======= -->
     <section class="section animate-in" aria-labelledby="newsletter-title">
       <div style="background:linear-gradient(135deg,var(--brun-chaud),var(--sable-fonce));border-radius:var(--radius-lg);padding:3rem 2.5rem;text-align:center;color:var(--blanc-casse);">
         <h2 id="newsletter-title" style="font-family:var(--font-titre);font-size:clamp(1.5rem,3vw,2.2rem);margin-bottom:.75rem;">Ne ratez aucun événement</h2>
         <p style="opacity:.85;max-width:480px;margin:0 auto 1.8rem;">Recevez chaque semaine notre sélection des meilleurs événements marseillais directement dans votre boîte mail.</p>
-        <form style="display:flex;gap:.75rem;max-width:460px;margin:0 auto;flex-wrap:wrap;justify-content:center;" aria-label="Formulaire d'inscription newsletter" id="newsletter-form">
-          <label for="newsletter-email" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Votre adresse email</label>
+        <form style="display:flex;gap:.75rem;max-width:460px;margin:0 auto;flex-wrap:wrap;justify-content:center;"
+          aria-label="Formulaire d'inscription newsletter" id="newsletter-form">
+          <label for="newsletter-email" class="sr-only">Votre adresse email</label>
           <input type="email" id="newsletter-email" name="email" placeholder="votre@email.fr" required
             style="flex:1;min-width:220px;padding:.75rem 1.2rem;border-radius:50px;border:none;font-family:var(--font-corps);font-size:.95rem;background:rgba(250,249,247,.15);color:#fff;outline:none;"
             aria-label="Votre adresse email">
@@ -425,26 +409,15 @@
       </div>
       <div class="footer-col">
         <h3>Événements</h3>
-        <a href="#">Concerts</a>
-        <a href="#">Expositions</a>
-        <a href="#">Festivals</a>
-        <a href="#">Théâtre</a>
-        <a href="#">Gastronomie</a>
+        <a href="#">Concerts</a><a href="#">Expositions</a><a href="#">Festivals</a><a href="#">Théâtre</a><a href="#">Gastronomie</a>
       </div>
       <div class="footer-col">
         <h3>VilleNova</h3>
-        <a href="#">À propos</a>
-        <a href="pages/contact.html">Contact</a>
-        <a href="#">Presse</a>
-        <a href="#">Partenaires</a>
-        <a href="#">Accessibilité</a>
+        <a href="#">À propos</a><a href="pages/contact.html">Contact</a><a href="#">Presse</a><a href="#">Partenaires</a><a href="#">Accessibilité</a>
       </div>
       <div class="footer-col">
         <h3>Légal</h3>
-        <a href="#">Mentions légales</a>
-        <a href="#">CGU</a>
-        <a href="#">Confidentialité</a>
-        <a href="#">Cookies</a>
+        <a href="#">Mentions légales</a><a href="#">CGU</a><a href="#">Confidentialité</a><a href="#">Cookies</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -453,10 +426,8 @@
     </div>
   </footer>
 
-  <!-- Toast container -->
   <div class="toast-container" aria-live="polite" aria-atomic="true" role="status"></div>
 
-  <script src="../js/index.js"></script>
-
+  <script src="../js/main.js"></script>
 </body>
 </html>
