@@ -130,3 +130,18 @@
     padding: 0 1.4rem 1.4rem;
   }
 }
+/* =========================================
+   5.calendrier  (≥ 1200px)
+   ========================================= */
+@include desktop {
+
+  .stats-inner { grid-template-columns: repeat(4, 1fr); }
+
+  .cal-cell { min-height: 110px; }
+
+  /* Panneau légèrement plus large sur grand écran */
+  .event-panel {
+    width: 420px;
+    max-width: 420px;
+  }
+}

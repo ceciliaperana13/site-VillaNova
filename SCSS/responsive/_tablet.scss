@@ -27,3 +27,25 @@
     grid-column: 1 / -1;
   }
 }
+
+/* =========================================
+   4. calendrier  (≤ 900px)
+   ========================================= */
+@include tablet {
+
+  .stats-inner { grid-template-columns: repeat(2, 1fr); }
+
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: 1 / -1; }
+
+  /* Calendrier tablette : on garde 7 colonnes mais moins de padding */
+  .cal-cell {
+    min-height: 70px;
+    padding: .35rem .3rem;
+  }
+
+  .cal-ev-pills {
+    /* Une seule pill visible max sur tablette */
+    .cal-ev-pill:nth-child(n+2) { display: none; }
+  }
+}

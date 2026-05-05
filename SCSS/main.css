@@ -216,9 +216,7 @@ p {
   gap: 1.5rem;
 }
 
-/* ----------------------------------------
-   LOGO
----------------------------------------- */
+/* ── Logo ── */
 .logo {
   display: flex;
   align-items: center;
@@ -239,9 +237,7 @@ p {
   color: var(--terracotta);
 }
 
-/* ----------------------------------------
-   NAVIGATION LINKS
----------------------------------------- */
+/* ── Nav links ── */
 .nav-links {
   display: flex;
   align-items: center;
@@ -259,9 +255,6 @@ p {
   color: var(--brun-chaud);
   background: var(--sable-moyen);
 }
-.nav-links {
-  /* CTA Billetterie */
-}
 .nav-links .nav-cta {
   background: var(--terracotta);
   color: #fff;
@@ -276,9 +269,7 @@ p {
   color: #fff;
 }
 
-/* ----------------------------------------
-   BURGER MENU (mobile)
----------------------------------------- */
+/* ── Burger — caché par défaut (desktop), affiché via _responsive.scss ── */
 .nav-burger {
   display: none;
   flex-direction: column;
@@ -286,6 +277,9 @@ p {
   padding: 0.4rem;
   border-radius: var(--radius-sm);
   transition: background var(--dur) var(--ease);
+  cursor: pointer;
+  border: none;
+  background: transparent;
 }
 .nav-burger:hover {
   background: var(--sable-moyen);
@@ -298,6 +292,9 @@ p {
   border-radius: 2px;
   transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
 }
+.nav-burger {
+  /* Animation croix quand ouvert */
+}
 .nav-burger[aria-expanded=true] span:nth-child(1) {
   transform: translateY(7px) rotate(45deg);
 }
@@ -309,50 +306,6 @@ p {
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* ----------------------------------------
-   RESPONSIVE MOBILE
----------------------------------------- */
-@media (max-width: 768px) {
-  .nav-burger {
-    display: flex;
-  }
-  .nav-links {
-    position: fixed;
-    top: var(--header-h);
-    left: 0;
-    right: 0;
-    background: var(--blanc-casse);
-    border-bottom: 1px solid var(--sable-moyen);
-    flex-direction: column;
-    gap: 0;
-    padding: 1rem 0;
-    box-shadow: var(--shadow-hover);
-    transform: translateY(-110%);
-    opacity: 0;
-    visibility: hidden;
-    transition: transform 0.35s ease, opacity 0.35s ease, visibility 0.35s ease;
-    z-index: 400;
-  }
-  .nav-links.open {
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
-  }
-  .nav-links a {
-    display: block;
-    padding: 0.85rem 1.5rem;
-    border-radius: 0;
-    width: 100%;
-    border-bottom: 1px solid var(--sable-clair);
-    font-size: 1rem;
-  }
-  .nav-links .nav-cta {
-    margin: 0.75rem 1.5rem 0;
-    border-radius: var(--radius-pill);
-    text-align: center;
-    width: calc(100% - 3rem);
-  }
-}
 .site-footer {
   background: var(--noir-doux);
   color: var(--sable-moyen);
@@ -2519,16 +2472,19 @@ p {
 
 /* ============================================================
    PANNEAU LATÉRAL — VilleNova
+   Drawer fixe à droite, ~380px, image en ratio 16/9
    ============================================================ */
+/* ── Overlay ── */
 .panel-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(43, 43, 43, 0.45);
-  backdrop-filter: blur(3px);
-  z-index: 300;
+  background: rgba(30, 20, 10, 0.5);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 500;
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--t-slow);
+  transition: opacity 0.3s ease;
 }
 
 .panel-overlay.is-visible {
@@ -2536,203 +2492,303 @@ p {
   pointer-events: auto;
 }
 
+/* ── Panneau ── */
 .event-panel {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
-  width: min(480px, 100vw);
-  background: var(--blanc-casse);
-  z-index: 400;
+  width: 380px; /* taille fixe compacte */
+  background: var(--blanc-casse, #FAF9F7);
+  z-index: 600;
   transform: translateX(100%);
-  transition: transform var(--t-slow) var(--ease-out);
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
   display: flex;
   flex-direction: column;
-  box-shadow: var(--shadow-lg);
+  box-shadow: -6px 0 32px rgba(0, 0, 0, 0.16);
+  overflow: hidden;
+}
+@media (max-width: 480px) {
+  .event-panel {
+    width: 100vw;
+  }
 }
 
 .event-panel.is-open {
   transform: translateX(0);
 }
 
+/* ── Scrollable ── */
 .event-panel-inner {
   display: flex;
   flex-direction: column;
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
   scrollbar-width: thin;
-  scrollbar-color: var(--sable-moyen) transparent;
+  scrollbar-color: var(--sable-moyen, #C2A27C) transparent;
 }
 
+/* ── Bouton fermeture ── */
 .panel-close {
   position: absolute;
-  top: var(--gap-md);
-  right: var(--gap-md);
-  width: 36px;
-  height: 36px;
-  border-radius: var(--r-full);
-  background: rgba(43, 43, 43, 0.55);
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(20, 12, 4, 0.65);
   color: #fff;
   font-size: 1rem;
   font-weight: 700;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   z-index: 10;
-  transition: background var(--t-fast), transform var(--t-fast);
+  transition: background 0.2s, transform 0.2s;
+  line-height: 1;
 }
 
 .panel-close:hover {
-  background: var(--terracotta);
-  transform: scale(1.1);
+  background: var(--terracotta, #D17B49);
+  transform: scale(1.12);
 }
 
+/* ── Image en ratio 16/9 → toujours entière ── */
 .panel-img-wrap {
   position: relative;
-  height: 240px;
+  width: 100%;
+  aspect-ratio: 16/9; /* ← ratio fixe, image jamais coupée */
   flex-shrink: 0;
   overflow: hidden;
+  background: var(--sable-moyen, #C2A27C);
 }
 
 .panel-img-wrap img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
-     object-fit: cover;
-  transition: transform var(--t-slow);
+     object-fit: cover; /* remplit le ratio sans déformer */
+  display: block;
 }
 
-.event-panel.is-open .panel-img-wrap img {
-  transform: scale(1);
-}
-
+/* ── Badge catégorie ── */
 .panel-badge {
   position: absolute;
-  bottom: var(--gap-md);
-  left: var(--gap-md);
+  bottom: 0.75rem;
+  left: 0.75rem;
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
-  padding: 0.3rem 0.9rem;
-  border-radius: var(--r-full);
-  font-size: 0.78rem;
+  gap: 0.25rem;
+  padding: 0.25rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   color: #fff;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 .panel-badge[data-cat=festival] {
-  background: rgba(209, 123, 73, 0.88);
+  background: rgba(209, 123, 73, 0.92);
 }
 
 .panel-badge[data-cat=concert] {
-  background: rgba(139, 94, 60, 0.88);
+  background: rgba(139, 94, 60, 0.92);
 }
 
 .panel-badge[data-cat=expo] {
-  background: rgba(194, 162, 124, 0.88);
+  background: rgba(194, 162, 124, 0.92);
 }
 
 .panel-badge[data-cat=theatre] {
-  background: rgba(107, 140, 110, 0.88);
+  background: rgba(107, 140, 110, 0.92);
 }
 
 .panel-badge[data-cat=gastro] {
-  background: rgba(176, 93, 93, 0.88);
+  background: rgba(176, 93, 93, 0.92);
 }
 
 .panel-badge[data-cat=sport] {
-  background: rgba(74, 120, 156, 0.88);
+  background: rgba(74, 120, 156, 0.92);
 }
 
+.panel-badge[data-cat=autre] {
+  background: rgba(122, 122, 157, 0.92);
+}
+
+/* ── Corps ── */
 .panel-body {
-  padding: var(--gap-lg);
+  padding: 1.2rem;
   display: flex;
   flex-direction: column;
-  gap: var(--gap-md);
-  animation: panelBodyReveal var(--t-slow) 0.1s var(--ease-out) both;
+  gap: 0.9rem;
+  flex: 1;
+  animation: panelBodyIn 0.32s 0.06s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes panelBodyReveal {
+@keyframes panelBodyIn {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
+/* ── Titre ── */
 .panel-title {
-  font-family: var(--font-titre);
-  font-size: 1.5rem;
+  font-family: var(--font-titre, "Playfair Display", serif);
+  font-size: 1.25rem;
   font-weight: 800;
-  color: var(--brun-chaud);
+  color: var(--brun-chaud, #8B5E3C);
   line-height: 1.25;
+  margin: 0;
 }
 
+/* ── Méta ── */
 .panel-meta-list {
+  list-style: none;
+  margin: 0;
+  padding: 0.85rem 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
-  background: var(--sable-clair);
-  border-radius: var(--r-md);
-  padding: var(--gap-md);
+  gap: 0.5rem;
+  background: var(--sable-clair, #F4EDE4);
+  border-radius: 0.65rem;
+  border-left: 3px solid var(--terracotta, #D17B49);
 }
 
 .panel-meta-list li {
   display: flex;
   align-items: flex-start;
-  gap: 0.75rem;
-  font-size: 0.9rem;
-  color: var(--gris-fonce);
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--gris-fonce, #4A4035);
+  line-height: 1.4;
 }
 
 .panel-icon {
   flex-shrink: 0;
   width: 20px;
   text-align: center;
-}
-
-.panel-desc {
   font-size: 0.95rem;
-  color: var(--gris-fonce);
-  line-height: 1.65;
 }
 
+/* ── Description ── */
+.panel-desc {
+  font-size: 0.88rem;
+  color: var(--gris-fonce, #4A4035);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── Tags ── */
 .panel-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
 }
 
+.panel-tags .tag,
+.panel-tags .detail-tag {
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: var(--sable-moyen, #C2A27C);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ── CTA ── */
 .btn-cta {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  padding: 0.85rem 1.75rem;
-  background: var(--terracotta);
+  width: 100%;
+  padding: 0.85rem 1.2rem;
+  background: var(--terracotta, #D17B49);
   color: #fff;
-  border-radius: var(--r-full);
+  border-radius: 999px;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
   letter-spacing: 0.02em;
-  transition: background var(--t-fast), transform var(--t-base) var(--ease-out), box-shadow var(--t-base);
-  box-shadow: 0 4px 18px rgba(209, 123, 73, 0.3);
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(209, 123, 73, 0.32);
 }
 
 .btn-cta:hover {
-  background: var(--brun-chaud);
+  background: var(--brun-chaud, #8B5E3C);
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(139, 94, 60, 0.35);
+  box-shadow: 0 8px 24px rgba(139, 94, 60, 0.38);
 }
 
 .panel-cta {
-  width: 100%;
   margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+/* ── Liste multi-events (même jour) ── */
+.panel-day-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.panel-day-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  background: var(--sable-clair, #F4EDE4);
+  border-radius: 0.65rem;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.panel-day-item:hover {
+  background: var(--sable-moyen, #C2A27C);
+  transform: translateX(4px);
+}
+
+.panel-day-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  flex: 1;
+}
+
+.panel-day-info strong {
+  font-size: 0.9rem;
+  color: var(--brun-chaud, #8B5E3C);
+  font-weight: 700;
+}
+
+.panel-day-info small {
+  font-size: 0.76rem;
+  color: var(--gris-fonce, #4A4035);
+}
+
+.panel-day-arrow {
+  font-size: 1rem;
+  color: var(--terracotta, #D17B49);
+  font-weight: 700;
 }
 
 /* =========================================
@@ -2952,7 +3008,6 @@ p {
   .detail-content {
     width: 100%;
   }
-  /* Météo */
   .weather-widget {
     margin-top: 1rem;
     border-radius: var(--r-lg);
@@ -2962,7 +3017,6 @@ p {
     gap: 0.6rem;
     justify-content: space-between;
   }
-  /* Bouton Favori */
   .favorite-btn,
   .add-favorite {
     width: 100%;
@@ -2970,7 +3024,6 @@ p {
     padding: 0.9rem 1rem;
     font-size: 0.95rem;
   }
-  /* Programme */
   .event-programme ul {
     padding-left: 1rem;
   }
@@ -2994,6 +3047,120 @@ p {
   .toast-container {
     bottom: 1rem;
     right: 1rem;
+  }
+  /* ============================
+     ★ AGENDA — MOBILE
+     Chercher "★ AGENDA" pour trouver
+  ============================ */
+  /* Hero agenda */
+  .agenda-hero {
+    padding: 2rem 1.2rem 1.5rem;
+    text-align: center;
+  }
+  .agenda-hero h1 {
+    font-size: clamp(1.4rem, 6vw, 2rem);
+    line-height: 1.2;
+  }
+  .agenda-hero p {
+    font-size: 0.88rem;
+  }
+  /* Barre contrôles : empilée verticalement */
+  .controls-inner {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    align-items: stretch;
+  }
+  .month-nav {
+    justify-content: center;
+  }
+  .view-toggle {
+    display: flex;
+    justify-content: center;
+  }
+  .agenda-search {
+    width: 100%;
+  }
+  .agenda-search input {
+    width: 100%;
+  }
+  /* Calendrier : 7 colonnes conservées, cellules réduites */
+  .cal-cell {
+    min-height: 52px;
+    padding: 0.3rem 0.2rem;
+  }
+  /* On masque les pills (trop petites), on garde les dots */
+  .cal-ev-pills {
+    display: none;
+  }
+  .cal-day-num {
+    width: 22px;
+    height: 22px;
+    font-size: 0.72rem;
+  }
+  .cal-dots {
+    gap: 2px;
+    margin-top: 0.2rem;
+  }
+  .cal-dot {
+    width: 5px;
+    height: 5px;
+  }
+  .cal-weekdays [role=columnheader] {
+    font-size: 0.62rem;
+    padding: 0.5rem 0.15rem;
+  }
+  .cal-legend {
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .cal-legend .legend-item {
+    font-size: 0.7rem;
+  }
+  .cal-legend .legend-dot {
+    width: 8px;
+    height: 8px;
+  }
+  /* Vue liste : cartes empilées */
+  .event-card {
+    display: flex;
+    flex-direction: column;
+  }
+  .event-card .event-card-img {
+    min-height: 160px;
+    aspect-ratio: 16/9;
+    background-size: cover;
+    background-position: center;
+  }
+  .event-card .event-card-body {
+    padding: 0.9rem;
+  }
+  .event-card .event-card-actions {
+    padding: 0.6rem 0.9rem;
+  }
+  /* Panneau : plein écran sur mobile */
+  .event-panel {
+    width: 100vw;
+    max-width: 100vw;
+    min-width: unset;
+  }
+  .panel-img-wrap {
+    aspect-ratio: 4/3;
+    height: auto;
+  }
+  .panel-body {
+    padding: 1rem;
+    gap: 0.8rem;
+  }
+  .panel-title {
+    font-size: 1.1rem;
+  }
+  .panel-meta-list {
+    padding: 0.75rem 0.9rem;
+  }
+  .panel-meta-list li {
+    font-size: 0.82rem;
   }
 }
 /* =========================================
@@ -3035,16 +3202,19 @@ p {
   .weather-days {
     gap: 0.5rem;
   }
-}
-@media (max-width: 768px) {
-  .cal-body {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .cal-weekdays {
-    display: none;
-  }
+  /* Agenda xs : cellules encore plus petites */
   .cal-cell {
-    min-height: 70px;
+    min-height: 40px;
+    padding: 0.15rem 0.1rem;
+  }
+  .cal-day-num {
+    width: 18px;
+    height: 18px;
+    font-size: 0.65rem;
+  }
+  .cal-dot {
+    width: 4px;
+    height: 4px;
   }
 }
 @media (max-width: 1024px) {
@@ -3065,6 +3235,31 @@ p {
   }
   .footer-brand {
     grid-column: 1/-1;
+  }
+}
+/* =========================================
+   4. calendrier  (≤ 900px)
+   ========================================= */
+@media (min-width: 768px) {
+  .stats-inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+  }
+  .footer-brand {
+    grid-column: 1/-1;
+  }
+  /* Calendrier tablette : on garde 7 colonnes mais moins de padding */
+  .cal-cell {
+    min-height: 70px;
+    padding: 0.35rem 0.3rem;
+  }
+  .cal-ev-pills {
+    /* Une seule pill visible max sur tablette */
+  }
+  .cal-ev-pills .cal-ev-pill:nth-child(n+2) {
+    display: none;
   }
 }
 @media (min-width: 1200px) {
@@ -3181,6 +3376,22 @@ p {
     width: 58%;
     flex: 1 1 58%;
     padding: 0 1.4rem 1.4rem;
+  }
+}
+/* =========================================
+   5.calendrier  (≥ 1200px)
+   ========================================= */
+@media (min-width: 1200px) {
+  .stats-inner {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .cal-cell {
+    min-height: 110px;
+  }
+  /* Panneau légèrement plus large sur grand écran */
+  .event-panel {
+    width: 420px;
+    max-width: 420px;
   }
 }
 @media (min-width: 1400px) {

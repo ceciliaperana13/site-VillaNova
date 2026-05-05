@@ -1,12 +1,13 @@
 // =========================================
 // HEADER — VilleNova
+// Pas de @media ici → tout est dans _responsive.scss
 // =========================================
 
 .site-header {
   position: sticky;
   top: 0;
   z-index: 500;
-  background: rgba(250,249,247,.92);
+  background: rgba(250, 249, 247, .92);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--sable-moyen);
   box-shadow: var(--shadow-header);
@@ -24,9 +25,7 @@
   gap: 1.5rem;
 }
 
-/* ----------------------------------------
-   LOGO
----------------------------------------- */
+/* ── Logo ── */
 .logo {
   display: flex;
   align-items: center;
@@ -44,14 +43,10 @@
     flex-shrink: 0;
   }
 
-  .accent {
-    color: var(--terracotta);
-  }
+  .accent { color: var(--terracotta); }
 }
 
-/* ----------------------------------------
-   NAVIGATION LINKS
----------------------------------------- */
+/* ── Nav links ── */
 .nav-links {
   display: flex;
   align-items: center;
@@ -72,7 +67,6 @@
     }
   }
 
-  /* CTA Billetterie */
   .nav-cta {
     background: var(--terracotta);
     color: #fff;
@@ -89,9 +83,7 @@
   }
 }
 
-/* ----------------------------------------
-   BURGER MENU (mobile)
----------------------------------------- */
+/* ── Burger — caché par défaut (desktop), affiché via _responsive.scss ── */
 .nav-burger {
   display: none;
   flex-direction: column;
@@ -99,10 +91,11 @@
   padding: .4rem;
   border-radius: var(--radius-sm);
   transition: background var(--dur) var(--ease);
+  cursor: pointer;
+  border: none;
+  background: transparent;
 
-  &:hover {
-    background: var(--sable-moyen);
-  }
+  &:hover { background: var(--sable-moyen); }
 
   span {
     display: block;
@@ -113,65 +106,11 @@
     transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
   }
 
+  /* Animation croix quand ouvert */
   &[aria-expanded="true"] {
-    span:nth-child(1) {
-      transform: translateY(7px) rotate(45deg);
-    }
-    span:nth-child(2) {
-      opacity: 0;
-      transform: scaleX(0);
-    }
-    span:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg);
-    }
+    span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
   }
 }
 
-/* ----------------------------------------
-   RESPONSIVE MOBILE
----------------------------------------- */
-@media (max-width: 768px) {
-  .nav-burger {
-    display: flex;
-  }
-
-  .nav-links {
-    position: fixed;
-    top: var(--header-h);
-    left: 0;
-    right: 0;
-    background: var(--blanc-casse);
-    border-bottom: 1px solid var(--sable-moyen);
-    flex-direction: column;
-    gap: 0;
-    padding: 1rem 0;
-    box-shadow: var(--shadow-hover);
-    transform: translateY(-110%);
-    opacity: 0;
-    visibility: hidden;
-    transition: transform .35s ease, opacity .35s ease, visibility .35s ease;
-    z-index: 400;
-
-    &.open {
-      transform: translateY(0);
-      opacity: 1;
-      visibility: visible;
-    }
-
-    a {
-      display: block;
-      padding: .85rem 1.5rem;
-      border-radius: 0;
-      width: 100%;
-      border-bottom: 1px solid var(--sable-clair);
-      font-size: 1rem;
-    }
-
-    .nav-cta {
-      margin: .75rem 1.5rem 0;
-      border-radius: var(--radius-pill);
-      text-align: center;
-      width: calc(100% - 3rem);
-    }
-  }
-}

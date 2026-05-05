@@ -124,31 +124,40 @@
 
 
 // ------------------------------
-// Responsive breakpoints
+// Responsive breakpoints — MOBILE FIRST
 // ------------------------------
-@mixin mobile {
-  @media (max-width: 768px) {
-    @content;
-  }
-}
 
+// Mobile = styles par défaut (pas de mixin)
+
+// EXTRA SMALL
 @mixin xs {
-  @media (max-width: 480px) {
+  @media (min-width: 480px) {
     @content;
   }
 }
 
+// MOBILE
+@mixin mobile {
+  @media (min-width: 576px) {
+    @content;
+  }
+}
+
+// TABLET
 @mixin tablet {
-  @media (max-width: 900px) {
+  @media (min-width: 768px) {
     @content;
   }
 }
 
+// DESKTOP
 @mixin desktop {
   @media (min-width: 1200px) {
     @content;
   }
 }
+
+// LARGE
 @mixin large {
   @media (min-width: 1400px) {
     @content;

@@ -18,42 +18,6 @@ function showToast(message, type = 'info', duration = 3500) {
   }, duration);
 }
 
-/* ══════════════════════════════════════════
-   MENU BURGER
-   ══════════════════════════════════════════ */
-function initNav() {
-  const burger   = document.querySelector('.nav-burger');
-  const navLinks = document.querySelector('.nav-links');
-  if (!burger || !navLinks) return;
-
-  burger.addEventListener('click', () => {
-    const isOpen = burger.getAttribute('aria-expanded') === 'true';
-    burger.setAttribute('aria-expanded', String(!isOpen));
-    navLinks.classList.toggle('open', !isOpen);
-  });
-
-  navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      burger.setAttribute('aria-expanded', 'false');
-      navLinks.classList.remove('open');
-    });
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!burger.contains(e.target) && !navLinks.contains(e.target)) {
-      burger.setAttribute('aria-expanded', 'false');
-      navLinks.classList.remove('open');
-    }
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      burger.setAttribute('aria-expanded', 'false');
-      navLinks.classList.remove('open');
-      burger.focus();
-    }
-  });
-}
 
 /* ══════════════════════════════════════════
    RECHERCHE + FILTRES (COMBINÉS)
