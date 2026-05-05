@@ -609,15 +609,17 @@ async function init(){
     else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
   });
 
-  const burger=document.querySelector('.nav-burger');
-  const navLinks=document.getElementById('nav-links');
-  if(burger&&navLinks){
-    burger.addEventListener('click',()=>{
-      const exp=burger.getAttribute('aria-expanded')==='true';
-      burger.setAttribute('aria-expanded',String(!exp));
-      navLinks.classList.toggle('is-open',!exp);
-    });
-  }
+const burger = document.getElementById('nav-burger');
+const navLinks = document.getElementById('nav-links');
+
+if (burger && navLinks) {
+  burger.addEventListener('click', () => {
+    const isOpen = burger.getAttribute('aria-expanded') === 'true';
+    burger.setAttribute('aria-expanded', String(!isOpen));
+    navLinks.classList.toggle('open', !isOpen);
+  });
+}
+
 
   const header=document.querySelector('.site-header');
   if(header){

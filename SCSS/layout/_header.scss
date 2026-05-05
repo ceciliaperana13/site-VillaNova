@@ -1,6 +1,5 @@
 // =========================================
 // HEADER — VilleNova
-// Pas de @media ici → tout est dans _responsive.scss
 // =========================================
 
 .site-header {
@@ -36,6 +35,7 @@
   color: var(--brun-chaud);
   white-space: nowrap;
   flex-shrink: 0;
+  z-index: 10000; /* ← IMPORTANT pour rester cliquable */
 
   svg {
     width: 32px;
@@ -46,11 +46,12 @@
   .accent { color: var(--terracotta); }
 }
 
-/* ── Nav links ── */
+/* ── Nav links (desktop) ── */
 .nav-links {
   display: flex;
   align-items: center;
   gap: .25rem;
+  transition: all var(--dur) var(--ease);
 
   a {
     font-size: .9rem;
@@ -83,7 +84,7 @@
   }
 }
 
-/* ── Burger — caché par défaut (desktop), affiché via _responsive.scss ── */
+/* ── Burger (mobile) ── */
 .nav-burger {
   display: none;
   flex-direction: column;
@@ -94,6 +95,7 @@
   cursor: pointer;
   border: none;
   background: transparent;
+  z-index: 10001; /* ← IMPORTANT */
 
   &:hover { background: var(--sable-moyen); }
 
@@ -106,11 +108,9 @@
     transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
   }
 
-  /* Animation croix quand ouvert */
   &[aria-expanded="true"] {
     span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
   }
 }
-

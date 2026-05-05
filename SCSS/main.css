@@ -227,6 +227,7 @@ p {
   color: var(--brun-chaud);
   white-space: nowrap;
   flex-shrink: 0;
+  z-index: 10000; /* ← IMPORTANT pour rester cliquable */
 }
 .logo svg {
   width: 32px;
@@ -237,11 +238,12 @@ p {
   color: var(--terracotta);
 }
 
-/* ── Nav links ── */
+/* ── Nav links (desktop) ── */
 .nav-links {
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  transition: all var(--dur) var(--ease);
 }
 .nav-links a {
   font-size: 0.9rem;
@@ -269,7 +271,7 @@ p {
   color: #fff;
 }
 
-/* ── Burger — caché par défaut (desktop), affiché via _responsive.scss ── */
+/* ── Burger (mobile) ── */
 .nav-burger {
   display: none;
   flex-direction: column;
@@ -280,6 +282,7 @@ p {
   cursor: pointer;
   border: none;
   background: transparent;
+  z-index: 10001; /* ← IMPORTANT */
 }
 .nav-burger:hover {
   background: var(--sable-moyen);
@@ -291,9 +294,6 @@ p {
   background: var(--brun-chaud);
   border-radius: 2px;
   transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
-}
-.nav-burger {
-  /* Animation croix quand ouvert */
 }
 .nav-burger[aria-expanded=true] span:nth-child(1) {
   transform: translateY(7px) rotate(45deg);
