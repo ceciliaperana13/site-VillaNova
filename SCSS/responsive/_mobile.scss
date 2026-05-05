@@ -1,387 +1,450 @@
 /* =========================================
-   RESPONSIVE — MOBILE (≤ 768px)
+   MOBILE-FIRST — BASE (mobile par défaut)
    ========================================= */
 
-@media (max-width: 768px) {
+/* ============================
+   NAVIGATION
+============================ */
+.nav-links {
+  display: none;
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
+  background: var(--blanc-casse);
+  border-bottom: 1px solid var(--sable-moyen);
+  flex-direction: column;
+  gap: 0;
+  padding: 1rem 0;
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-110%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform .35s ease, opacity .35s ease, visibility .35s ease;
+  z-index: 400;
 
-  /* ============================
-     NAVIGATION
-  ============================ */
-  .nav-links {
-    position: fixed;
-    top: var(--header-h);
-    left: 0;
-    right: 0;
-    background: var(--blanc-casse);
-    border-bottom: 1px solid var(--sable-moyen);
-    flex-direction: column;
-    gap: 0;
-    padding: 1rem 0;
-    box-shadow: var(--shadow-hover);
-    transform: translateY(-110%);
-    opacity: 0;
-    visibility: hidden;
-    transition: transform .35s ease, opacity .35s ease, visibility .35s ease;
-    z-index: 400;
-
-    &.open {
-      transform: translateY(0);
-      opacity: 1;
-      visibility: visible;
-    }
-
-    a {
-      display: block;
-      padding: .85rem 1.5rem;
-      width: 100%;
-      border-bottom: 1px solid var(--sable-clair);
-      font-size: 1rem;
-    }
-
-    .nav-cta {
-      margin: .75rem 1.5rem 0;
-      width: calc(100% - 3rem);
-      text-align: center;
-    }
+  &.open {
+    display: flex;
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
   }
 
-  .nav-burger { display: flex; }
+  a {
+    display: block;
+    padding: .85rem 1.5rem;
+    width: 100%;
+    border-bottom: 1px solid var(--sable-clair);
+    font-size: 1rem;
+  }
 
-  /* ============================
-     HERO
-  ============================ */
-  .hero { min-height: 320px; }
-  .hero-actions { flex-direction: column; align-items: center; }
-  .hero-actions .btn { width: 100%; max-width: 300px; }
-
-  /* ============================
-     HERO BILLETTERIE
-  ============================ */
-  .hero-billet {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    padding: 2.2rem 1.4rem;
+  .nav-cta {
+    margin: .75rem 1.5rem 0;
+    width: calc(100% - 3rem);
     text-align: center;
   }
+}
 
-  .hero-billet .hero-billet-img { order: -1; }
+.nav-burger {
+  display: flex;
+}
 
-  .hero-billet .hero-billet-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: .8rem;
+/* ============================
+   HERO
+============================ */
+.hero {
+  min-height: 320px;
+}
+
+.hero-actions {
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-actions .btn {
+  width: 100%;
+  max-width: 300px;
+}
+
+/* ============================
+   HERO BILLETTERIE
+============================ */
+.hero-billet {
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  padding: 2.2rem 1.4rem;
+  text-align: center;
+}
+
+.hero-billet .hero-billet-img {
+  order: -1;
+}
+
+.hero-billet .hero-billet-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .8rem;
+}
+
+/* ============================
+   STATS
+============================ */
+.stats-inner {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* ============================
+   FILTRES — scroll visible
+============================ */
+.filters-inner {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: .6rem;
+  padding: .4rem .2rem .6rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.filters-inner::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-tag {
+  flex-shrink: 0;
+  white-space: nowrap;
+  padding: .55rem 1.1rem;
+  font-size: .9rem;
+}
+
+/* ============================
+   UNIVERSAL CARDS GRID
+============================ */
+.cards-grid,
+.events-grid,
+.events-billet-grid,
+.agenda-grid,
+.similar-grid,
+.access-grid {
+  grid-template-columns: 1fr ;
+  gap: 1.2rem;
+}
+
+/* ============================
+   CARDS — STRUCTURE MOBILE
+============================ */
+.card,
+.event-card,
+.billet-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+}
+
+.card-img-wrap,
+.billet-card-img {
+  width: 100%;
+  flex: 0 0 auto;
+  aspect-ratio: 4 / 3;
+}
+
+.card-body,
+.billet-card-body {
+  width: 100%;
+  flex: 1 1 auto;
+  padding: 1rem .9rem;
+}
+
+.card-footer,
+.billet-card-footer {
+  width: 100%;
+  margin-top: auto;
+  padding: .8rem .9rem 1rem;
+}
+
+/* ============================
+   ÉVÉNEMENTIEL — CARDS
+============================ */
+.card-img-wrap {
+  aspect-ratio: 4 / 3;
+}
+
+.event-featured {
+  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-featured .card-img-wrap {
+  min-height: 200px;
+  aspect-ratio: unset;
+}
+
+.event-featured .card-body {
+  padding: 1.2rem 1rem;
+}
+
+/* ============================
+   BILLETERIE — CARDS
+============================ */
+.billet-featured {
+  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
+}
+
+.billet-featured .billet-card-img {
+  min-height: 200px;
+  aspect-ratio: unset;
+}
+
+.billet-featured .billet-card-body {
+  padding: 1.2rem 1rem;
+}
+
+/* ============================
+   BADGES & ACCESSIBILITÉ
+============================ */
+.billet-card-img,
+.card-img-wrap {
+  position: relative;
+}
+
+.card-badge {
+  top: .6rem;
+  left: .6rem;
+  font-size: .68rem;
+  padding: .22rem .55rem;
+  z-index: 20;
+}
+
+.card-accessibility {
+  top: .6rem;
+  right: .6rem;
+
+  span {
+    width: 24px;
+    height: 24px;
+    font-size: .75rem;
+  }
+}
+
+/* ============================
+   PAGE DÉTAIL ÉVÉNEMENTIEL
+   (MÉTÉO + FAVORI + SIDEBAR)
+============================ */
+.detail-layout {
+  display: grid;
+  grid-template-columns: 1fr !important;
+  gap: 2rem;
+}
+
+.detail-sidebar {
+  position: static !important;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.detail-content {
+  width: 100%;
+}
+
+.weather-widget {
+  margin-top: 1rem;
+  border-radius: var(--r-lg);
+  padding: 1rem 1.2rem;
+}
+
+.weather-days {
+  gap: .6rem;
+  justify-content: space-between;
+}
+
+.favorite-btn,
+.add-favorite {
+  width: 100%;
+  justify-content: center;
+  padding: .9rem 1rem;
+  font-size: .95rem;
+}
+
+.event-programme ul {
+  padding-left: 1rem;
+}
+
+.event-programme li {
+  font-size: .9rem;
+  margin-bottom: .4rem;
+}
+
+/* ============================
+   FOOTER
+============================ */
+.footer-inner {
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.footer-brand {
+  grid-column: 1 / -1;
+}
+
+/* ============================
+   TOAST
+============================ */
+.toast-container {
+  bottom: 1rem;
+  right: 1rem;
+}
+
+/* ============================
+   ★ AGENDA — MOBILE
+============================ */
+
+/* Hero agenda */
+.agenda-hero {
+  padding: 2rem 1.2rem 1.5rem;
+  text-align: center;
+
+  h1 {
+    font-size: clamp(1.4rem, 6vw, 2rem);
+    line-height: 1.2;
   }
 
-  /* ============================
-     STATS
-  ============================ */
-  .stats-inner { grid-template-columns: repeat(2, 1fr); }
-
-  /* ============================
-     FILTRES — scroll visible
-  ============================ */
-  .filters-inner {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    gap: .6rem;
-    padding: .4rem .2rem .6rem;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+  p {
+    font-size: .88rem;
   }
-  .filters-inner::-webkit-scrollbar { display: none; }
+}
 
-  .filter-tag {
-    flex-shrink: 0;
-    white-space: nowrap;
-    padding: .55rem 1.1rem;
-    font-size: .9rem;
-  }
+/* Barre contrôles : empilée verticalement */
+.controls-inner {
+  flex-direction: column;
+  gap: .75rem;
+  padding: .85rem 1rem;
+  align-items: stretch;
+}
 
-  /* ============================
-     UNIVERSAL CARDS GRID
-  ============================ */
-  .cards-grid,
-  .events-grid,
-  .events-billet-grid,
-  .agenda-grid,
-  .similar-grid,
-  .access-grid {
-    grid-template-columns: 1fr !important;
-    gap: 1.2rem;
-  }
+.month-nav {
+  justify-content: center;
+}
 
-  /* ============================
-     CARDS — STRUCTURE MOBILE
-  ============================ */
-  .card,
-  .event-card,
-  .billet-card {
-    display: flex;
-    flex-direction: column;
+.view-toggle {
+  display: flex;
+  justify-content: center;
+}
+
+.agenda-search {
+  width: 100%;
+
+  input {
     width: 100%;
-    overflow: hidden;
+  }
+}
+
+/* Calendrier : 7 colonnes conservées, cellules réduites */
+.cal-cell {
+  min-height: 52px;
+  padding: .3rem .2rem;
+}
+
+/* On masque les pills (trop petites), on garde les dots */
+.cal-ev-pills {
+  display: none;
+}
+
+.cal-day-num {
+  width: 22px;
+  height: 22px;
+  font-size: .72rem;
+}
+
+.cal-dots {
+  gap: 2px;
+  margin-top: .2rem;
+}
+
+.cal-dot {
+  width: 5px;
+  height: 5px;
+}
+
+.cal-weekdays [role="columnheader"] {
+  font-size: .62rem;
+  padding: .5rem .15rem;
+}
+
+.cal-legend {
+  gap: .5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .legend-item {
+    font-size: .7rem;
   }
 
-  .card-img-wrap,
-  .billet-card-img {
-    width: 100%;
-    flex: 0 0 auto;
-    aspect-ratio: 4 / 3;
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+/* Vue liste : cartes empilées */
+.event-card {
+  display: flex;
+  flex-direction: column;
+
+  .event-card-img {
+    min-height: 160px;
+    aspect-ratio: 16 / 9;
+    background-size: cover;
+    background-position: center;
   }
 
-  .card-body,
-  .billet-card-body {
-    width: 100%;
-    flex: 1 1 auto;
-    padding: 1rem .9rem;
+  .event-card-body {
+    padding: .9rem;
   }
 
-  .card-footer,
-  .billet-card-footer {
-    width: 100%;
-    margin-top: auto;
-    padding: .8rem .9rem 1rem;
+  .event-card-actions {
+    padding: .6rem .9rem;
   }
+}
 
-  /* ============================
-     ÉVÉNEMENTIEL — CARDS
-  ============================ */
-  .card-img-wrap { aspect-ratio: 4 / 3; }
+/* Panneau : plein écran sur mobile */
+.event-panel {
+  width: 100vw;
+  max-width: 100vw;
+  min-width: unset;
+}
 
-  .event-featured {
-    grid-template-columns: 1fr;
-    display: flex;
-    flex-direction: column;
-  }
+.panel-img-wrap {
+  aspect-ratio: 4 / 3;
+  height: auto;
+}
 
-  .event-featured .card-img-wrap {
-    min-height: 200px;
-    aspect-ratio: unset;
-  }
+.panel-body {
+  padding: 1rem;
+  gap: .8rem;
+}
 
-  .event-featured .card-body { padding: 1.2rem 1rem; }
+.panel-title {
+  font-size: 1.1rem;
+}
 
-  /* ============================
-     BILLETERIE — CARDS
-  ============================ */
-  .billet-featured {
-    grid-template-columns: 1fr;
-    display: flex;
-    flex-direction: column;
-  }
+.panel-meta-list {
+  padding: .75rem .9rem;
 
-  .billet-featured .billet-card-img {
-    min-height: 200px;
-    aspect-ratio: unset;
-  }
-
-  .billet-featured .billet-card-body { padding: 1.2rem 1rem; }
-
-  /* ============================
-     BADGES & ACCESSIBILITÉ
-  ============================ */
-  .billet-card-img,
-  .card-img-wrap { position: relative; }
-
-  .card-badge {
-    top: .6rem;
-    left: .6rem;
-    font-size: .68rem;
-    padding: .22rem .55rem;
-    z-index: 20;
-  }
-
-  .card-accessibility {
-    top: .6rem;
-    right: .6rem;
-
-    span {
-      width: 24px;
-      height: 24px;
-      font-size: .75rem;
-    }
-  }
-
-  /* ============================
-     PAGE DÉTAIL ÉVÉNEMENTIEL
-     (MÉTÉO + FAVORI + SIDEBAR)
-  ============================ */
-  .detail-layout {
-    display: grid;
-    grid-template-columns: 1fr !important;
-    gap: 2rem;
-  }
-
-  .detail-sidebar {
-    position: static !important;
-    width: 100%;
-    margin-top: 1rem;
-  }
-
-  .detail-content { width: 100%; }
-
-  .weather-widget {
-    margin-top: 1rem;
-    border-radius: var(--r-lg);
-    padding: 1rem 1.2rem;
-  }
-
-  .weather-days {
-    gap: .6rem;
-    justify-content: space-between;
-  }
-
-  .favorite-btn,
-  .add-favorite {
-    width: 100%;
-    justify-content: center;
-    padding: .9rem 1rem;
-    font-size: .95rem;
-  }
-
-  .event-programme ul { padding-left: 1rem; }
-  .event-programme li {
-    font-size: .9rem;
-    margin-bottom: .4rem;
-  }
-
-  /* ============================
-     FOOTER
-  ============================ */
-  .footer-inner {
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
-
-  .footer-brand { grid-column: 1 / -1; }
-
-  /* ============================
-     TOAST
-  ============================ */
-  .toast-container {
-    bottom: 1rem;
-    right: 1rem;
-  }
-
-  /* ============================
-     ★ AGENDA — MOBILE
-     Chercher "★ AGENDA" pour trouver
-  ============================ */
-
-  /* Hero agenda */
-  .agenda-hero {
-    padding: 2rem 1.2rem 1.5rem;
-    text-align: center;
-
-    h1 {
-      font-size: clamp(1.4rem, 6vw, 2rem);
-      line-height: 1.2;
-    }
-
-    p { font-size: .88rem; }
-  }
-
-  /* Barre contrôles : empilée verticalement */
-  .controls-inner {
-    flex-direction: column;
-    gap: .75rem;
-    padding: .85rem 1rem;
-    align-items: stretch;
-  }
-
-  .month-nav { justify-content: center; }
-
-  .view-toggle {
-    display: flex;
-    justify-content: center;
-  }
-
-  .agenda-search {
-    width: 100%;
-
-    input { width: 100%; }
-  }
-
-  /* Calendrier : 7 colonnes conservées, cellules réduites */
-  .cal-cell {
-    min-height: 52px;
-    padding: .3rem .2rem;
-  }
-
-  /* On masque les pills (trop petites), on garde les dots */
-  .cal-ev-pills { display: none; }
-
-  .cal-day-num {
-    width: 22px;
-    height: 22px;
-    font-size: .72rem;
-  }
-
-  .cal-dots { gap: 2px; margin-top: .2rem; }
-
-  .cal-dot { width: 5px; height: 5px; }
-
-  .cal-weekdays [role="columnheader"] {
-    font-size: .62rem;
-    padding: .5rem .15rem;
-  }
-
-  .cal-legend {
-    gap: .5rem;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    .legend-item { font-size: .7rem; }
-    .legend-dot  { width: 8px; height: 8px; }
-  }
-
-  /* Vue liste : cartes empilées */
-  .event-card {
-    display: flex;
-    flex-direction: column;
-
-    .event-card-img {
-      min-height: 160px;
-      aspect-ratio: 16 / 9;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .event-card-body { padding: .9rem; }
-
-    .event-card-actions { padding: .6rem .9rem; }
-  }
-
-  /* Panneau : plein écran sur mobile */
-  .event-panel {
-    width: 100vw;
-    max-width: 100vw;
-    min-width: unset;
-  }
-
-  .panel-img-wrap {
-    aspect-ratio: 4 / 3;
-    height: auto;
-  }
-
-  .panel-body  { padding: 1rem; gap: .8rem; }
-  .panel-title { font-size: 1.1rem; }
-
-  .panel-meta-list {
-    padding: .75rem .9rem;
-
-    li { font-size: .82rem; }
+  li {
+    font-size: .82rem;
   }
 }
 
 /* =========================================
-   EXTRA SMALL (≤ 480px)
+   EXTRA SMALL (≥ 480px)
    ========================================= */
 
-@media (max-width: 480px) {
-
+@include xs {
   .card,
   .event-card,
   .billet-card {
@@ -390,13 +453,22 @@
   }
 
   .card-body,
-  .billet-card-body { padding: .9rem .85rem; }
+  .billet-card-body {
+    padding: .9rem .85rem;
+  }
 
   .card-footer,
-  .billet-card-footer { padding: .7rem .85rem .85rem; }
+  .billet-card-footer {
+    padding: .7rem .85rem .85rem;
+  }
 
-  .card-title { font-size: .95rem; }
-  .card-desc  { font-size: .8rem; }
+  .card-title {
+    font-size: .95rem;
+  }
+
+  .card-desc {
+    font-size: .8rem;
+  }
 
   .card-img-wrap,
   .billet-card-img {
@@ -409,10 +481,14 @@
     font-size: .82rem;
   }
 
-  .breadcrumb-list { font-size: .78rem; }
-  .weather-days    { gap: .5rem; }
+  .breadcrumb-list {
+    font-size: .78rem;
+  }
 
-  /* Agenda xs : cellules encore plus petites */
+  .weather-days {
+    gap: .5rem;
+  }
+
   .cal-cell {
     min-height: 40px;
     padding: .15rem .1rem;
@@ -424,5 +500,8 @@
     font-size: .65rem;
   }
 
-  .cal-dot { width: 4px; height: 4px; }
+  .cal-dot {
+    width: 4px;
+    height: 4px;
+  }
 }

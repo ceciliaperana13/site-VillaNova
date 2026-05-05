@@ -1,5 +1,5 @@
 // =========================================
-// LAYOUT PRINCIPAL
+// PAGE DÉTAIL — LAYOUT MOBILE FIRST
 // =========================================
 
 .detail-layout {
@@ -7,11 +7,20 @@
   margin: 0 auto;
   padding: var(--section-pad);
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr; /* MOBILE = 1 colonne */
   gap: 2.5rem;
 }
 
-.detail-body {
+.detail-body,
+.detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.detail-sidebar {
+  position: static;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2rem;

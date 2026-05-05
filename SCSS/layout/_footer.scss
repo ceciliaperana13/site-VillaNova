@@ -1,3 +1,7 @@
+/* =========================================
+   FOOTER — MOBILE FIRST
+   ========================================= */
+
 .site-footer {
   background: var(--noir-doux);
   color: var(--sable-moyen);
@@ -8,11 +12,13 @@
   max-width: var(--container-max);
   margin: 0 auto;
   padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem) 2rem;
+
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr; /* MOBILE = 1 colonne */
   gap: 2.5rem;
 }
 
+/* Branding */
 .footer-brand .logo {
   color: var(--sable-moyen);
   margin-bottom: 1rem;
@@ -28,6 +34,7 @@
   color: rgba(230, 211, 179, .65);
 }
 
+/* Colonnes */
 .footer-col h3 {
   font-family: var(--font-corps);
   font-size: .82rem;
@@ -50,16 +57,19 @@
   }
 }
 
+/* Bas de footer */
 .footer-bottom {
   max-width: var(--container-max);
   margin: 0 auto;
   padding: 1.2rem clamp(1rem, 4vw, 2rem);
   border-top: 1px solid rgba(255,255,255,.07);
+
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
   flex-wrap: wrap;
+
   font-size: .78rem;
   color: rgba(230, 211, 179, .4);
 }

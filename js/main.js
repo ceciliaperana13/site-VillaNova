@@ -334,6 +334,138 @@ async function loadOpenAgendaCards() {
   if (eventsSport[0]) fillCard("ev6", eventsSport[0]);
 }
 
+/* ========= AJOUTS DE L’AUTRE FICHIER ========= */
+
+/* COMPTEURS */
+function animateCount(el, target, duration = 1400) {
+  const start = performance.now();
+
+  const update = (now) => {
+    const progress = Math.min((now - start) / duration, 1);
+    el.textContent = Math.round((1 - Math.pow(1 - progress, 3)) * target).toLocaleString('fr-FR');
+
+    if (progress < 1) requestAnimationFrame(update);
+  };
+
+  requestAnimationFrame(update);
+}
+
+function initCounters() {
+  if (!('IntersectionObserver' in window)) return;
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+
+      const t = parseInt(entry.target.dataset.count, 10);
+      if (!isNaN(t)) animateCount(entry.target, t);
+
+      obs.unobserve(entry.target);
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('[data-count]').forEach(el => obs.observe(el));
+}
+
+/* MODAL VIDÉO */
+function initVideoModal() {
+  const modal    = document.getElementById('video-modal');
+  const trigger  = document.querySelector('[data-video-trigger]');
+  const closeBtn = document.querySelector('.video-modal-close');
+
+  if (!modal) return;
+
+  const openModal = () => {
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    closeBtn?.focus();
+  };
+
+  const closeModal = () => {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    modal.querySelector('video')?.pause();
+    trigger?.focus();
+  };
+
+  trigger?.addEventListener('click', openModal);
+  trigger?.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openModal();
+    }
+  });
+
+  closeBtn?.addEventListener('click', closeModal);
+
+  modal.addEventListener('click', e => {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+}
+
+/* PAGINATION */
+function initPagination() {
+  document.querySelectorAll('.page-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      if (['←', '→'].includes(this.textContent.trim())) return;
+
+      document.querySelectorAll('.page-btn').forEach(b => {
+        b.classList.remove('active');
+        b.removeAttribute('aria-current');
+      });
+
+      this.classList.add('active');
+      this.setAttribute('aria-current', 'page');
+
+      const section = document.getElementById('evenements');
+      if (section) window.scrollTo({ top: section.offsetTop - 80, behavior: 'smooth' });
+    });
+  });
+}
+
+/* NEWSLETTER */
+function handleNewsletter(e) {
+  e.preventDefault();
+
+  const email = document.getElementById('newsletter-email')?.value?.trim();
+  const btn   = e.target.querySelector('[type="submit"]');
+
+  if (!email) {
+    showToast('Veuillez entrer un email valide.', 'error');
+    return;
+  }
+
+  const orig = btn.textContent;
+  btn.textContent = 'Envoi…';
+  btn.disabled    = true;
+
+  setTimeout(() => {
+    showToast(`Inscription confirmée pour ${email} ! 🎉`, 'success');
+    e.target.reset();
+    btn.textContent = orig;
+    btn.disabled    = false;
+  }, 800);
+}
+
+/* UTILITAIRES ANTI-XSS */
+const _xssEl = document.createElement('div');
+
+function escapeHtml(str) {
+  _xssEl.textContent = String(str ?? '');
+  return _xssEl.innerHTML;
+}
+
+function escapeAttr(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;').replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 /* ---- INIT ---- */
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
@@ -341,6 +473,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initSearch();
   initScrollAnimations();
   initStickyHeader();
+  initCounters();
+  initVideoModal();
+  initPagination();
 
   loadOpenAgendaCards();
 });
