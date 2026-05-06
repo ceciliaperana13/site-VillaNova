@@ -1,3 +1,7 @@
+/* =========================================
+   MODAL VIDÉO
+========================================= */
+
 .video-modal {
   position: fixed;
   inset: 0;
@@ -18,9 +22,11 @@
   }
 
   video {
-    max-width: min(900px, 100%);
+    width: 100%;
+    max-width: 900px;      /* ← tu modifies ici la taille */
     max-height: 80vh;
     border-radius: var(--r-md);
+    object-fit: contain;
     outline: none;
   }
 }
@@ -44,4 +50,48 @@
   &:hover {
     background: rgba(255,255,255,.35);
   }
+}
+
+/* =========================================
+   IMAGE D’APERÇU AVEC FILTRE + PLAY
+========================================= */
+
+.media-item.has-video {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: var(--r-md);
+}
+
+.media-item.has-video::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25); /* filtre léger */
+  transition: background .3s ease;
+  z-index: 2;
+}
+
+.media-item.has-video::after {
+  content: "▶";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  color: white;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  opacity: .9;
+  z-index: 3;
+  pointer-events: none;
+  transition: transform .3s ease, opacity .3s ease;
+}
+
+.media-item.has-video:hover::before {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.media-item.has-video:hover::after {
+  transform: translate(-50%, -50%) scale(1.1);
+  opacity: 1;
 }

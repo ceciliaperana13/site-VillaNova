@@ -39,11 +39,11 @@
       <nav aria-label="Navigation principale">
         <ul class="nav-links" role="list">
           <li><a href="index.html" aria-current="page">Accueil</a></li>
-          <li><a href="/html/evenement-detail.html">Événements</a></li>
-          <li><a href="/html/agenda.html">Agenda</a></li>
-          <li><a href="/html/carte.html">Carte</a></li>
-          <li><a href="/html/contact.html">Contact</a></li>
-          <li><a href="/html/billetterie.html" class="nav-cta">Billetterie</a></li>
+          <li><a href="../html/evenement-detail.html">Événements</a></li>
+          <li><a href="../html/agenda.html">Agenda</a></li>
+          <li><a href="../html/carte.html">Carte</a></li>
+          <li><a href="../html/contact.html">Contact</a></li>
+          <li><a href="../html/billetterie.html" class="nav-cta">Billetterie</a></li>
         </ul>
       </nav>
       <button class="nav-burger" id="nav-burger" aria-expanded="false" aria-controls="nav-links" aria-label="Ouvrir le menu">
@@ -161,11 +161,7 @@
         <article class="event-card" data-category="concert" role="listitem" aria-labelledby="ev1-title">
           <div class="card-img-wrap">
             <picture>
-              <!-- JS injecte ev1-img.src — aucune image chargée inutilement -->
-              <img id="ev1-img"
-                   src=""
-                   alt="Concert"
-                   loading="lazy" width="600" height="338">
+              <img id="ev1-img" src="" alt="Concert" loading="lazy" width="600" height="338">
             </picture>
             <span id="ev1-badge" class="card-badge">Concert</span>
             <div class="card-accessibility" aria-label="Accessibilité">
@@ -191,11 +187,7 @@
         <article class="event-card" data-category="expo" role="listitem" aria-labelledby="ev2-title">
           <div class="card-img-wrap">
             <picture>
-              <!-- JS injecte ev2-img.src — aucune image chargée inutilement -->
-              <img id="ev2-img"
-                   src=""
-                   alt="Exposition"
-                   loading="lazy" width="600" height="338">
+              <img id="ev2-img" src="" alt="Exposition" loading="lazy" width="600" height="338">
             </picture>
             <span id="ev2-badge" class="card-badge">Exposition</span>
             <div class="card-accessibility" aria-label="Accessibilité">
@@ -222,11 +214,7 @@
         <article class="event-card" data-category="theatre" role="listitem" aria-labelledby="ev3-title">
           <div class="card-img-wrap">
             <picture>
-              <!-- JS injecte ev3-img.src — aucune image chargée inutilement -->
-              <img id="ev3-img"
-                   src=""
-                   alt="Théâtre"
-                   loading="lazy" width="600" height="338">
+              <img id="ev3-img" src="" alt="Théâtre" loading="lazy" width="600" height="338">
             </picture>
             <span id="ev3-badge" class="card-badge">Théâtre</span>
             <div class="card-accessibility">
@@ -254,11 +242,7 @@
         <article class="event-card" data-category="theatre" role="listitem" aria-labelledby="ev4-title">
           <div class="card-img-wrap">
             <picture>
-              <!-- JS injecte ev4-img.src — aucune image chargée inutilement -->
-              <img id="ev4-img"
-                   src=""
-                   alt="Spectacle"
-                   loading="lazy" width="600" height="338">
+              <img id="ev4-img" src="" alt="Spectacle" loading="lazy" width="600" height="338">
             </picture>
             <span id="ev4-badge" class="card-badge">Théâtre</span>
             <div class="card-accessibility">
@@ -284,11 +268,7 @@
         <article class="event-card" data-category="festival" role="listitem" aria-labelledby="ev5-title">
           <div class="card-img-wrap">
             <picture>
-              <!-- JS injecte ev5-img.src — aucune image chargée inutilement -->
-              <img id="ev5-img"
-                   src=""
-                   alt="Festival"
-                   loading="lazy" width="600" height="338">
+              <img id="ev5-img" src="" alt="Festival" loading="lazy" width="600" height="338">
             </picture>
             <span id="ev5-badge" class="card-badge">Festival</span>
             <div class="card-accessibility">
@@ -315,11 +295,7 @@
         <article class="event-card" data-category="sport" role="listitem" aria-labelledby="ev6-title">
           <div class="card-img-wrap">
             <picture>
-              <!-- JS injecte ev6-img.src — aucune image chargée inutilement -->
-              <img id="ev6-img"
-                   src=""
-                   alt="Sport"
-                   loading="lazy" width="600" height="338">
+              <img id="ev6-img" src="" alt="Sport" loading="lazy" width="600" height="338">
             </picture>
             <span id="ev6-badge" class="card-badge">Sport</span>
             <div class="card-accessibility">
@@ -364,12 +340,22 @@
           <h2 class="section-title" id="video-section-title">Marseille en vidéo</h2>
         </div>
         <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;align-items:center;">
+
+          <!--  IMAGE D'APERÇU UNIQUE — ouvre le modal vidéo -->
           <div class="media-item has-video"
-            style="border-radius:var(--radius-lg);aspect-ratio:16/9;overflow:hidden;background:var(--sable-fonce);"
-            data-video-trigger tabindex="0" role="button" aria-label="Lire la vidéo de présentation de Marseille">
+               id="open-video"
+               data-video-trigger
+               tabindex="0"
+               role="button"
+               aria-label="Lire la vidéo de présentation de Marseille"
+               aria-haspopup="dialog">
             <img src="https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&q=75"
-                 alt="Vue aérienne de Marseille" loading="lazy" width="800" height="450">
+                 alt="Vue aérienne de Marseille — cliquez pour lancer la vidéo"
+                 loading="lazy"
+                 width="800"
+                 height="450">
           </div>
+
           <div>
             <p class="hero-eyebrow" style="text-align:left;">À propos</p>
             <h3 style="font-family:var(--font-titre);font-size:1.8rem;color:var(--brun-chaud);margin-bottom:1rem;line-height:1.25;">
@@ -385,12 +371,21 @@
       </div>
     </section>
 
-    <!-- Modal vidéo -->
-    <div id="video-modal" class="video-modal" role="dialog" aria-modal="true" aria-label="Vidéo de Marseille" aria-hidden="true">
+    <!-- ✅ MODAL VIDÉO — lié à l'image ci-dessus, ancienne image d'aperçu supprimée -->
+    <div id="video-modal"
+         class="video-modal"
+         role="dialog"
+         aria-modal="true"
+         aria-label="Vidéo de présentation de Marseille"
+         aria-hidden="true">
       <button class="video-modal-close" aria-label="Fermer la vidéo">✕</button>
-      <video controls preload="none" aria-label="Présentation vidéo de Marseille" width="900">
-        <source src="../assets/marseille-promo.mp4" type="video/mp4">
-        <track kind="captions" src="../assets/captions-fr.vtt" srclang="fr" label="Français" default>
+      <!-- éco-numérique + performance : preload=metadata -->
+      <video
+        controls
+        preload="metadata"
+        poster="../assets/images/marseille-preview.jpg"
+        aria-label="Présentation vidéo de Marseille">
+        <source src="../assets/videos/promotion.mp4" type="video/mp4">
         Votre navigateur ne supporte pas la lecture vidéo.
       </video>
     </div>
@@ -449,7 +444,7 @@
 
   <div class="toast-container" aria-live="polite" aria-atomic="true" role="status"></div>
 
-  <script src="../js/main.js"></script>
+  <script src="../js/main.js"defer></script>
 
 </body>
 </html>

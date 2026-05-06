@@ -53,3 +53,9 @@ $breakpoints: (
     @content;
   }
 }
+// ===============================================
+// TYPOGRAPHIE FLUIDE — PRO
+// ===============================================
+@mixin fluid-type($min, $max) {
+  font-size: clamp(#{$min}, 1rem + 1.5vw, #{$max});
+}
