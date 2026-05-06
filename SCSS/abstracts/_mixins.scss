@@ -1,6 +1,9 @@
-// =============================================
-// BREAKPOINT SYSTEM — PRODUCTION READY
-// =============================================
+// ===============================================
+// BREAKPOINT SYSTEM — PRODUCTION READY (Sass 3.0)
+// ===============================================
+
+// Import du module map
+@use "sass:map";
 
 // 1. Définition des breakpoints (mobile-first)
 $breakpoints: (
@@ -11,9 +14,9 @@ $breakpoints: (
   xl: 1400px   // Large desktop
 );
 
-// 2. Mixin universel — min-width (mobile-first)
+// 2. Mixin universel — min-width
 @mixin respond($bp) {
-  $value: map-get($breakpoints, $bp);
+  $value: map.get($breakpoints, $bp);
 
   @if $value == null {
     @error "❌ Breakpoint `#{$bp}` not found in $breakpoints map.";
@@ -24,9 +27,9 @@ $breakpoints: (
   }
 }
 
-// 3. Mixin max-width (optionnel)
+// 3. Mixin max-width
 @mixin respond-max($bp) {
-  $value: map-get($breakpoints, $bp);
+  $value: map.get($breakpoints, $bp);
 
   @if $value == null {
     @error "❌ Breakpoint `#{$bp}` not found in $breakpoints map.";
@@ -37,10 +40,10 @@ $breakpoints: (
   }
 }
 
-// 4. Mixin entre deux breakpoints (optionnel)
+// 4. Mixin entre deux breakpoints
 @mixin between($min, $max) {
-  $minVal: map-get($breakpoints, $min);
-  $maxVal: map-get($breakpoints, $max);
+  $minVal: map.get($breakpoints, $min);
+  $maxVal: map.get($breakpoints, $max);
 
   @if $minVal == null or $maxVal == null {
     @error "❌ Breakpoints `#{$min}` or `#{$max}` not found.";

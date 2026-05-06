@@ -4,7 +4,6 @@
 
 @use '../abstracts/mixins' as *;
 
-
 /* ============================
    NAVIGATION
 ============================ */
@@ -130,7 +129,7 @@
 .agenda-grid,
 .similar-grid,
 .access-grid {
-  grid-template-columns: 1fr ;
+  grid-template-columns: 1fr;
   gap: 1.2rem;
 }
 
@@ -236,7 +235,6 @@
 
 /* ============================
    PAGE DÉTAIL ÉVÉNEMENTIEL
-   (MÉTÉO + FAVORI + SIDEBAR)
 ============================ */
 .detail-layout {
   display: grid;
@@ -305,8 +303,6 @@
 /* ============================
    ★ AGENDA — MOBILE
 ============================ */
-
-/* Hero agenda */
 .agenda-hero {
   padding: 2rem 1.2rem 1.5rem;
   text-align: center;
@@ -321,7 +317,6 @@
   }
 }
 
-/* Barre contrôles : empilée verticalement */
 .controls-inner {
   flex-direction: column;
   gap: .75rem;
@@ -346,13 +341,11 @@
   }
 }
 
-/* Calendrier : 7 colonnes conservées, cellules réduites */
 .cal-cell {
   min-height: 52px;
   padding: .3rem .2rem;
 }
 
-/* On masque les pills (trop petites), on garde les dots */
 .cal-ev-pills {
   display: none;
 }
@@ -393,7 +386,6 @@
   }
 }
 
-/* Vue liste : cartes empilées */
 .event-card {
   display: flex;
   flex-direction: column;
@@ -414,7 +406,6 @@
   }
 }
 
-/* Panneau : plein écran sur mobile */
 .event-panel {
   width: 100vw;
   max-width: 100vw;
@@ -445,9 +436,9 @@
 
 /* =========================================
    EXTRA SMALL (≥ 480px)
-   ========================================= */
+========================================= */
+@include respond(xs) {
 
-@include xs {
   .card,
   .event-card,
   .billet-card {

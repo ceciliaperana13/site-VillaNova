@@ -1,6 +1,10 @@
+/* =========================================
+   LARGE DESKTOP (≥ 1400px)
+========================================= */
 @use '../abstracts/mixins' as *;
 
-@include large {
+@include respond(xl) {
+
   body {
     font-size: 1.375rem;
   }

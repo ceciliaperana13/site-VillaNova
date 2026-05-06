@@ -3031,7 +3031,6 @@ p {
 
 /* ============================
    PAGE DÉTAIL ÉVÉNEMENTIEL
-   (MÉTÉO + FAVORI + SIDEBAR)
 ============================ */
 .detail-layout {
   display: grid;
@@ -3100,7 +3099,6 @@ p {
 /* ============================
    ★ AGENDA — MOBILE
 ============================ */
-/* Hero agenda */
 .agenda-hero {
   padding: 2rem 1.2rem 1.5rem;
   text-align: center;
@@ -3113,7 +3111,6 @@ p {
   font-size: 0.88rem;
 }
 
-/* Barre contrôles : empilée verticalement */
 .controls-inner {
   flex-direction: column;
   gap: 0.75rem;
@@ -3137,13 +3134,11 @@ p {
   width: 100%;
 }
 
-/* Calendrier : 7 colonnes conservées, cellules réduites */
 .cal-cell {
   min-height: 52px;
   padding: 0.3rem 0.2rem;
 }
 
-/* On masque les pills (trop petites), on garde les dots */
 .cal-ev-pills {
   display: none;
 }
@@ -3182,7 +3177,6 @@ p {
   height: 8px;
 }
 
-/* Vue liste : cartes empilées */
 .event-card {
   display: flex;
   flex-direction: column;
@@ -3200,7 +3194,6 @@ p {
   padding: 0.6rem 0.9rem;
 }
 
-/* Panneau : plein écran sur mobile */
 .event-panel {
   width: 100vw;
   max-width: 100vw;
@@ -3230,7 +3223,7 @@ p {
 
 /* =========================================
    EXTRA SMALL (≥ 480px)
-   ========================================= */
+========================================= */
 @media (min-width: 480px) {
   .card,
   .event-card,
@@ -3281,6 +3274,9 @@ p {
     height: 4px;
   }
 }
+/* =========================================
+   TABLETTE — GRILLES & CARTES
+========================================= */
 @media (min-width: 768px) {
   .events-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -3303,7 +3299,7 @@ p {
 }
 /* =========================================
    CALENDRIER TABLETTE (≥ 768px)
-   ========================================= */
+========================================= */
 @media (min-width: 768px) {
   .stats-inner {
     grid-template-columns: repeat(2, 1fr);
@@ -3324,10 +3320,10 @@ p {
 }
 /* =========================================
    DESKTOP (≥ 1200px)
-   ========================================= */
+========================================= */
 /* ============================
    FOCUS DESKTOP
-   ============================ */
+============================ */
 @media (min-width: 1200px) {
   body {
     font-size: 1.15rem;
@@ -3340,7 +3336,7 @@ p {
   }
   /* =========================================
      PAGE DÉTAIL — SIDEBAR À DROITE
-     ========================================= */
+  ========================================= */
   .detail-layout {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -3489,7 +3485,7 @@ p {
   }
   /* =========================================
      CALENDRIER DESKTOP
-     ========================================= */
+  ========================================= */
   .stats-inner {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -3502,7 +3498,7 @@ p {
   }
   /* =========================================
      FOOTER — 4 COLONNES
-     ========================================= */
+  ========================================= */
   .footer-inner {
     grid-template-columns: 2fr 1fr 1fr 1fr;
     align-items: start;
@@ -3511,6 +3507,9 @@ p {
     flex-wrap: nowrap;
   }
 }
+/* =========================================
+   LARGE DESKTOP (≥ 1400px)
+========================================= */
 @media (min-width: 1400px) {
   body {
     font-size: 1.375rem;
