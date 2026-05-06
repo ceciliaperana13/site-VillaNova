@@ -12,7 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../SCSS/main.css">
+  <link rel="stylesheet" href="../SCSS/main.css" media="all">
+
 </head>
 <body>
 
@@ -127,9 +128,23 @@
         <!-- ── ÉVÉNEMENT VEDETTE (statique — inchangé) ── -->
         <article class="event-card event-featured" data-category="festival" role="listitem" aria-labelledby="ev-feat-title">
           <div class="card-img-wrap">
-            <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80"
-                 alt="Festival de jazz sur le Vieux-Port de Marseille, scène illuminée face à la mer"
-                 loading="lazy" width="800" height="450">
+            <picture>
+  <source 
+    srcset="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80&fm=avif" 
+    type="image/avif">
+    
+  <source 
+    srcset="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80&fm=webp" 
+    type="image/webp">
+
+  <img 
+    src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80" 
+    alt="Festival de jazz sur le Vieux-Port de Marseille, scène illuminée face à la mer"
+    loading="lazy"
+    width="800"
+    height="450">
+</picture>
+
             <span class="card-badge" aria-label="Catégorie : Festival">Festival</span>
             <div class="card-accessibility" aria-label="Accessibilité">
               <span title="Sous-titrage disponible" aria-label="Sous-titrage">💬</span>

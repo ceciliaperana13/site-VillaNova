@@ -4,13 +4,16 @@
 
 'use strict';
 
-/* ---- LOADER ---- */
-window.addEventListener('load', () => {
+/* ---- LOADER OPTIMISÉ ---- */
+document.addEventListener('DOMContentLoaded', () => {
   const loader = document.getElementById('page-loader');
-  if (loader) {
-    setTimeout(() => loader.classList.add('hidden'), 300);
-  }
+  if (!loader) return;
+
+  requestAnimationFrame(() => {
+    loader.classList.add('hidden');
+  });
 });
+
 
 /* ---- NAVIGATION MOBILE ---- */
 function initNav() {
