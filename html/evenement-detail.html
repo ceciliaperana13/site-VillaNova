@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jazz au Vieux-Port – Festival International | VilleNova</title>
-  <meta name="description" content="Festival Jazz au Vieux-Port de Marseille, 15–17 mai 2025. 3 jours de concerts gratuits face à la Méditerranée. Billetterie, infos pratiques et accessibilité.">
+  <title id="page-title">Événement | VilleNova</title>
+  <meta name="description" id="page-desc" content="Détail d'un événement VilleNova Marseille.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -12,6 +12,7 @@
 </head>
 <body>
 
+  <!-- ═══ LOADER ═══ -->
   <div id="page-loader" role="status" aria-label="Chargement">
     <div class="loader-ring"></div>
     <span style="font-family:var(--font-titre);color:var(--brun-chaud);">VilleNova</span>
@@ -19,10 +20,10 @@
 
   <a class="skip-link" href="#main-content">Aller au contenu principal</a>
 
-  <!-- HEADER -->
+  <!-- ═══ HEADER ═══ -->
   <header class="site-header" role="banner">
     <div class="nav-inner">
-      <a href="../index.html" class="logo" aria-label="VilleNova - Accueil">
+      <a href="/html/index.html" class="logo" aria-label="VilleNova - Accueil">
         <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <circle cx="16" cy="16" r="14" fill="#D17B49" opacity=".15"/>
           <path d="M8 20 L16 10 L24 20" stroke="#8B5E3C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -32,7 +33,7 @@
         Ville<span class="accent">Nova</span>
       </a>
       <nav aria-label="Navigation principale">
-        <ul class="nav-links" role="list">
+        <ul class="nav-links" id="nav-links" role="list">
           <li><a href="/html/index.html">Accueil</a></li>
           <li><a href="/html/evenement-detail.html" aria-current="page">Événements</a></li>
           <li><a href="/html/agenda.html">Agenda</a></li>
@@ -41,7 +42,7 @@
           <li><a href="/html/billetterie.html" class="nav-cta">Billetterie</a></li>
         </ul>
       </nav>
-      <button class="nav-burger" aria-expanded="false" aria-label="Ouvrir le menu">
+      <button class="nav-burger" id="nav-burger" aria-expanded="false" aria-controls="nav-links" aria-label="Ouvrir le menu">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -49,102 +50,87 @@
 
   <main id="main-content">
 
-    
-
-    <!-- HERO IMAGE -->
-    <div class="detail-hero" role="img" aria-label="Scène du festival Jazz au Vieux-Port de Marseille illuminée la nuit">
-      <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1400&q=85"
-           alt="Grande scène flottante du festival Jazz au Vieux-Port, Marseille, nuit étoilée"
-           loading="eager" width="1400" height="533">
+    <!-- ═══ HERO — src vide, JS injecte l'image OA ═══ -->
+    <div class="detail-hero" role="img" aria-label="Visuel de l'événement">
+      <picture>
+        <img id="detail-img"
+             src=""
+             alt="Visuel de l'événement"
+             loading="eager"
+             width="1400" height="533"
+             fetchpriority="high">
+      </picture>
       <div class="detail-hero-overlay">
         <div class="detail-hero-text">
-          <div class="detail-breadcrumb">Festival · Gratuit · Marseille</div>
-          <h1>Jazz au Vieux-Port<br>Festival International</h1>
+          <div class="detail-breadcrumb" id="detail-breadcrumb">Chargement…</div>
+          <h1 id="detail-title">Chargement de l'événement…</h1>
         </div>
       </div>
     </div>
 
-    <!-- LAYOUT PRINCIPAL -->
+    <!-- ═══ LAYOUT PRINCIPAL ═══ -->
     <div class="detail-layout">
 
-      <!-- Corps principal -->
-      <article class="detail-body" aria-labelledby="event-title">
-        <h2 id="event-title" class="sr-only">Jazz au Vieux-Port — Informations</h2>
+      <!-- ── Corps ── -->
+      <article class="detail-body" aria-labelledby="event-section-title">
+        <h2 id="event-section-title" class="sr-only">Informations sur l'événement</h2>
 
-        <!-- Tags -->
-        <div class="detail-tags" style="margin-bottom:1.5rem;">
-          <span class="detail-tag">🎵 Jazz</span>
-          <span class="detail-tag">🎉 Festival</span>
-          <span class="detail-tag">✨ Gratuit</span>
-          <span class="detail-tag">🌞 En plein air</span>
-          <span class="detail-tag">🤟 LSF</span>
-          <span class="detail-tag">💬 Sous-titrage</span>
-          <span class="detail-tag">♿ PMR</span>
-        </div>
+        <!-- Tags — injectés par JS -->
+        <div class="detail-tags" id="detail-tags" style="margin-bottom:1.5rem;" aria-label="Tags"></div>
 
         <h2>À propos de l'événement</h2>
-        <p>Le <strong>Festival Jazz au Vieux-Port</strong> est l'un des rendez-vous musicaux incontournables de Marseille. Pendant trois jours, la grande scène flottante installée sur le bassin du Vieux-Port accueille plus de trente artistes venus des quatre coins du monde.</p>
-        <p>Concerts en plein air, ateliers d'improvisation, jam sessions dans les bars du quartier, expositions de photos jazzy le long des quais… Une programmation riche et variée, accessible à tous, pour vivre la musique autrement face à la Méditerranée.</p>
+        <p id="detail-desc">Chargement…</p>
+        <p id="detail-long-desc"></p>
 
-        <h2>Programme</h2>
-        <ul>
-          <li><strong>15 mai (Jeudi)</strong> – Ouverture : Trio Nina & the Groove · 19h / Blue Note Collective · 21h</li>
-          <li><strong>16 mai (Vendredi)</strong> – Soirée fusion : Kader Diallo Quintet · 18h / Les Jazzmen du Port · 20h / Marcus Brown Band · 22h</li>
-          <li><strong>17 mai (Samedi)</strong> – Grande nuit : Jam session libre · 17h / Orchestre de Chambre de Marseille · 20h / Finale : Ibrahim Kouyaté · 22h30</li>
-        </ul>
+        <h2>Accès &amp; Informations pratiques</h2>
+        <p id="detail-acces">Chargement…</p>
 
-        <h2>Accès & Informations pratiques</h2>
-        <p>L'événement se tient <strong>quai des Belges et quai du Port</strong>, à deux pas du métro Vieux-Port (Ligne 1). Entrée entièrement gratuite, sans réservation pour la plupart des concerts (places debout). Des zones assises réservées PMR sont disponibles sur inscription en ligne.</p>
-
-        <!-- Section Médias (galerie + vidéo) -->
+        <!-- ── GALERIE PHOTOS (sans vidéo) ── -->
         <div class="media-section">
-          <h2>Galerie & Vidéo</h2>
-          <div class="media-grid" role="list" aria-label="Galerie photos et vidéo du festival">
+          <h2>Photos</h2>
+          <div class="media-grid" role="list" aria-label="Galerie photos">
 
-            <!-- Image principale / vidéo trigger -->
-            <div
-              class="media-item media-main has-video"
-              data-video-trigger
-              tabindex="0"
-              role="button"
-              aria-label="Lire la vidéo de présentation du festival Jazz au Vieux-Port"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=700&q=80"
-                alt="Foule devant la scène principale du festival de jazz, lumières chaudes"
-                loading="lazy" width="700" height="450"
-              >
+            <!-- Photo 1 — même image que le hero, injectée par JS -->
+            <div class="media-item media-main" role="listitem">
+              <picture>
+                <img id="media-img-1"
+                     src=""
+                     alt="Photo principale"
+                     loading="lazy"
+                     width="700" height="450">
+              </picture>
             </div>
 
-            <!-- Photo 2 -->
+            <!-- Photo 2 — ambiance statique -->
             <div class="media-item" role="listitem">
-              <img
-                src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=400&q=75"
-                alt="Musicien de jazz jouant de la trompette en gros plan, éclairage scénique"
-                loading="lazy" width="400" height="225"
-              >
+              <picture>
+                <img src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=400&q=75"
+                     alt="Musicien en concert, éclairage scénique"
+                     loading="lazy" width="400" height="225">
+              </picture>
             </div>
 
-            <!-- Photo 3 -->
+            <!-- Photo 3 — lieu statique -->
             <div class="media-item" role="listitem">
-              <img
-                src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=400&q=75"
-                alt="Vue panoramique du Vieux-Port de Marseille au coucher du soleil"
-                loading="lazy" width="400" height="225"
-              >
+              <picture>
+                <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=400&q=75"
+                     alt="Vue du Vieux-Port de Marseille au coucher du soleil"
+                     loading="lazy" width="400" height="225">
+              </picture>
             </div>
+
           </div>
         </div>
 
-        <!-- Carte -->
+        <!-- Carte lieu -->
         <h2 style="margin-top:2rem;">Lieu</h2>
-        <div class="map-placeholder" role="img" aria-label="Carte de localisation : Quai des Belges, Vieux-Port, Marseille">
+        <div class="map-placeholder" role="img" aria-label="Localisation">
           <span style="font-size:2rem;" aria-hidden="true">🗺</span>
-          <strong>Quai des Belges — Vieux-Port, Marseille</strong>
-          <small style="color:var(--gris-fonce);">Métro : Vieux-Port (Ligne 1) · Bus : 83, 82, 60</small>
+          <strong id="detail-lieu-nom">Chargement…</strong>
+          <small id="detail-lieu-adresse" style="color:var(--gris-fonce);"></small>
         </div>
 
-        <!-- Accessibilité détaillée -->
+        <!-- Accessibilité -->
         <section class="accessibility-detail" aria-labelledby="access-title">
           <h2 id="access-title">Accessibilité</h2>
           <div class="access-grid">
@@ -152,41 +138,43 @@
               <span class="access-icon" aria-hidden="true">♿</span>
               <div>
                 <strong>Accès fauteuil roulant</strong>
-                <p>Toute la zone est accessible PMR. Des espaces réservés aux premiers rangs sont disponibles sur inscription.</p>
+                <p>Zone accessible PMR. Espaces réservés disponibles sur inscription.</p>
               </div>
             </div>
             <div class="access-item">
               <span class="access-icon" aria-hidden="true">🤟</span>
               <div>
                 <strong>Langue des Signes Française</strong>
-                <p>Des interprètes LSF seront présents lors des concerts du vendredi et samedi soir (20h–22h).</p>
+                <p>Interprètes LSF présents lors des principaux temps forts.</p>
               </div>
             </div>
             <div class="access-item">
               <span class="access-icon" aria-hidden="true">💬</span>
               <div>
                 <strong>Sous-titrage en temps réel</strong>
-                <p>Les annonces et présentations des artistes seront sous-titrées sur écrans latéraux.</p>
+                <p>Annonces sous-titrées sur écrans latéraux lorsque disponibles.</p>
               </div>
             </div>
             <div class="access-item">
               <span class="access-icon" aria-hidden="true">🔊</span>
               <div>
                 <strong>Audiodescription</strong>
-                <p>Application mobile VilleNova disponible avec audiodescription des lieux et programmes.</p>
+                <p>Application VilleNova avec audiodescription des lieux et programmes.</p>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- Événements similaires -->
+        <!-- Événements similaires statiques -->
         <section aria-labelledby="similar-title" style="margin-top:2.5rem;">
           <h2 id="similar-title">Événements similaires</h2>
           <div class="similar-grid">
             <article class="event-card" style="opacity:1;animation:none;" aria-labelledby="sim1-title">
               <div class="card-img-wrap" style="aspect-ratio:3/2;">
-                <img src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=400&q=70"
-                     alt="Concert classique en salle de théâtre" loading="lazy" width="400" height="267">
+                <picture>
+                  <img src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=400&q=70"
+                       alt="Concert classique" loading="lazy" width="400" height="267">
+                </picture>
                 <span class="card-badge">Concert</span>
               </div>
               <div class="card-body">
@@ -197,13 +185,15 @@
             </article>
             <article class="event-card" style="opacity:1;animation:none;" aria-labelledby="sim2-title">
               <div class="card-img-wrap" style="aspect-ratio:3/2;">
-                <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=400&q=70"
-                     alt="Festival électronique en plein air la nuit" loading="lazy" width="400" height="267">
+                <picture>
+                  <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=400&q=70"
+                       alt="Festival en plein air" loading="lazy" width="400" height="267">
+                </picture>
                 <span class="card-badge">Festival</span>
               </div>
               <div class="card-body">
                 <div class="card-meta"><span>📅 7 juin 2025</span></div>
-                <h3 class="card-title" id="sim2-title">Festival Son & Lumière</h3>
+                <h3 class="card-title" id="sim2-title">Festival Son &amp; Lumière</h3>
                 <p class="card-desc">Esplanade Velodrome — Gratuit</p>
               </div>
             </article>
@@ -212,65 +202,86 @@
 
       </article>
 
-      <!-- SIDEBAR -->
+      <!-- ── SIDEBAR ── -->
       <aside class="detail-sidebar" aria-label="Informations pratiques et réservation">
         <div class="info-card">
           <div class="info-card-header">
             <div class="price-label">Tarif</div>
-            <div class="price">Gratuit</div>
-            <div style="font-size:.82rem;opacity:.7;margin-top:.2rem;">Entrée libre sans réservation</div>
+            <div class="price" id="sidebar-prix">Chargement…</div>
+            <div style="font-size:.82rem;opacity:.7;margin-top:.2rem;" id="sidebar-prix-detail"></div>
           </div>
           <div class="info-card-body">
+
             <div class="info-row">
               <span class="info-icon" aria-hidden="true">📅</span>
               <div>
                 <span class="info-label">Dates</span>
-                15, 16 et 17 mai 2025
+                <span id="sidebar-date">Chargement…</span>
               </div>
             </div>
+
             <div class="info-row">
               <span class="info-icon" aria-hidden="true">⏰</span>
               <div>
                 <span class="info-label">Horaires</span>
-                17h – 23h30
+                <span id="sidebar-heure">À préciser</span>
               </div>
             </div>
+
             <div class="info-row">
               <span class="info-icon" aria-hidden="true">📍</span>
               <div>
                 <span class="info-label">Lieu</span>
-                Quai des Belges<br>Vieux-Port, Marseille
+                <span id="sidebar-lieu">Chargement…</span>
               </div>
             </div>
+
             <div class="info-row">
-              <span class="info-icon" aria-hidden="true">🚇</span>
+              <span class="info-icon" aria-hidden="true">💶</span>
               <div>
-                <span class="info-label">Accès</span>
-                Métro Vieux-Port (L1)<br>Bus 83, 82, 60
+                <span class="info-label">Conditions</span>
+                <span id="sidebar-conditions">—</span>
               </div>
             </div>
+
             <div class="info-row">
               <span class="info-icon" aria-hidden="true">🎵</span>
               <div>
                 <span class="info-label">Catégorie</span>
-                Festival · Jazz
+                <span id="sidebar-cat">—</span>
               </div>
             </div>
 
-            <button class="reserve-btn" onclick="handleReservation()" aria-label="Réserver ma place au festival Jazz au Vieux-Port">
-              Réserver ma place →
-            </button>
+            <!-- BOUTON RÉSERVATION -->
+            <a id="btn-reservation"
+               href="/html/billetterie.html"
+               class="reserve-btn"
+               aria-label="Réserver ma place pour cet événement">
+              🎟 Réserver ma place →
+            </a>
 
+            <!-- BOUTON LIEN OFFICIEL OA -->
+            <a id="btn-oa-link"
+               href="#"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="reserve-btn"
+               aria-label="Voir la page officielle de l'événement"
+               style="background:transparent;border:2px solid var(--brun-chaud);color:var(--brun-chaud);margin-top:.6rem;box-shadow:none;text-align:center;display:block;">
+              🔗 Page officielle →
+            </a>
+
+            <!-- BOUTON FAVORIS -->
             <button
+              id="btn-favoris"
               class="reserve-btn"
-              style="background:transparent;border:2px solid var(--terracotta);color:var(--terracotta);margin-top:.6rem;box-shadow:none;"
-              onclick="handleFavorite(this)"
               aria-pressed="false"
-              aria-label="Ajouter aux favoris"
-            >
+              aria-label="Ajouter cet événement à mes favoris"
+              style="background:transparent;border:2px solid var(--terracotta);color:var(--terracotta);margin-top:.6rem;box-shadow:none;">
               ♡ Ajouter aux favoris
             </button>
 
+            <!-- Badges accessibilité -->
             <div class="accessibility-badges">
               <p>Services accessibilité :</p>
               <div class="badges-row">
@@ -285,22 +296,31 @@
             <div style="margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--sable-moyen);">
               <p style="font-size:.8rem;font-weight:600;color:var(--gris-fonce);margin-bottom:.5rem;">Partager :</p>
               <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
-                <button onclick="handleShare('facebook')" class="share-btn" aria-label="Partager sur Facebook" style="background:var(--sable-moyen);border:none;border-radius:var(--radius-sm);padding:.4rem .8rem;font-size:.82rem;cursor:pointer;color:var(--brun-chaud);font-family:var(--font-corps);font-weight:600;transition:all var(--transition);">Facebook</button>
-                <button onclick="handleShare('twitter')" class="share-btn" aria-label="Partager sur X (Twitter)" style="background:var(--sable-moyen);border:none;border-radius:var(--radius-sm);padding:.4rem .8rem;font-size:.82rem;cursor:pointer;color:var(--brun-chaud);font-family:var(--font-corps);font-weight:600;transition:all var(--transition);">X / Twitter</button>
-                <button onclick="handleShare('copy')" class="share-btn" aria-label="Copier le lien" style="background:var(--sable-moyen);border:none;border-radius:var(--radius-sm);padding:.4rem .8rem;font-size:.82rem;cursor:pointer;color:var(--brun-chaud);font-family:var(--font-corps);font-weight:600;transition:all var(--transition);">Copier le lien</button>
+                <button id="btn-share-fb" class="share-btn" aria-label="Partager sur Facebook"
+                  style="background:var(--sable-moyen);border:none;border-radius:var(--radius-sm);padding:.4rem .8rem;font-size:.82rem;cursor:pointer;color:var(--brun-chaud);font-family:var(--font-corps);font-weight:600;">
+                  Facebook
+                </button>
+                <button id="btn-share-tw" class="share-btn" aria-label="Partager sur X (Twitter)"
+                  style="background:var(--sable-moyen);border:none;border-radius:var(--radius-sm);padding:.4rem .8rem;font-size:.82rem;cursor:pointer;color:var(--brun-chaud);font-family:var(--font-corps);font-weight:600;">
+                  X / Twitter
+                </button>
+                <button id="btn-share-copy" class="share-btn" aria-label="Copier le lien"
+                  style="background:var(--sable-moyen);border:none;border-radius:var(--radius-sm);padding:.4rem .8rem;font-size:.82rem;cursor:pointer;color:var(--brun-chaud);font-family:var(--font-corps);font-weight:600;">
+                  Copier le lien
+                </button>
               </div>
             </div>
 
           </div>
         </div>
 
-        <!-- Météo contextuelle -->
-        <div class="weather-widget" aria-label="Météo prévue pour l'événement">
+        <!-- Météo -->
+        <div class="weather-widget" aria-label="Météo prévue">
           <div class="weather-header">
             <span aria-hidden="true">☀️</span>
             <div>
               <strong>Météo prévue</strong>
-              <div style="font-size:.78rem;opacity:.7;">15–17 mai · Marseille</div>
+              <div style="font-size:.78rem;opacity:.7;">Marseille</div>
             </div>
           </div>
           <div class="weather-days">
@@ -315,21 +335,11 @@
 
   </main>
 
-  <!-- MODAL VIDÉO -->
-  <div id="video-modal" class="video-modal" role="dialog" aria-modal="true" aria-label="Vidéo du festival" aria-hidden="true">
-    <button class="video-modal-close" aria-label="Fermer la vidéo">✕</button>
-    <video controls preload="none" aria-label="Vidéo de présentation du festival Jazz au Vieux-Port" width="900">
-      <source src="../assets/jazz-festival.mp4" type="video/mp4">
-      <track kind="captions" src="../assets/captions-fr.vtt" srclang="fr" label="Français" default>
-      <p>Votre navigateur ne prend pas en charge la lecture vidéo. <a href="../assets/jazz-festival.mp4">Télécharger la vidéo</a>.</p>
-    </video>
-  </div>
-
-  <!-- FOOTER -->
+  <!-- ═══ FOOTER ═══ -->
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
       <div class="footer-brand">
-        <a href="../index.html" class="logo" aria-label="VilleNova - Accueil">
+        <a href="/html/index.html" class="logo" aria-label="VilleNova - Accueil">
           <svg viewBox="0 0 32 32" fill="none" width="24" aria-hidden="true">
             <circle cx="16" cy="16" r="14" fill="#D17B49" opacity=".2"/>
             <path d="M8 20 L16 10 L24 20" stroke="#E6D3B3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -341,15 +351,20 @@
       </div>
       <div class="footer-col">
         <h3>Événements</h3>
-        <a href="#">Concerts</a><a href="#">Expositions</a><a href="#">Festivals</a><a href="#">Théâtre</a>
+        <a href="#">Concerts</a><a href="#">Expositions</a>
+        <a href="#">Festivals</a><a href="#">Théâtre</a>
       </div>
       <div class="footer-col">
         <h3>VilleNova</h3>
-        <a href="#">À propos</a><a href="contact.html">Contact</a><a href="#">Presse</a>
+        <a href="#">À propos</a>
+        <a href="/html/contact.html">Contact</a>
+        <a href="#">Presse</a>
       </div>
       <div class="footer-col">
         <h3>Légal</h3>
-        <a href="#">Mentions légales</a><a href="#">CGU</a><a href="#">Confidentialité</a>
+        <a href="#">Mentions légales</a>
+        <a href="#">CGU</a>
+        <a href="#">Confidentialité</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -360,40 +375,7 @@
 
   <div class="toast-container" aria-live="polite" aria-atomic="true" role="status"></div>
 
-  <script src="../js/main.js"defer></script>
-  <script src="../js/detail.js"defer></script>
-  <script src="../js/evenement-detail.js"defer></script>
-  <script>
-    function handleReservation() {
-      showToast('Redirection vers la billetterie…', 'info');
-      setTimeout(() => { window.location.href = 'billetterie.html'; }, 1000);
-    }
-
-    function handleFavorite(btn) {
-      const isPressed = btn.getAttribute('aria-pressed') === 'true';
-      btn.setAttribute('aria-pressed', String(!isPressed));
-      btn.innerHTML = isPressed ? '♡ Ajouter aux favoris' : '♥ Retiré des favoris';
-      if (!isPressed) {
-        btn.style.background = 'var(--terracotta)';
-        btn.style.color = '#fff';
-        showToast('Événement ajouté à vos favoris ❤️', 'success');
-      } else {
-        btn.style.background = 'transparent';
-        btn.style.color = 'var(--terracotta)';
-        showToast('Événement retiré de vos favoris', 'info');
-      }
-    }
-
-    function handleShare(platform) {
-      const url = window.location.href;
-      const title = 'Jazz au Vieux-Port – Festival International';
-      if (platform === 'copy') {
-        navigator.clipboard.writeText(url).then(() => showToast('Lien copié dans le presse-papiers !', 'success'));
-      } else {
-        showToast(`Partage sur ${platform === 'facebook' ? 'Facebook' : 'X'} en cours…`, 'info');
-      }
-    }
-  </script>
+  <script src="../js/evenement-detail.js" defer></script>
 
 </body>
 </html>
