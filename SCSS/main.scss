@@ -1,90 +1,90 @@
 // =========================================
-// VilleNova — main.scss
+// VilleNova — main.scss (version optimisée)
 // =========================================
 
 // 1. Abstracts
-@import 'abstracts/variables';
-@import 'abstracts/mixins';
-@import 'abstracts/functions';
+@use 'abstracts/variables' as *;
+@use 'abstracts/mixins' as *;
+@use 'abstracts/functions' as *;
 
 // 2. Base
-@import 'base/reset';
-@import 'base/typography';
-@import 'base/accessibility';
-@import 'base/animations';
-@import 'base/utilities';
+@use 'base/reset' as *;
+@use 'base/typography' as *;
+@use 'base/accessibility' as *;
+@use 'base/animations' as *;
+@use 'base/utilities' as *;
 
 // 3. Layout
-@import 'layout/header';
-@import 'layout/footer';
-@import 'layout/sections';
-@import 'layout/grid';
+@use 'layout/header' as *;
+@use 'layout/footer' as *;
+@use 'layout/sections' as *;
+@use 'layout/grid' as *;
 
 // 4. Components
-@import 'components/buttons';
-@import 'components/search';
-@import 'components/filters';
+@use 'components/buttons' as *;
+@use 'components/search' as *;
+@use 'components/filters' as *;
 
 // Cartes — base commune
-@import 'components/cards-base';
+@use 'components/cards-base' as *;
 
 // Événementiel
-@import 'components/cards-events';
+@use 'components/cards-events' as *;
 
 // Billetterie
-@import 'components/cards-billetterie';
+@use 'components/cards-billetterie' as *;
 
 // Hero
-@import 'components/hero';
-@import 'components/hero-billet';
+@use 'components/hero' as *;
+@use 'components/hero-billet' as *;
 
 // Newsletter
-@import 'components/newsletter';
+@use 'components/newsletter' as *;
 
 // Modales & UI
-@import 'components/video-modal';
-@import 'components/toast';
-@import 'components/drawer';
-@import 'components/modal-confirm';
+@use 'components/video-modal' as *;
+@use 'components/toast' as *;
+@use 'components/drawer' as *;
+@use 'components/modal-confirm' as *;
 
 // Stats & pagination
-@import 'components/stats';
-@import 'components/pagination';
+@use 'components/stats' as *;
+@use 'components/pagination' as *;
 
 // =========================================
 // PAGE DÉTAIL — NOUVEAUX COMPOSANTS
 // =========================================
-@import 'components/detail-hero';
-@import 'components/detail-layout';
-@import 'components/detail-tags';
-@import 'components/detail-typography';
-@import 'components/detail-media';
-@import 'components/detail-map';
-@import 'components/detail-sidebar';
-@import 'components/accessibility';
-@import 'components/weather';
-@import 'components/similar-events';
+@use 'components/detail-hero' as *;
+@use 'components/detail-layout' as *;
+@use 'components/detail-tags' as *;
+@use 'components/detail-typography' as *;
+@use 'components/detail-media' as *;
+@use 'components/detail-map' as *;
+@use 'components/detail-sidebar' as *;
+@use 'components/accessibility' as *;
+@use 'components/weather' as *;
+@use 'components/similar-events' as *;
 
 // =========================================
 // AGENDA — emplacement CORRECT
 // =========================================
 
 // La PAGE agenda (hero, filtres, recherche, contrôles)
-@import 'pages/agenda';
+@use 'pages/agenda' as *;
 
 // Le CALENDRIER (grille, cases, dots)
-@import 'components/calendar';
+@use 'components/calendar' as *;
 
 // La LISTE (event-card)
-@import 'components/agenda-list';
+@use 'components/agenda-list' as *;
 
 // Le PANNEAU latéral
-@import 'components/agenda-panel';
+@use 'components/agenda-panel' as *;
 
 // =========================================
 // Responsive
 // =========================================
-@import 'responsive/mobile';
-@import 'responsive/tablet';
-@import 'responsive/desktop';
-@import 'responsive/large';
+@use 'responsive/mobile' as *;
+@use 'responsive/tablet' as *;
+@use 'responsive/desktop' as *;
+@use 'responsive/large' as *;

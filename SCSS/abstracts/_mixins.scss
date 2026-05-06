@@ -1,165 +1,52 @@
 // =============================================
-// MIXINS — VilleNova
+// BREAKPOINT SYSTEM — PRODUCTION READY
 // =============================================
 
-// ------------------------------
-// Flex helpers
-// ------------------------------
-@mixin flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+// 1. Définition des breakpoints (mobile-first)
+$breakpoints: (
+  xs: 480px,   // Extra small
+  sm: 576px,   // Small / mobile large
+  md: 768px,   // Tablet
+  lg: 1200px,  // Desktop
+  xl: 1400px   // Large desktop
+);
 
-@mixin flex-between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+// 2. Mixin universel — min-width (mobile-first)
+@mixin respond($bp) {
+  $value: map-get($breakpoints, $bp);
 
-@mixin flex-col($gap: 0) {
-  display: flex;
-  flex-direction: column;
-  gap: $gap;
-}
-
-
-// ------------------------------
-// Grid helpers
-// ------------------------------
-@mixin grid-cols($cols, $gap: var(--gap-cards)) {
-  display: grid;
-  grid-template-columns: repeat($cols, 1fr);
-  gap: $gap;
-}
-
-@mixin grid-auto($min, $gap: var(--gap-cards)) {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax($min, 1fr));
-  gap: $gap;
-}
-
-
-// ------------------------------
-// Container
-// ------------------------------
-@mixin container {
-  max-width: var(--container-max);
-  margin-inline: auto;
-  padding-inline: clamp(1rem, 4vw, 2rem);
-}
-
-
-// ------------------------------
-// Text helpers
-// ------------------------------
-@mixin ellipsis($lines: 1) {
-  display: -webkit-box;
-  -webkit-line-clamp: $lines;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-@mixin title-shadow {
-  text-shadow: 0 2px 8px rgba(0,0,0,.18);
-}
-
-
-// ------------------------------
-// Transitions & animations
-// ------------------------------
-@mixin smooth {
-  transition: all var(--dur) var(--ease);
-}
-
-@mixin hover-lift($y: -3px) {
-  transition: transform var(--dur) var(--ease),
-              box-shadow var(--dur) var(--ease);
-
-  &:hover {
-    transform: translateY($y);
-    box-shadow: var(--shadow-hover);
+  @if $value == null {
+    @error "❌ Breakpoint `#{$bp}` not found in $breakpoints map.";
   }
-}
 
-
-// ------------------------------
-// Shimmer skeleton
-// ------------------------------
-@mixin shimmer {
-  background: linear-gradient(
-    90deg,
-    var(--sable-moyen) 25%,
-    var(--sable-clair) 50%,
-    var(--sable-moyen) 75%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-
-// ------------------------------
-// Focus ring
-// ------------------------------
-@mixin focus-ring {
-  &:focus-visible {
-    outline: 3px solid var(--terracotta);
-    outline-offset: 3px;
-    border-radius: var(--r-sm);
-  }
-}
-
-
-// ------------------------------
-// Card base
-// ------------------------------
-@mixin card-base {
-  background: var(--blanc-casse);
-  border: 1px solid var(--sable-moyen);
-  border-radius: var(--r-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-card);
-  @include smooth;
-}
-
-
-// ------------------------------
-// Responsive breakpoints — MOBILE FIRST
-// ------------------------------
-
-// Mobile = styles par défaut (pas de mixin)
-
-// EXTRA SMALL
-@mixin xs {
-  @media (min-width: 480px) {
+  @media (min-width: $value) {
     @content;
   }
 }
 
-// MOBILE
-@mixin mobile {
-  @media (min-width: 576px) {
+// 3. Mixin max-width (optionnel)
+@mixin respond-max($bp) {
+  $value: map-get($breakpoints, $bp);
+
+  @if $value == null {
+    @error "❌ Breakpoint `#{$bp}` not found in $breakpoints map.";
+  }
+
+  @media (max-width: $value) {
     @content;
   }
 }
 
-// TABLET
-@mixin tablet {
-  @media (min-width: 768px) {
-    @content;
-  }
-}
+// 4. Mixin entre deux breakpoints (optionnel)
+@mixin between($min, $max) {
+  $minVal: map-get($breakpoints, $min);
+  $maxVal: map-get($breakpoints, $max);
 
-// DESKTOP
-@mixin desktop {
-  @media (min-width: 1200px) {
-    @content;
+  @if $minVal == null or $maxVal == null {
+    @error "❌ Breakpoints `#{$min}` or `#{$max}` not found.";
   }
-}
 
-// LARGE
-@mixin large {
-  @media (min-width: 1400px) {
+  @media (min-width: $minVal) and (max-width: $maxVal) {
     @content;
   }
 }
