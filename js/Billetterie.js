@@ -38,8 +38,8 @@ const cart = {
   },
 
   clear() {
-    this.items        = {};
-    this.promoApplied = false;
+    this.items         = {};
+    this.promoApplied  = false;
     this.promoDiscount = 0;
   },
 };
@@ -110,12 +110,11 @@ function initFilters() {
       const cards  = document.querySelectorAll('#events-grid .billet-card');
       let visible  = 0;
 
-      cards.forEach((card, i) => {
+      cards.forEach((card) => {
         const match = filter === 'all' || card.dataset.category === filter;
         card.style.display = match ? '' : 'none';
         card.setAttribute('aria-hidden', String(!match));
         if (match) {
-          /* Ré-animer les cartes filtrées avec décalage */
           card.classList.remove('visible');
           card.style.setProperty('--delay', `${visible * 60}ms`);
           setTimeout(() => card.classList.add('visible'), 20 + visible * 60);
@@ -148,12 +147,11 @@ function initSort() {
       'date':       () => 0,
       'price-asc':  (a, b) => getPrice(a) - getPrice(b),
       'price-desc': (a, b) => getPrice(b) - getPrice(a),
-      'popular':    () => Math.random() - .5,   // démo
+      'popular':    () => Math.random() - .5,
     }[sel.value] ?? (() => 0);
 
     cards.sort(compare);
 
-    /* Réinsertion avec animation */
     cards.forEach((card, i) => {
       card.classList.remove('visible');
       card.style.setProperty('--delay', `${i * 55}ms`);
@@ -169,40 +167,35 @@ function initSort() {
 function initQtyControls() {
   document.querySelectorAll('.qty-btn').forEach(btn => {
     btn.addEventListener('click', function () {
-      const eventId  = this.dataset.event;
-      const price    = parseFloat(this.dataset.price);
-      const name     = this.dataset.name;
-      const isMinus  = this.classList.contains('qty-minus');
-      const output   = document.querySelector(`.qty-val[data-event="${eventId}"]`);
-      const row      = this.closest('.tarif-row');
+      const eventId = this.dataset.event;
+      const price   = parseFloat(this.dataset.price);
+      const name    = this.dataset.name;
+      const isMinus = this.classList.contains('qty-minus');
+      const output  = document.querySelector(`.qty-val[data-event="${eventId}"]`);
+      const row     = this.closest('.tarif-row');
 
       if (!output) return;
 
       let qty = parseInt(output.textContent, 10) || 0;
       qty = isMinus ? Math.max(0, qty - 1) : Math.min(10, qty + 1);
 
-      /* Mise à jour DOM */
       output.textContent = qty;
       output.classList.add('changed');
       output.addEventListener('animationend', () => output.classList.remove('changed'), { once: true });
 
-      /* Highlight de la ligne */
       if (qty > 0) {
         row.classList.add('has-qty');
       } else {
         row.classList.remove('has-qty');
       }
 
-      /* Désactiver le bouton minus si qty = 0 */
       const minusBtn = row.querySelector('.qty-minus');
       if (minusBtn) minusBtn.disabled = qty === 0;
 
-      /* Mise à jour du panier */
       cart.setItem(eventId, name, price, qty);
       renderCart();
       updateCartBadge();
 
-      /* Toast si ajout */
       if (!isMinus && qty > 0) {
         showToast(`✓ ${name} ajouté au panier`, 'success', 2000);
       }
@@ -214,25 +207,22 @@ function initQtyControls() {
    7. RENDU PANIER
    ══════════════════════════════════════════ */
 function renderCart() {
-  const itemsEl   = document.getElementById('cart-items');
-  const footerEl  = document.getElementById('cart-footer');
-  const emptyEl   = document.getElementById('cart-empty');
+  const itemsEl    = document.getElementById('cart-items');
+  const footerEl   = document.getElementById('cart-footer');
+  const emptyEl    = document.getElementById('cart-empty');
   const subtotalEl = document.getElementById('cart-subtotal');
-  const feesEl    = document.getElementById('cart-fees');
-  const totalEl   = document.getElementById('cart-total');
+  const feesEl     = document.getElementById('cart-fees');
+  const totalEl    = document.getElementById('cart-total');
 
   const isEmpty = cart.count === 0;
 
-  /* Afficher / masquer états */
-  if (emptyEl) emptyEl.style.display = isEmpty ? 'flex' : 'none';
+  if (emptyEl)  emptyEl.style.display = isEmpty ? 'flex' : 'none';
   if (footerEl) footerEl.hidden = isEmpty;
 
   if (!itemsEl) return;
 
-  /* Supprimer les items précédents (pas l'empty state) */
   itemsEl.querySelectorAll('.cart-item').forEach(el => el.remove());
 
-  /* Réinjecter les items */
   Object.entries(cart.items).forEach(([id, item]) => {
     const el = document.createElement('div');
     el.className = 'cart-item';
@@ -245,15 +235,10 @@ function renderCart() {
       <span class="cart-item-price">${(item.price * item.qty).toFixed(2)} €</span>
       <button class="cart-item-remove" data-id="${id}" aria-label="Supprimer ${escapeHtml(item.name)}">✕</button>
     `;
-
-    el.querySelector('.cart-item-remove').addEventListener('click', () => {
-      removeCartItem(id);
-    });
-
+    el.querySelector('.cart-item-remove').addEventListener('click', () => removeCartItem(id));
     itemsEl.appendChild(el);
   });
 
-  /* Totaux */
   const fmt = (n) => n.toFixed(2).replace('.', ',') + ' €';
   if (subtotalEl) subtotalEl.textContent = fmt(cart.total);
   if (feesEl)     feesEl.textContent     = fmt(cart.fees);
@@ -264,7 +249,6 @@ function removeCartItem(id) {
   const item = cart.items[id];
   if (!item) return;
 
-  /* Réinitialiser le compteur dans la carte */
   const output = document.querySelector(`.qty-val[data-event="${id}"]`);
   if (output) {
     output.textContent = '0';
@@ -292,7 +276,7 @@ function updateCartBadge() {
   badge.textContent = cart.count;
   if (cart.count !== prev) {
     badge.classList.remove('bump');
-    void badge.offsetWidth;   // reflow pour reset animation
+    void badge.offsetWidth;
     badge.classList.add('bump');
   }
 }
@@ -301,9 +285,9 @@ function updateCartBadge() {
    9. PANNEAU PANIER (DRAWER)
    ══════════════════════════════════════════ */
 function initCartDrawer() {
-  const toggle  = document.getElementById('cart-toggle');
-  const drawer  = document.getElementById('cart-drawer');
-  const overlay = document.getElementById('cart-overlay');
+  const toggle   = document.getElementById('cart-toggle');
+  const drawer   = document.getElementById('cart-drawer');
+  const overlay  = document.getElementById('cart-overlay');
   const closeBtn = document.getElementById('cart-close');
 
   if (!toggle || !drawer) return;
@@ -347,12 +331,12 @@ function initPromo() {
 
   const CODES = {
     'MARSEILLE10': 10,
-    'VILLENOVA':   5,
+    'VILLENOVA':    5,
     'CULTURE2025': 15,
   };
 
   promoBtn.addEventListener('click', () => {
-    const code    = promoInput.value.trim().toUpperCase();
+    const code     = promoInput.value.trim().toUpperCase();
     const discount = CODES[code];
 
     if (!discount) {
@@ -369,7 +353,7 @@ function initPromo() {
     cart.promoDiscount = discount;
     cart.promoApplied  = true;
     promoInput.style.borderColor = '#2a7d4f';
-    promoInput.value = `${code} (−${discount} €)`;
+    promoInput.value    = `${code} (−${discount} €)`;
     promoInput.disabled = true;
     promoBtn.disabled   = true;
     renderCart();
@@ -390,7 +374,6 @@ function initCheckout() {
       return;
     }
 
-    /* Simuler une requête de paiement */
     btn.textContent = 'Traitement…';
     btn.disabled    = true;
 
@@ -400,7 +383,6 @@ function initCheckout() {
       renderCart();
       updateCartBadge();
 
-      /* Fermer le drawer */
       document.getElementById('cart-drawer')?.classList.remove('open');
       document.getElementById('cart-overlay')?.classList.remove('open');
       document.body.style.overflow = '';
@@ -423,7 +405,6 @@ function showConfirmModal() {
   const close   = document.getElementById('confirm-close');
   if (!modal) return;
 
-  /* Détails du récapitulatif */
   if (details) {
     const lines = Object.values(cart.items).map(i =>
       `<div>🎟 <strong>${escapeHtml(i.name)}</strong> × ${i.qty} — ${(i.price * i.qty).toFixed(2)} €</div>`
@@ -433,10 +414,7 @@ function showConfirmModal() {
 
   modal.classList.add('open');
   modal.setAttribute('aria-hidden', 'false');
-
-  /* Confettis */
   launchConfetti();
-
   close?.focus();
 
   close?.addEventListener('click', () => {
@@ -536,18 +514,17 @@ function escapeHtml(str) {
    ══════════════════════════════════════════ */
 function initCardInteractions() {
   document.querySelectorAll('.billet-card').forEach(card => {
-    /* Effet tilt léger au survol souris (desktop only) */
     if (window.matchMedia('(hover: hover)').matches) {
       card.addEventListener('mousemove', (e) => {
-        const rect   = card.getBoundingClientRect();
-        const x      = (e.clientX - rect.left) / rect.width  - .5;
-        const y      = (e.clientY - rect.top)  / rect.height - .5;
-        card.style.transform = `translateY(-5px) rotateX(${-y * 4}deg) rotateY(${x * 4}deg)`;
+        const rect = card.getBoundingClientRect();
+        const x    = (e.clientX - rect.left) / rect.width  - .5;
+        const y    = (e.clientY - rect.top)  / rect.height - .5;
+        card.style.transform  = `translateY(-5px) rotateX(${-y * 4}deg) rotateY(${x * 4}deg)`;
         card.style.transition = 'transform .1s ease';
       });
 
       card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
+        card.style.transform  = '';
         card.style.transition = 'transform .35s ease, box-shadow .35s ease, border-color .35s ease';
       });
     }
@@ -555,27 +532,252 @@ function initCardInteractions() {
 }
 
 /* ══════════════════════════════════════════
-   17. ENTRÉE CLAVIER SUR LES CARTES
+   OPENAGENDA — CONFIG
    ══════════════════════════════════════════ */
-function initKeyboardSupport() {
-  /* Les boutons + et - sont déjà focusables, rien à ajouter */
+const OA_KEY          = "832ecfba688a4dda9e6beb28922ee893";
+const OA_AGENDA_UID   = "24882772";
+const OA_THEATRE_UID  = "65855330";
+const OA_FESTIVAL_UID = "46290899";
+const OA_SPORT_UID    = "94552197";
+const OA_BASE         = "https://api.openagenda.com/v2";
+
+/* ── FETCH ─────────────────────────────────────────────── */
+async function oaBilletFetch(uid, params = {}) {
+  const url = `${OA_BASE}/agendas/${uid}/events?` +
+    new URLSearchParams({ key: OA_KEY, lang: 'fr', ...params });
+  try {
+    const res  = await fetch(url);
+    const data = await res.json();
+    console.log(`[Billetterie] agenda ${uid} → ${(data.events || []).length} events`);
+    return data.events || [];
+  } catch (e) {
+    console.error('[Billetterie] fetch error:', e);
+    return [];
+  }
+}
+
+/* ── EXTRACTION IMAGE (identique à main.js / agenda.js) ── */
+function extractImage(ev) {
+  const fallback = 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&q=80';
+  if (!ev.image) return fallback;
+  if (ev.image.base && ev.image.filename) return ev.image.base + ev.image.filename;
+  if (ev.image.variants?.length) {
+    const v = ev.image.variants.find(v => v.type === 'full') || ev.image.variants[0];
+    return ev.image.base + v.filename;
+  }
+  return fallback;
+}
+
+/* ── EXTRACTION TARIF ──────────────────────────────────── */
+/**
+ * Retourne { label: string, price: number } depuis un event OA.
+ * - Si ev.free → gratuit
+ * - Si ev.registration[].price existe → premier tarif trouvé
+ * - Si ev.conditions.fr contient un chiffre → on le parse
+ * - Sinon → "Voir détails" / 0
+ */
+function extractTarif(ev) {
+  /* Gratuit */
+  if (ev.free) return { label: 'Gratuit', price: 0 };
+
+  /* Tarifs dans registration */
+  if (Array.isArray(ev.registration) && ev.registration.length) {
+    for (const reg of ev.registration) {
+      if (typeof reg.price === 'number') {
+        return {
+          label: reg.label?.fr || `${reg.price.toFixed(2)} €`,
+          price: reg.price,
+        };
+      }
+    }
+  }
+
+  /* Conditions textuelles (ex: "Entrée : 8 €") */
+  const conditions = ev.conditions?.fr || '';
+  const match = conditions.match(/(\d+(?:[.,]\d{1,2})?)\s*€/);
+  if (match) {
+    const price = parseFloat(match[1].replace(',', '.'));
+    return { label: `${price.toFixed(2)} €`, price };
+  }
+
+  /* Fallback */
+  return { label: 'Voir détails', price: 0 };
+}
+
+/* ── INJECTION DANS UNE BILLET-CARD ────────────────────── */
+/**
+ * Injecte image, titre, date, lieu et tarif dans une carte billetterie
+ * identifiée par son préfixe (bev1, bev2…).
+ *
+ * La carte HTML doit contenir :
+ *   <img  id="bev1-img">
+ *   <h3   id="bev1-title">
+ *   <span id="bev1-date">
+ *   <span id="bev1-place">
+ *   <!-- zone tarifs -->
+ *   <div id="bev1-tarifs">
+ *     <!-- générée dynamiquement -->
+ *   </div>
+ */
+function fillBilletCard(prefix, ev) {
+  const $ = (id) => document.getElementById(`${prefix}-${id}`);
+
+  /* ── Titre ── */
+  const titre = ev.title?.fr || 'Événement';
+  const titleEl = $('title');
+  if (titleEl) titleEl.textContent = titre;
+
+  /* ── Date & lieu ── */
+  const date  = ev.dateRange?.fr || '';
+  const lieu  = ev.location?.name || '';
+  const dateEl  = $('date');
+  const placeEl = $('place');
+  if (dateEl)  dateEl.textContent  = date  ? `📅 ${date}`  : '';
+  if (placeEl) placeEl.textContent = lieu  ? `📍 ${lieu}`  : '';
+
+  /* ── Image ── */
+  const imgSrc  = extractImage(ev);
+  const fallback = 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&q=80';
+  const imgEl   = $('img');
+  if (imgEl) {
+    imgEl.src    = imgSrc;
+    imgEl.alt    = titre;
+    imgEl.onerror = () => { imgEl.src = fallback; imgEl.onerror = null; };
+  }
+
+  /* ── Tarifs ── */
+  const tarifsEl = $('tarifs');
+  if (!tarifsEl) return;
+
+  const eventId = String(ev.uid || prefix);
+  tarifsEl.innerHTML = '';
+
+  /* Plusieurs tarifs registration ? */
+  const registrations = Array.isArray(ev.registration) && ev.registration.length
+    ? ev.registration.filter(r => typeof r.price === 'number')
+    : [];
+
+  if (registrations.length > 1) {
+    /* On génère une ligne par tarif */
+    registrations.forEach((reg, i) => {
+      const rowId    = `${eventId}-t${i}`;
+      const rowLabel = reg.label?.fr || `Tarif ${i + 1}`;
+      const rowPrice = reg.price;
+      tarifsEl.appendChild(buildTarifRow(rowId, rowLabel, rowPrice));
+    });
+  } else {
+    /* Un seul tarif (ou gratuit / fallback) */
+    const { label, price } = extractTarif(ev);
+    tarifsEl.appendChild(buildTarifRow(eventId, `${titre} — ${label}`, price));
+  }
+
+  /* Réinitialiser les listeners quantité sur les nouveaux boutons */
+  tarifsEl.querySelectorAll('.qty-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const eid   = this.dataset.event;
+      const price = parseFloat(this.dataset.price);
+      const name  = this.dataset.name;
+      const isMinus = this.classList.contains('qty-minus');
+      const output  = tarifsEl.querySelector(`.qty-val[data-event="${eid}"]`);
+      const row     = this.closest('.tarif-row');
+      if (!output) return;
+
+      let qty = parseInt(output.textContent, 10) || 0;
+      qty = isMinus ? Math.max(0, qty - 1) : Math.min(10, qty + 1);
+
+      output.textContent = qty;
+      output.classList.add('changed');
+      output.addEventListener('animationend', () => output.classList.remove('changed'), { once: true });
+
+      row.classList.toggle('has-qty', qty > 0);
+      const minusBtn = row.querySelector('.qty-minus');
+      if (minusBtn) minusBtn.disabled = qty === 0;
+
+      cart.setItem(eid, name, price, qty);
+      renderCart();
+      updateCartBadge();
+
+      if (!isMinus && qty > 0) showToast(`✓ ${name} ajouté au panier`, 'success', 2000);
+    });
+  });
+
+  /* Désactiver les boutons minus des nouvelles lignes */
+  tarifsEl.querySelectorAll('.qty-minus').forEach(btn => { btn.disabled = true; });
+}
+
+/* ── CONSTRUIRE UNE LIGNE TARIF ─────────────────────────── */
+function buildTarifRow(eventId, name, price) {
+  const row = document.createElement('div');
+  row.className = 'tarif-row';
+
+  const priceDisplay = price > 0
+    ? `<span class="tarif-prix">${price.toFixed(2)} €</span>`
+    : `<span class="tarif-prix tarif-gratuit">Gratuit</span>`;
+
+  row.innerHTML = `
+    <div class="tarif-info">
+      <span class="tarif-label">${escapeHtml(name)}</span>
+      ${priceDisplay}
+    </div>
+    <div class="tarif-qty" role="group" aria-label="Quantité pour ${escapeHtml(name)}">
+      <button class="qty-btn qty-minus"
+              data-event="${escapeHtml(eventId)}"
+              data-price="${price}"
+              data-name="${escapeHtml(name)}"
+              aria-label="Retirer un billet"
+              disabled>−</button>
+      <span class="qty-val" data-event="${escapeHtml(eventId)}" aria-live="polite">0</span>
+      <button class="qty-btn qty-plus"
+              data-event="${escapeHtml(eventId)}"
+              data-price="${price}"
+              data-name="${escapeHtml(name)}"
+              aria-label="Ajouter un billet">+</button>
+    </div>
+  `;
+
+  return row;
+}
+
+/* ── CHARGEMENT DES CARTES OA ───────────────────────────── */
+async function loadOABilletCards() {
+  const [evMain, evTheatre, evFestival, evSport] = await Promise.all([
+    oaBilletFetch(OA_AGENDA_UID,   { limit: 2 }),
+    oaBilletFetch(OA_THEATRE_UID,  { limit: 1 }),
+    oaBilletFetch(OA_FESTIVAL_UID, { limit: 1 }),
+    oaBilletFetch(OA_SPORT_UID,    { limit: 1, 'relative[0]': 'current', 'relative[1]': 'upcoming' }),
+  ]);
+
+  /* Slot bev1 → agenda principal event 1 */
+  if (evMain[0])    fillBilletCard('bev1', evMain[0]);
+  /* Slot bev2 → agenda principal event 2 */
+  if (evMain[1])    fillBilletCard('bev2', evMain[1]);
+  /* Slot bev3 → théâtre */
+  if (evTheatre[0]) fillBilletCard('bev3', evTheatre[0]);
+  /* Slot bev4 → festival */
+  if (evFestival[0]) fillBilletCard('bev4', evFestival[0]);
+  /* Slot bev5 → sport */
+  if (evSport[0])   fillBilletCard('bev5', evSport[0]);
+
+  console.log('[Billetterie] Cartes OA chargées.');
 }
 
 /* ══════════════════════════════════════════
-   18. POINT D'ENTRÉE
+   17. POINT D'ENTRÉE
    ══════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initFilters();
   initSort();
-  initQtyControls();
+  initQtyControls();          // contrôles sur les cartes statiques existantes
   initCartDrawer();
   initPromo();
   initCheckout();
   initScrollAnimations();
   initCardInteractions();
-  initKeyboardSupport();
 
-  /* Désactiver tous les boutons minus au chargement (qty = 0) */
+  /* Désactiver les boutons minus statiques au chargement (qty = 0) */
   document.querySelectorAll('.qty-minus').forEach(btn => { btn.disabled = true; });
+
+  /* Charger les cartes OpenAgenda (images + tarifs) */
+  loadOABilletCards();
 });

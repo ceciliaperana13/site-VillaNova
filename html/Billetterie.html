@@ -93,12 +93,12 @@
     <!-- ── FILTRES ── -->
     <div class="filters-band" role="group" aria-label="Filtrer les événements">
       <div class="filters-inner">
-        <button class="filter-chip active" data-filter="all" aria-pressed="true">Tous</button>
-        <button class="filter-chip" data-filter="concert" aria-pressed="false">🎵 Concerts</button>
-        <button class="filter-chip" data-filter="festival" aria-pressed="false">🎉 Festivals</button>
-        <button class="filter-chip" data-filter="expo" aria-pressed="false">🖼 Expositions</button>
-        <button class="filter-chip" data-filter="theatre" aria-pressed="false">🎭 Théâtre</button>
-        <button class="filter-chip" data-filter="gastro" aria-pressed="false">🍽 Gastronomie</button>
+        <button class="filter-chip active" data-filter="all"      aria-pressed="true">Tous</button>
+        <button class="filter-chip"        data-filter="concert"  aria-pressed="false">🎵 Concerts</button>
+        <button class="filter-chip"        data-filter="festival" aria-pressed="false">🎉 Festivals</button>
+        <button class="filter-chip"        data-filter="expo"     aria-pressed="false">🖼 Expositions</button>
+        <button class="filter-chip"        data-filter="theatre"  aria-pressed="false">🎭 Théâtre</button>
+        <button class="filter-chip"        data-filter="gastro"   aria-pressed="false">🍽 Gastronomie</button>
 
         <div class="filter-sep" aria-hidden="true"></div>
 
@@ -121,7 +121,9 @@
 
       <div class="events-billet-grid" id="events-grid" role="list">
 
-        <!-- ══ CARD 1 — VEDETTE ══ -->
+        <!-- ══════════════════════════════════════════════════════
+             CARD 1 — VEDETTE STATIQUE (inchangée)
+        ══════════════════════════════════════════════════════ -->
         <article class="billet-card billet-featured animate-in" data-category="festival" role="listitem" aria-labelledby="ev1-title">
           <div class="billet-card-img">
             <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80"
@@ -149,7 +151,7 @@
                 <div class="qty-control" role="group" aria-label="Quantité Soirée Vendredi">
                   <button class="qty-btn qty-minus" aria-label="Retirer une place" data-event="jazz-ven" data-price="22" data-name="Jazz — Vendredi">−</button>
                   <output class="qty-val" aria-live="polite" data-event="jazz-ven">0</output>
-                  <button class="qty-btn qty-plus" aria-label="Ajouter une place" data-event="jazz-ven" data-price="22" data-name="Jazz — Vendredi">+</button>
+                  <button class="qty-btn qty-plus"  aria-label="Ajouter une place"  data-event="jazz-ven" data-price="22" data-name="Jazz — Vendredi">+</button>
                 </div>
               </div>
               <div class="tarif-row">
@@ -160,7 +162,7 @@
                 <div class="qty-control" role="group" aria-label="Quantité Soirée Samedi">
                   <button class="qty-btn qty-minus" aria-label="Retirer" data-event="jazz-sam" data-price="28" data-name="Jazz — Samedi">−</button>
                   <output class="qty-val" aria-live="polite" data-event="jazz-sam">0</output>
-                  <button class="qty-btn qty-plus" aria-label="Ajouter" data-event="jazz-sam" data-price="28" data-name="Jazz — Samedi">+</button>
+                  <button class="qty-btn qty-plus"  aria-label="Ajouter" data-event="jazz-sam" data-price="28" data-name="Jazz — Samedi">+</button>
                 </div>
               </div>
               <div class="tarif-row">
@@ -171,7 +173,7 @@
                 <div class="qty-control" role="group" aria-label="Quantité Pass 3 nuits">
                   <button class="qty-btn qty-minus" aria-label="Retirer" data-event="jazz-pass" data-price="60" data-name="Jazz — Pass 3 nuits">−</button>
                   <output class="qty-val" aria-live="polite" data-event="jazz-pass">0</output>
-                  <button class="qty-btn qty-plus" aria-label="Ajouter" data-event="jazz-pass" data-price="60" data-name="Jazz — Pass 3 nuits">+</button>
+                  <button class="qty-btn qty-plus"  aria-label="Ajouter" data-event="jazz-pass" data-price="60" data-name="Jazz — Pass 3 nuits">+</button>
                 </div>
               </div>
             </div>
@@ -184,82 +186,32 @@
           </div>
         </article>
 
-        <!-- ══ CARD 2 ══ -->
-        <article class="billet-card animate-in" data-category="concert" role="listitem" aria-labelledby="ev2-title" style="--delay:.08s">
+        <!-- ══════════════════════════════════════════════════════
+             CARD 2 — OpenAgenda bev1 (agenda général ev1)
+             JS injecte : image · titre · date · lieu · desc · tarifs
+        ══════════════════════════════════════════════════════ -->
+        <article class="billet-card animate-in" data-category="concert" role="listitem" aria-labelledby="bev1-title" style="--delay:.08s">
           <div class="billet-card-img">
-            <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&q=75"
-                 alt="Concert électronique, lumières scéniques bleues et violettes" loading="lazy" width="600" height="338">
+            <picture>
+              <!-- src vide : aucune requête inutile, JS injecte la vraie URL -->
+              <img id="bev1-img"
+                   src=""
+                   alt="Chargement…"
+                   loading="lazy" width="600" height="338">
+            </picture>
             <div class="card-overlay">
               <span class="card-cat-badge">🎵 Concert</span>
             </div>
           </div>
           <div class="billet-card-body">
             <div class="card-meta-row">
-              <time class="card-date" datetime="2025-05-03">📅 3 mai 2025</time>
-              <span class="card-loc">📍 Le Dôme</span>
+              <time class="card-date" id="bev1-date">📅 Chargement…</time>
+              <span class="card-loc"  id="bev1-place">📍 …</span>
             </div>
-            <h3 class="card-title" id="ev2-title">Nuit Électronique — Kollektif Sound</h3>
-            <p class="card-desc">Son Dolby Surround, lasers et mapping vidéo. Les meilleurs DJs de la scène marseillaise et internationale.</p>
-            <div class="tarifs-grid" role="group" aria-label="Tarifs">
-              <div class="tarif-row">
-                <div class="tarif-info"><span class="tarif-nom">Tarif standard</span><span class="tarif-prix">18 €</span></div>
-                <div class="qty-control">
-                  <button class="qty-btn qty-minus" data-event="elec-std" data-price="18" data-name="Nuit Électronique — Standard" aria-label="Retirer">−</button>
-                  <output class="qty-val" data-event="elec-std" aria-live="polite">0</output>
-                  <button class="qty-btn qty-plus" data-event="elec-std" data-price="18" data-name="Nuit Électronique — Standard" aria-label="Ajouter">+</button>
-                </div>
-              </div>
-              <div class="tarif-row">
-                <div class="tarif-info"><span class="tarif-nom">VIP (accès backstage)</span><span class="tarif-prix">45 €</span></div>
-                <div class="qty-control">
-                  <button class="qty-btn qty-minus" data-event="elec-vip" data-price="45" data-name="Nuit Électronique — VIP" aria-label="Retirer">−</button>
-                  <output class="qty-val" data-event="elec-vip" aria-live="polite">0</output>
-                  <button class="qty-btn qty-plus" data-event="elec-vip" data-price="45" data-name="Nuit Électronique — VIP" aria-label="Ajouter">+</button>
-                </div>
-              </div>
-            </div>
-            <div class="card-dispo">
-              <span class="dispo-dot dispo-warn" aria-hidden="true"></span>
-              <span>Stock limité</span>
-              <span class="dispo-count">28 restantes</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- ══ CARD 3 ══ -->
-        <article class="billet-card animate-in" data-category="expo" role="listitem" aria-labelledby="ev3-title" style="--delay:.16s">
-          <div class="billet-card-img">
-            <img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=600&q=75"
-                 alt="Exposition d'art contemporain au MUCEM, grandes toiles abstraites" loading="lazy" width="600" height="338">
-            <div class="card-overlay">
-              <span class="card-cat-badge">🖼 Exposition</span>
-            </div>
-          </div>
-          <div class="billet-card-body">
-            <div class="card-meta-row">
-              <time class="card-date" datetime="2025-06-30">📅 Jusqu'au 30 juin</time>
-              <span class="card-loc">📍 MUCEM</span>
-            </div>
-            <h3 class="card-title" id="ev3-title">Méditerranée — Mémoires Croisées</h3>
-            <p class="card-desc">Exposition immersive sur les cultures méditerranéennes, photographies, installations et archives sonores.</p>
-            <div class="tarifs-grid" role="group" aria-label="Tarifs">
-              <div class="tarif-row">
-                <div class="tarif-info"><span class="tarif-nom">Plein tarif</span><span class="tarif-prix">12 €</span></div>
-                <div class="qty-control">
-                  <button class="qty-btn qty-minus" data-event="expo-plein" data-price="12" data-name="Méditerranée — Plein tarif" aria-label="Retirer">−</button>
-                  <output class="qty-val" data-event="expo-plein" aria-live="polite">0</output>
-                  <button class="qty-btn qty-plus" data-event="expo-plein" data-price="12" data-name="Méditerranée — Plein tarif" aria-label="Ajouter">+</button>
-                </div>
-              </div>
-              <div class="tarif-row">
-                <div class="tarif-info"><span class="tarif-nom">Tarif réduit</span><span class="tarif-prix">8 €</span></div>
-                <div class="qty-control">
-                  <button class="qty-btn qty-minus" data-event="expo-reduit" data-price="8" data-name="Méditerranée — Tarif réduit" aria-label="Retirer">−</button>
-                  <output class="qty-val" data-event="expo-reduit" aria-live="polite">0</output>
-                  <button class="qty-btn qty-plus" data-event="expo-reduit" data-price="8" data-name="Méditerranée — Tarif réduit" aria-label="Ajouter">+</button>
-                </div>
-              </div>
-            </div>
+            <h3 class="card-title" id="bev1-title">Chargement…</h3>
+            <p class="card-desc"    id="bev1-desc"></p>
+            <!-- JS génère les lignes tarif ici via buildTarifRow() -->
+            <div class="tarifs-grid" id="bev1-tarifs" role="group" aria-label="Tarifs"></div>
             <div class="card-dispo">
               <span class="dispo-dot dispo-ok" aria-hidden="true"></span>
               <span>Billets disponibles</span>
@@ -267,128 +219,122 @@
           </div>
         </article>
 
-        <!-- ══ CARD 4 ══ -->
-        <article class="billet-card animate-in" data-category="theatre" role="listitem" aria-labelledby="ev4-title" style="--delay:.24s">
+        <!-- ══════════════════════════════════════════════════════
+             CARD 3 — OpenAgenda bev2 (agenda général ev2)
+        ══════════════════════════════════════════════════════ -->
+        <article class="billet-card animate-in" data-category="expo" role="listitem" aria-labelledby="bev2-title" style="--delay:.16s">
           <div class="billet-card-img">
-            <img src="https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=600&q=75"
-                 alt="Représentation de théâtre contemporain sous éclairage dramatique" loading="lazy" width="600" height="338">
+            <picture>
+              <img id="bev2-img"
+                   src=""
+                   alt="Chargement…"
+                   loading="lazy" width="600" height="338">
+            </picture>
+            <div class="card-overlay">
+              <span class="card-cat-badge">🖼 Exposition</span>
+            </div>
+          </div>
+          <div class="billet-card-body">
+            <div class="card-meta-row">
+              <time class="card-date" id="bev2-date">📅 Chargement…</time>
+              <span class="card-loc"  id="bev2-place">📍 …</span>
+            </div>
+            <h3 class="card-title" id="bev2-title">Chargement…</h3>
+            <p class="card-desc"    id="bev2-desc"></p>
+            <div class="tarifs-grid" id="bev2-tarifs" role="group" aria-label="Tarifs"></div>
+            <div class="card-dispo">
+              <span class="dispo-dot dispo-ok" aria-hidden="true"></span>
+              <span>Billets disponibles</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- ══════════════════════════════════════════════════════
+             CARD 4 — OpenAgenda bev3 (théâtre)
+        ══════════════════════════════════════════════════════ -->
+        <article class="billet-card animate-in" data-category="theatre" role="listitem" aria-labelledby="bev3-title" style="--delay:.24s">
+          <div class="billet-card-img">
+            <picture>
+              <img id="bev3-img"
+                   src=""
+                   alt="Chargement…"
+                   loading="lazy" width="600" height="338">
+            </picture>
             <div class="card-overlay">
               <span class="card-cat-badge">🎭 Théâtre</span>
             </div>
           </div>
           <div class="billet-card-body">
             <div class="card-meta-row">
-              <time class="card-date" datetime="2025-05-10">📅 10–25 mai 2025</time>
-              <span class="card-loc">📍 Théâtre du Gymnase</span>
+              <time class="card-date" id="bev3-date">📅 Chargement…</time>
+              <span class="card-loc"  id="bev3-place">📍 …</span>
             </div>
-            <h3 class="card-title" id="ev4-title">Les Nouvelles Libertés — Cie Lucioles</h3>
-            <p class="card-desc">Pièce contemporaine avec LSF intégrée à la mise en scène. Représentations sous-titrées disponibles.</p>
-            <div class="tarifs-grid" role="group" aria-label="Tarifs">
-              <div class="tarif-row">
-                <div class="tarif-info"><span class="tarif-nom">Plein tarif</span><span class="tarif-prix">15 €</span></div>
-                <div class="qty-control">
-                  <button class="qty-btn qty-minus" data-event="theatre-plein" data-price="15" data-name="Nouvelles Libertés — Plein tarif" aria-label="Retirer">−</button>
-                  <output class="qty-val" data-event="theatre-plein" aria-live="polite">0</output>
-                  <button class="qty-btn qty-plus" data-event="theatre-plein" data-price="15" data-name="Nouvelles Libertés — Plein tarif" aria-label="Ajouter">+</button>
-                </div>
-              </div>
-              <div class="tarif-row">
-                <div class="tarif-info"><span class="tarif-nom">Étudiant / -26 ans</span><span class="tarif-prix">9 €</span></div>
-                <div class="qty-control">
-                  <button class="qty-btn qty-minus" data-event="theatre-etud" data-price="9" data-name="Nouvelles Libertés — Étudiant" aria-label="Retirer">−</button>
-                  <output class="qty-val" data-event="theatre-etud" aria-live="polite">0</output>
-                  <button class="qty-btn qty-plus" data-event="theatre-etud" data-price="9" data-name="Nouvelles Libertés — Étudiant" aria-label="Ajouter">+</button>
-                </div>
-              </div>
-            </div>
+            <h3 class="card-title" id="bev3-title">Chargement…</h3>
+            <p class="card-desc"    id="bev3-desc"></p>
+            <div class="tarifs-grid" id="bev3-tarifs" role="group" aria-label="Tarifs"></div>
             <div class="card-dispo">
               <span class="dispo-dot dispo-ok" aria-hidden="true"></span>
               <span>Places disponibles</span>
-              <span class="dispo-count">67 restantes</span>
             </div>
           </div>
         </article>
 
-        <!-- ══ CARD 5 ══ -->
-        <article class="billet-card animate-in" data-category="gastro" role="listitem" aria-labelledby="ev5-title" style="--delay:.32s">
+        <!-- ══════════════════════════════════════════════════════
+             CARD 5 — OpenAgenda bev4 (festival)
+        ══════════════════════════════════════════════════════ -->
+        <article class="billet-card animate-in" data-category="festival" role="listitem" aria-labelledby="bev4-title" style="--delay:.32s">
           <div class="billet-card-img">
-            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=75"
-                 alt="Dîner gastronomique de chefs étoilés marseillais" loading="lazy" width="600" height="338">
+            <picture>
+              <img id="bev4-img"
+                   src=""
+                   alt="Chargement…"
+                   loading="lazy" width="600" height="338">
+            </picture>
             <div class="card-overlay">
-              <span class="card-cat-badge">🍽 Gastronomie</span>
+              <span class="card-cat-badge">🎉 Festival</span>
             </div>
           </div>
           <div class="billet-card-body">
             <div class="card-meta-row">
-              <time class="card-date" datetime="2025-06-08">📅 8 juin 2025</time>
-              <span class="card-loc">📍 Vallon des Auffes</span>
+              <time class="card-date" id="bev4-date">📅 Chargement…</time>
+              <span class="card-loc"  id="bev4-place">📍 …</span>
             </div>
-            <h3 class="card-title" id="ev5-title">Saveurs de la Mer — Dîner de Chefs</h3>
-            <p class="card-desc">5 chefs étoilés revisitent la bouillabaisse lors d'un dîner gastronomique face à la Méditerranée.</p>
-            <div class="tarifs-grid" role="group" aria-label="Tarifs">
-              <div class="tarif-row">
-                <div class="tarif-info"><span class="tarif-nom">Couvert dîner</span><span class="tarif-prix">95 €</span></div>
-                <div class="qty-control">
-                  <button class="qty-btn qty-minus" data-event="gastro-std" data-price="95" data-name="Saveurs de la Mer — Couvert" aria-label="Retirer">−</button>
-                  <output class="qty-val" data-event="gastro-std" aria-live="polite">0</output>
-                  <button class="qty-btn qty-plus" data-event="gastro-std" data-price="95" data-name="Saveurs de la Mer — Couvert" aria-label="Ajouter">+</button>
-                </div>
-              </div>
-              <div class="tarif-row">
-                <div class="tarif-info"><span class="tarif-nom">Table de 4 (−10%)</span><span class="tarif-prix tarif-promo">342 € <s>380 €</s></span></div>
-                <div class="qty-control">
-                  <button class="qty-btn qty-minus" data-event="gastro-table" data-price="342" data-name="Saveurs de la Mer — Table 4" aria-label="Retirer">−</button>
-                  <output class="qty-val" data-event="gastro-table" aria-live="polite">0</output>
-                  <button class="qty-btn qty-plus" data-event="gastro-table" data-price="342" data-name="Saveurs de la Mer — Table 4" aria-label="Ajouter">+</button>
-                </div>
-              </div>
-            </div>
+            <h3 class="card-title" id="bev4-title">Chargement…</h3>
+            <p class="card-desc"    id="bev4-desc"></p>
+            <div class="tarifs-grid" id="bev4-tarifs" role="group" aria-label="Tarifs"></div>
             <div class="card-dispo">
-              <span class="dispo-dot dispo-low" aria-hidden="true"></span>
-              <span>Presque complet</span>
-              <span class="dispo-count">9 restantes</span>
+              <span class="dispo-dot dispo-ok" aria-hidden="true"></span>
+              <span>Billets disponibles</span>
             </div>
           </div>
         </article>
 
-        <!-- ══ CARD 6 ══ -->
-        <article class="billet-card animate-in" data-category="concert" role="listitem" aria-labelledby="ev6-title" style="--delay:.40s">
+        <!-- ══════════════════════════════════════════════════════
+             CARD 6 — OpenAgenda bev5 (sport)
+        ══════════════════════════════════════════════════════ -->
+        <article class="billet-card animate-in" data-category="sport" role="listitem" aria-labelledby="bev5-title" style="--delay:.40s">
           <div class="billet-card-img">
-            <img src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=600&q=75"
-                 alt="Concert de musique classique à l'Opéra de Marseille" loading="lazy" width="600" height="338">
+            <picture>
+              <img id="bev5-img"
+                   src=""
+                   alt="Chargement…"
+                   loading="lazy" width="600" height="338">
+            </picture>
             <div class="card-overlay">
-              <span class="card-cat-badge">🎵 Concert</span>
+              <span class="card-cat-badge">⚽ Sport</span>
             </div>
           </div>
           <div class="billet-card-body">
             <div class="card-meta-row">
-              <time class="card-date" datetime="2025-05-20">📅 20 mai 2025</time>
-              <span class="card-loc">📍 Opéra de Marseille</span>
+              <time class="card-date" id="bev5-date">📅 Chargement…</time>
+              <span class="card-loc"  id="bev5-place">📍 …</span>
             </div>
-            <h3 class="card-title" id="ev6-title">Symphonie Provençale — Orchestre Philharmonique</h3>
-            <p class="card-desc">Œuvres en hommage à la Provence mêlant instruments classiques et mélodies populaires méditerranéennes.</p>
-            <div class="tarifs-grid" role="group" aria-label="Tarifs">
-              <div class="tarif-row">
-                <div class="tarif-info"><span class="tarif-nom">Parterre</span><span class="tarif-prix">22 €</span></div>
-                <div class="qty-control">
-                  <button class="qty-btn qty-minus" data-event="phila-part" data-price="22" data-name="Symphonie Provençale — Parterre" aria-label="Retirer">−</button>
-                  <output class="qty-val" data-event="phila-part" aria-live="polite">0</output>
-                  <button class="qty-btn qty-plus" data-event="phila-part" data-price="22" data-name="Symphonie Provençale — Parterre" aria-label="Ajouter">+</button>
-                </div>
-              </div>
-              <div class="tarif-row">
-                <div class="tarif-info"><span class="tarif-nom">Balcon</span><span class="tarif-prix">16 €</span></div>
-                <div class="qty-control">
-                  <button class="qty-btn qty-minus" data-event="phila-balc" data-price="16" data-name="Symphonie Provençale — Balcon" aria-label="Retirer">−</button>
-                  <output class="qty-val" data-event="phila-balc" aria-live="polite">0</output>
-                  <button class="qty-btn qty-plus" data-event="phila-balc" data-price="16" data-name="Symphonie Provençale — Balcon" aria-label="Ajouter">+</button>
-                </div>
-              </div>
-            </div>
+            <h3 class="card-title" id="bev5-title">Chargement…</h3>
+            <p class="card-desc"    id="bev5-desc"></p>
+            <div class="tarifs-grid" id="bev5-tarifs" role="group" aria-label="Tarifs"></div>
             <div class="card-dispo">
               <span class="dispo-dot dispo-ok" aria-hidden="true"></span>
-              <span>Places disponibles</span>
-              <span class="dispo-count">203 restantes</span>
+              <span>Billets disponibles</span>
             </div>
           </div>
         </article>
@@ -508,6 +454,6 @@
     </div>
   </footer>
 
-  <script src="../js/main.js"></script>
+  <script src="../js/billetterie.js"></script>
 </body>
 </html>
