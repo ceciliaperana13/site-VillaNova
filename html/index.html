@@ -13,7 +13,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../SCSS/main.css" media="all">
-
 </head>
 <body>
 
@@ -125,49 +124,34 @@
       <!-- ======= GRILLE ÉVÉNEMENTS ======= -->
       <div class="events-grid" id="events-grid" role="list">
 
-        <!-- ── ÉVÉNEMENT VEDETTE (statique — inchangé) ── -->
-        <article class="event-card event-featured" data-category="festival" role="listitem" aria-labelledby="ev-feat-title">
+        <!-- ── ÉVÉNEMENT VEDETTE — chargé dynamiquement depuis OpenAgenda ── -->
+        <article class="event-card event-featured" data-category="concert" role="listitem" aria-labelledby="ev-feat-title">
           <div class="card-img-wrap">
             <picture>
-  <source 
-    srcset="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80&fm=avif" 
-    type="image/avif">
-    
-  <source 
-    srcset="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80&fm=webp" 
-    type="image/webp">
-
-  <img 
-    src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80" 
-    alt="Festival de jazz sur le Vieux-Port de Marseille, scène illuminée face à la mer"
-    loading="lazy"
-    width="800"
-    height="450">
-</picture>
-
-            <span class="card-badge" aria-label="Catégorie : Festival">Festival</span>
+              <img
+                id="ev-feat-img"
+                src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800&q=80"
+                alt="Événement vedette"
+                loading="eager"
+                width="800"
+                height="450">
+            </picture>
+            <span class="card-badge" id="ev-feat-badge" aria-label="Catégorie">Concert</span>
             <div class="card-accessibility" aria-label="Accessibilité">
-              <span title="Sous-titrage disponible" aria-label="Sous-titrage">💬</span>
               <span title="Accessible PMR" aria-label="Accès fauteuil roulant">♿</span>
-              <span title="Langue des signes" aria-label="Langue des signes française">🤟</span>
             </div>
           </div>
           <div class="card-body">
             <div class="card-meta">
-              <span>📅 15–17 mai 2025</span>
+              <span id="ev-feat-date">📅 Chargement…</span>
               <span class="dot" aria-hidden="true"></span>
-              <span>📍 Vieux-Port, Marseille</span>
+              <span id="ev-feat-place">📍 …</span>
             </div>
-            <h3 class="card-title" id="ev-feat-title">Jazz au Vieux-Port — Festival International</h3>
-            <p class="card-desc">Trois jours de jazz live face à la Méditerranée. Plus de 30 artistes internationaux se succèdent sur la grande scène flottante du Vieux-Port.</p>
-            <div class="detail-tags" style="margin-top:.8rem;">
-              <span class="detail-tag">Jazz</span>
-              <span class="detail-tag">Gratuit</span>
-              <span class="detail-tag">En plein air</span>
-              <span class="detail-tag">LSF</span>
-            </div>
+            <h3 class="card-title" id="ev-feat-title">Chargement…</h3>
+            <p class="card-desc" id="ev-feat-desc"></p>
+            <div class="detail-tags" id="ev-feat-tags" style="margin-top:.8rem;"></div>
             <div style="margin-top:1.2rem;">
-              <a href="/html/evenement-detail.html" class="btn btn-primary" style="font-size:.9rem;">Voir l'événement →</a>
+              <a id="ev-feat-link" href="/html/evenement-detail.html" class="btn btn-primary" style="font-size:.9rem;">Voir l'événement →</a>
             </div>
           </div>
         </article>
@@ -355,8 +339,6 @@
           <h2 class="section-title" id="video-section-title">Marseille en vidéo</h2>
         </div>
         <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;align-items:center;">
-
-          <!--  IMAGE D'APERÇU UNIQUE — ouvre le modal vidéo -->
           <div class="media-item has-video"
                id="open-video"
                data-video-trigger
@@ -370,7 +352,6 @@
                  width="800"
                  height="450">
           </div>
-
           <div>
             <p class="hero-eyebrow" style="text-align:left;">À propos</p>
             <h3 style="font-family:var(--font-titre);font-size:1.8rem;color:var(--brun-chaud);margin-bottom:1rem;line-height:1.25;">
@@ -386,7 +367,7 @@
       </div>
     </section>
 
-    <!-- ✅ MODAL VIDÉO — lié à l'image ci-dessus, ancienne image  -->
+    <!-- MODAL VIDÉO -->
     <div id="video-modal"
          class="video-modal"
          role="dialog"
@@ -394,10 +375,7 @@
          aria-label="Vidéo de présentation de Marseille"
          aria-hidden="true">
       <button class="video-modal-close" aria-label="Fermer la vidéo">✕</button>
-      <!-- éco-numérique + performance : preload=metadata -->
-      <video
-        controls
-        preload="metadata"
+      <video controls preload="metadata"
         poster="../assets/images/marseille-preview.jpg"
         aria-label="Présentation vidéo de Marseille">
         <source src="../assets/videos/promotion.mp4" type="video/mp4">
@@ -459,7 +437,7 @@
 
   <div class="toast-container" aria-live="polite" aria-atomic="true" role="status"></div>
 
-  <script src="../js/main.js"defer></script>
+  <script src="../js/main.js" defer></script>
 
 </body>
 </html>
