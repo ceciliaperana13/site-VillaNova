@@ -1,0 +1,92 @@
+// =========================================
+// INFO ÉVÉNEMENT — Page Détail
+// =========================================
+
+.event-info {
+  background: var(--blanc-casse);
+  border: 1px solid var(--sable-moyen);
+  border-radius: var(--r-lg);
+  padding: 1.6rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  box-shadow: var(--shadow-card);
+}
+
+// Ligne d'information (icône + contenu)
+.info-row {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+// Icône
+.info-icon {
+  font-size: 1.45rem;
+  color: var(--terracotta);
+  flex-shrink: 0;
+}
+
+// Contenu texte
+.info-content {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+
+  strong {
+    font-size: .9rem;
+    font-weight: 700;
+    color: var(--brun-chaud);
+    margin-bottom: .1rem;
+  }
+
+  span,
+  p {
+    font-size: .85rem;
+    color: var(--gris-fonce);
+    line-height: 1.55;
+  }
+}
+
+// Catégorie (badge)
+.info-category {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--brun-chaud);
+  background: var(--sable-clair);
+  padding: .4rem .9rem;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--sable-moyen);
+  margin-top: .3rem;
+}
+
+// Participation (barre + chiffres)
+.info-participation {
+  margin-top: .5rem;
+
+  strong {
+    font-size: .9rem;
+    color: var(--brun-chaud);
+  }
+
+  .participation-bar {
+    margin-top: .5rem;
+    height: 8px;
+    width: 100%;
+    background: var(--sable-clair);
+    border-radius: var(--r-pill);
+    overflow: hidden;
+    border: 1px solid var(--sable-moyen);
+
+    .bar-fill {
+      height: 100%;
+      background: var(--terracotta);
+      border-radius: var(--r-pill);
+      transition: width .4s ease;
+    }
+  }
+}

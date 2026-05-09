@@ -1,0 +1,43 @@
+// =========================================
+// MÉTÉO — Page Détail
+// =========================================
+
+.weather-widget {
+  background: linear-gradient(135deg, #4a90d9 0%, #2e6db4 100%);
+  border-radius: var(--r-lg);
+  padding: 1.2rem 1.4rem;
+  color: #fff;
+  margin-top: 1rem;
+  box-shadow: var(--shadow-card);
+}
+
+.weather-header {
+  display: flex;
+  gap: .75rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: .95rem;
+  font-weight: 600;
+}
+
+.weather-days {
+  display: flex;
+  justify-content: space-between;
+}
+
+.weather-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .3rem;
+  font-size: .88rem;
+
+  span:first-child {
+    opacity: .8;
+    font-size: .78rem;
+  }
+
+  span:last-child {
+    font-weight: 700;
+  }
+}

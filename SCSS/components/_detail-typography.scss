@@ -1,0 +1,52 @@
+// =========================================
+// TEXTE ÉDITORIAL
+// =========================================
+
+.detail-body h2 {
+  font-family: var(--font-titre);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--brun-chaud);
+  margin-bottom: .6rem;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 3px;
+    background: var(--terracotta);
+    border-radius: 2px;
+    margin-top: .45rem;
+  }
+}
+
+.detail-body p {
+  font-size: .95rem;
+  color: var(--gris-fonce);
+  line-height: 1.75;
+}
+
+.detail-body ul {
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+  padding-left: 0;
+}
+
+.detail-body li {
+  font-size: .9rem;
+  color: var(--gris-fonce);
+  line-height: 1.6;
+  padding-left: 1rem;
+  position: relative;
+
+  &::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--terracotta);
+    font-weight: 700;
+  }
+}

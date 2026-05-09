@@ -1,0 +1,46 @@
+.confirm-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(43,43,43,.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .3s ease, visibility .3s ease;
+
+  &.open {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.confirm-box {
+  background: var(--blanc-casse);
+  padding: 2rem;
+  border-radius: var(--r-lg);
+  max-width: 420px;
+  width: 90%;
+  box-shadow: var(--shadow-hover);
+  animation: fadeUp .4s ease both;
+
+  h3 {
+    font-family: var(--font-titre);
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--brun-chaud);
+  }
+
+  p {
+    font-size: .95rem;
+    color: var(--gris-fonce);
+    margin-bottom: 1.5rem;
+  }
+
+  .confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: .75rem;
+  }
+}

@@ -1,0 +1,90 @@
+// =========================================
+// VilleNova — main.scss (version optimisée)
+// =========================================
+
+// 1. Abstracts
+@use 'abstracts/variables' as *;
+@use 'abstracts/mixins' as *;
+@use 'abstracts/functions' as *;
+
+// 2. Base
+@use 'base/reset' as *;
+@use 'base/typography' as *;
+@use 'base/accessibility' as *;
+@use 'base/animations' as *;
+@use 'base/utilities' as *;
+
+// 3. Layout
+@use 'layout/header' as *;
+@use 'layout/footer' as *;
+@use 'layout/sections' as *;
+@use 'layout/grid' as *;
+
+// 4. Components
+@use 'components/buttons' as *;
+@use 'components/search' as *;
+@use 'components/filters' as *;
+
+// Cartes — base commune
+@use 'components/cards-base' as *;
+
+// Événementiel
+@use 'components/cards-events' as *;
+
+// Billetterie
+@use 'components/cards-billetterie' as *;
+
+// Hero
+@use 'components/hero' as *;
+@use 'components/hero-billet' as *;
+
+// Newsletter
+@use 'components/newsletter' as *;
+
+// Modales & UI
+@use 'components/video-modal' as *;
+@use 'components/toast' as *;
+@use 'components/drawer' as *;
+@use 'components/modal-confirm' as *;
+
+// Stats & pagination
+@use 'components/stats' as *;
+@use 'components/pagination' as *;
+
+// =========================================
+// PAGE DÉTAIL — NOUVEAUX COMPOSANTS
+// =========================================
+@use 'components/detail-hero' as *;
+@use 'components/detail-layout' as *;
+@use 'components/detail-tags' as *;
+@use 'components/detail-typography' as *;
+@use 'components/detail-media' as *;
+@use 'components/detail-map' as *;
+@use 'components/detail-sidebar' as *;
+@use 'components/accessibility' as *;
+@use 'components/weather' as *;
+@use 'components/similar-events' as *;
+
+// =========================================
+// AGENDA — emplacement CORRECT
+// =========================================
+
+// La PAGE agenda (hero, filtres, recherche, contrôles)
+@use 'pages/agenda' as *;
+
+// Le CALENDRIER (grille, cases, dots)
+@use 'components/calendar' as *;
+
+// La LISTE (event-card)
+@use 'components/agenda-list' as *;
+
+// Le PANNEAU latéral
+@use 'components/agenda-panel' as *;
+
+// =========================================
+// Responsive
+// =========================================
+@use 'responsive/mobile' as *;
+@use 'responsive/tablet' as *;
+@use 'responsive/desktop' as *;
+@use 'responsive/large' as *;

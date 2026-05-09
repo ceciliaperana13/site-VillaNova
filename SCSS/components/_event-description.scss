@@ -1,0 +1,109 @@
+// =========================================
+// DESCRIPTION ÉVÉNEMENT — Page Détail
+// =========================================
+
+.event-description {
+  background: var(--blanc-casse);
+  border: 1px solid var(--sable-moyen);
+  border-radius: var(--r-lg);
+  padding: 2rem clamp(1rem, 3vw, 2rem);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+// -----------------------------
+// BADGES (Jazz · Festival · Gratuit · etc.)
+// -----------------------------
+.event-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+}
+
+.event-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--brun-chaud);
+  background: var(--sable-clair);
+  padding: .4rem .85rem;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--sable-moyen);
+  transition: background var(--dur) var(--ease),
+              border-color var(--dur) var(--ease),
+              transform var(--dur) var(--ease);
+
+  &:hover {
+    background: var(--sable-moyen);
+    border-color: var(--sable-fonce);
+    transform: translateY(-2px);
+  }
+}
+
+// -----------------------------
+// TITRE SECTIONS
+// -----------------------------
+.event-section-title {
+  font-family: var(--font-titre);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--brun-chaud);
+  margin-bottom: .6rem;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 3px;
+    background: var(--terracotta);
+    border-radius: 2px;
+    margin-top: .4rem;
+  }
+}
+
+// -----------------------------
+// TEXTE À PROPOS
+// -----------------------------
+.event-about {
+  font-size: .95rem;
+  color: var(--gris-fonce);
+  line-height: 1.7;
+
+  em {
+    font-style: italic;
+    color: var(--terracotta);
+  }
+}
+
+// -----------------------------
+// PROGRAMME
+// -----------------------------
+.event-program {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.program-day {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+
+  strong {
+    font-size: .95rem;
+    color: var(--brun-chaud);
+  }
+
+  .program-line {
+    font-size: .85rem;
+    color: var(--gris-fonce);
+    line-height: 1.55;
+    padding-left: .4rem;
+    border-left: 3px solid var(--sable-fonce);
+  }
+}

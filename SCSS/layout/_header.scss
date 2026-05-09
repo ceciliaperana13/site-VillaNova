@@ -1,0 +1,116 @@
+// =========================================
+// HEADER — VilleNova
+// =========================================
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  background: rgba(250, 249, 247, .92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--sable-moyen);
+  box-shadow: var(--shadow-header);
+  height: var(--header-h);
+}
+
+.nav-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 2rem);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+/* ── Logo ── */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  font-family: var(--font-titre);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--brun-chaud);
+  white-space: nowrap;
+  flex-shrink: 0;
+  z-index: 10000; /* ← IMPORTANT pour rester cliquable */
+
+  svg {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+
+  .accent { color: var(--terracotta); }
+}
+
+/* ── Nav links (desktop) ── */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+  transition: all var(--dur) var(--ease);
+
+  a {
+    font-size: .9rem;
+    font-weight: 500;
+    color: var(--gris-fonce);
+    padding: .45rem .75rem;
+    border-radius: var(--radius-pill);
+    transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+
+    &:hover,
+    &[aria-current="page"] {
+      color: var(--brun-chaud);
+      background: var(--sable-moyen);
+    }
+  }
+
+  .nav-cta {
+    background: var(--terracotta);
+    color: #fff;
+    padding: .5rem 1.2rem;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    transition: background var(--dur) var(--ease), transform var(--dur) var(--ease);
+
+    &:hover {
+      background: var(--brun-chaud);
+      transform: translateY(-1px);
+      color: #fff;
+    }
+  }
+}
+
+/* ── Burger (mobile) ── */
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: .4rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--dur) var(--ease);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  z-index: 10001; /* ← IMPORTANT */
+
+  &:hover { background: var(--sable-moyen); }
+
+  span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--brun-chaud);
+    border-radius: 2px;
+    transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+  }
+
+  &[aria-expanded="true"] {
+    span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  }
+}

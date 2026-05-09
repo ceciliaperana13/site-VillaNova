@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda — VilleNova · Tous les événements à Marseille</title>
+  <meta name="description" content="Agenda complet des événements culturels, concerts, expositions et festivals à Marseille.">
+  <meta name="theme-color" content="#D17B49">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../SCSS/main.css">
+</head>
+<body>
+
+  <!-- Loader -->
+  <div id="page-loader" role="status" aria-label="Chargement">
+    <div class="loader-ring"></div>
+    <span style="font-family:var(--font-titre);color:var(--brun-chaud);font-size:1.1rem;">VilleNova</span>
+  </div>
+
+  <a class="skip-link" href="#main-content">Aller au contenu principal</a>
+
+  <!-- ======= HEADER ======= -->
+  <header class="site-header" role="banner">
+    <div class="nav-inner">
+      <a href="../html/index.html" class="logo" aria-label="VilleNova - Accueil">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="#D17B49" opacity=".15"/>
+          <path d="M8 20 L16 10 L24 20" stroke="#8B5E3C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M11 20 L11 24 M21 20 L21 24" stroke="#D17B49" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="16" cy="10" r="2.5" fill="#D17B49"/>
+        </svg>
+        Ville<span class="accent">Nova</span>
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="nav-links" id="nav-links" role="list">
+          <li><a href="../html/index.html">Accueil</a></li>
+          <li><a href="../html/index.html#evenements">Événements</a></li>
+          <li><a href="../html/agenda.html" aria-current="page">Agenda</a></li>
+          <li><a href="../html/carte.html">Carte</a></li>
+          <li><a href="../html/contact.html">Contact</a></li>
+          <li><a href="../html/billetterie.html" class="nav-cta">Billetterie</a></li>
+        </ul>
+      </nav>
+      <button class="nav-burger" id="nav-burger" aria-expanded="false" aria-controls="nav-links" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ======= HERO AGENDA ======= -->
+    <section class="agenda-hero" aria-labelledby="agenda-title">
+      <div class="agenda-hero-inner">
+        <span class="hero-eyebrow">📅 Agenda 2025</span>
+        <h1 id="agenda-title">Tous les événements<br>à Marseille</h1>
+        <p>Concerts, expos, festivals, gastronomie, sport — retrouvez l'intégralité<br>du programme culturel marseillais en un seul endroit.</p>
+      </div>
+      <div class="agenda-hero-wave" aria-hidden="true">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" fill="var(--sable-clair)"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ======= BARRE DE CONTRÔLES ======= -->
+    <div class="agenda-controls" role="toolbar" aria-label="Contrôles de l'agenda">
+      <div class="controls-inner">
+
+        <div class="month-nav" aria-label="Navigation par mois">
+          <button class="month-btn" id="prev-month" aria-label="Mois précédent">←</button>
+          <h2 class="month-title" id="month-title" aria-live="polite">Mai 2025</h2>
+          <button class="month-btn" id="next-month" aria-label="Mois suivant">→</button>
+        </div>
+
+        <div class="view-toggle" role="group" aria-label="Mode d'affichage">
+          <button class="view-btn active" id="btn-calendar" data-view="calendar" aria-pressed="true" title="Vue calendrier">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            Calendrier
+          </button>
+          <button class="view-btn" id="btn-list" data-view="list" aria-pressed="false" title="Vue liste">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+              <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+            </svg>
+            Liste
+          </button>
+        </div>
+
+        <div class="search-bar agenda-search" role="search">
+          <span aria-hidden="true">🔍</span>
+          <input type="search" id="agenda-search" placeholder="Rechercher…" aria-label="Rechercher un événement" autocomplete="off">
+          <button id="agenda-search-btn" aria-label="Rechercher">→</button>
+        </div>
+
+      </div>
+
+      <div class="filters-bar agenda-filters" role="group" aria-label="Filtrer par catégorie">
+        <div class="filters-inner">
+          <button class="filter-tag active" data-filter="all" aria-pressed="true">Tous <span class="filter-count" id="count-all"></span></button>
+          <button class="filter-tag" data-filter="concert"  aria-pressed="false">🎵 Concerts</button>
+          <button class="filter-tag" data-filter="expo"     aria-pressed="false">🖼 Expositions</button>
+          <button class="filter-tag" data-filter="festival" aria-pressed="false">🎉 Festivals</button>
+          <button class="filter-tag" data-filter="theatre"  aria-pressed="false">🎭 Théâtre</button>
+          <button class="filter-tag" data-filter="gastro"   aria-pressed="false">🍽 Gastronomie</button>
+          <button class="filter-tag" data-filter="sport"    aria-pressed="false">⚽ Sport</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= RÉSUMÉ RÉSULTATS ======= -->
+    <div class="results-summary" aria-live="polite" aria-atomic="true">
+      <span id="results-count">17 événements</span>
+      <span id="results-period">en Mai–Juin 2025</span>
+    </div>
+
+    <!-- ======= VUE CALENDRIER ======= -->
+    <section class="agenda-section" id="view-calendar" aria-labelledby="calendar-label">
+      <h2 class="sr-only" id="calendar-label">Calendrier des événements</h2>
+
+      <div class="calendar-grid" id="calendar-grid" role="grid" aria-label="Calendrier mai 2025">
+        <div class="cal-weekdays" role="row">
+          <div role="columnheader" aria-label="Lundi">Lun</div>
+          <div role="columnheader" aria-label="Mardi">Mar</div>
+          <div role="columnheader" aria-label="Mercredi">Mer</div>
+          <div role="columnheader" aria-label="Jeudi">Jeu</div>
+          <div role="columnheader" aria-label="Vendredi">Ven</div>
+          <div role="columnheader" aria-label="Samedi">Sam</div>
+          <div role="columnheader" aria-label="Dimanche">Dim</div>
+        </div>
+
+        <div class="cal-body" id="cal-body" role="rowgroup">
+
+          <!-- Mai 2025 commence un jeudi → 3 cases vides -->
+          <div class="cal-cell cal-cell--empty" role="gridcell"></div>
+          <div class="cal-cell cal-cell--empty" role="gridcell"></div>
+          <div class="cal-cell cal-cell--empty" role="gridcell"></div>
+
+          <!-- 1 -->
+          <div class="cal-cell cal-cell--has-events cal-cell--today" data-day="1" role="gridcell" tabindex="0" aria-label="1 mai — 1 événement">
+            <div class="cal-day-num">1</div>
+            <div class="cal-dots">
+              <span class="cal-dot" data-cat="concert"></span>
+            </div>
+            <div class="cal-ev-pills">
+              <span class="cal-ev-pill" data-cat="concert">Soirée Jazz Vieux-Port</span>
+            </div>
+          </div>
+
+          <div class="cal-cell" data-day="2"  role="gridcell"><div class="cal-day-num">2</div></div>
+          <div class="cal-cell" data-day="3"  role="gridcell"><div class="cal-day-num">3</div></div>
+          <div class="cal-cell" data-day="4"  role="gridcell"><div class="cal-day-num">4</div></div>
+          <div class="cal-cell" data-day="5"  role="gridcell"><div class="cal-day-num">5</div></div>
+          <div class="cal-cell" data-day="6"  role="gridcell"><div class="cal-day-num">6</div></div>
+          <div class="cal-cell" data-day="7"  role="gridcell"><div class="cal-day-num">7</div></div>
+
+          <!-- 8 -->
+          <div class="cal-cell cal-cell--has-events" data-day="8" role="gridcell" tabindex="0" aria-label="8 mai — 1 événement">
+            <div class="cal-day-num">8</div>
+            <div class="cal-dots">
+              <span class="cal-dot" data-cat="expo"></span>
+            </div>
+            <div class="cal-ev-pills">
+              <span class="cal-ev-pill" data-cat="expo">Lumières de Provence</span>
+            </div>
+          </div>
+
+          <div class="cal-cell" data-day="9"  role="gridcell"><div class="cal-day-num">9</div></div>
+
+          <!-- 10 -->
+          <div class="cal-cell cal-cell--has-events" data-day="10" role="gridcell" tabindex="0" aria-label="10 mai — 1 événement">
+            <div class="cal-day-num">10</div>
+            <div class="cal-dots">
+              <span class="cal-dot" data-cat="gastro"></span>
+            </div>
+            <div class="cal-ev-pills">
+              <span class="cal-ev-pill" data-cat="gastro">Marché des Saveurs</span>
+            </div>
+          </div>
+
+          <div class="cal-cell" data-day="11" role="gridcell"><div class="cal-day-num">11</div></div>
+          <div class="cal-cell" data-day="12" role="gridcell"><div class="cal-day-num">12</div></div>
+          <div class="cal-cell" data-day="13" role="gridcell"><div class="cal-day-num">13</div></div>
+          <div class="cal-cell" data-day="14" role="gridcell"><div class="cal-day-num">14</div></div>
+
+          <!-- 15 -->
+          <div class="cal-cell cal-cell--has-events" data-day="15" role="gridcell" tabindex="0" aria-label="15 mai — 2 événements">
+            <div class="cal-day-num">15</div>
+            <div class="cal-dots">
+              <span class="cal-dot" data-cat="festival"></span>
+              <span class="cal-dot" data-cat="concert"></span>
+            </div>
+            <div class="cal-ev-pills">
+              <span class="cal-ev-pill" data-cat="festival">Festival Marsatac</span>
+              <span class="cal-ev-pill" data-cat="concert">Nuit des Guitaristes</span>
+            </div>
+          </div>
+
+          <div class="cal-cell" data-day="16" role="gridcell"><div class="cal-day-num">16</div></div>
+
+          <!-- 17 -->
+          <div class="cal-cell cal-cell--has-events" data-day="17" role="gridcell" tabindex="0" aria-label="17 mai — 1 événement">
+            <div class="cal-day-num">17</div>
+            <div class="cal-dots">
+              <span class="cal-dot" data-cat="sport"></span>
+            </div>
+            <div class="cal-ev-pills">
+              <span class="cal-ev-pill" data-cat="sport">OM vs PSG</span>
+            </div>
+          </div>
+
+          <div class="cal-cell" data-day="18" role="gridcell"><div class="cal-day-num">18</div></div>
+
+          <!-- 19 -->
+          <div class="cal-cell cal-cell--has-events" data-day="19" role="gridcell" tabindex="0" aria-label="19 mai — 1 événement">
+            <div class="cal-day-num">19</div>
+            <div class="cal-dots">
+              <span class="cal-dot" data-cat="expo"></span>
+            </div>
+            <div class="cal-ev-pills">
+              <span class="cal-ev-pill" data-cat="expo">Art Contemporain</span>
+            </div>
+          </div>
+
+          <div class="cal-cell" data-day="20" role="gridcell"><div class="cal-day-num">20</div></div>
+          <div class="cal-cell" data-day="21" role="gridcell"><div class="cal-day-num">21</div></div>
+
+          <!-- 22 -->
+          <div class="cal-cell cal-cell--has-events" data-day="22" role="gridcell" tabindex="0" aria-label="22 mai — 1 événement">
+            <div class="cal-day-num">22</div>
+            <div class="cal-dots">
+              <span class="cal-dot" data-cat="theatre"></span>
+            </div>
+            <div class="cal-ev-pills">
+              <span class="cal-ev-pill" data-cat="theatre">Molière en Plein Air</span>
+            </div>
+          </div>
+
+          <div class="cal-cell" data-day="23" role="gridcell"><div class="cal-day-num">23</div></div>
+
+          <!-- 24 -->
+          <div class="cal-cell cal-cell--has-events" data-day="24" role="gridcell" tabindex="0" aria-label="24 mai — 1 événement">
+            <div class="cal-day-num">24</div>
+            <div class="cal-dots">
+              <span class="cal-dot" data-cat="gastro"></span>
+            </div>
+            <div class="cal-ev-pills">
+              <span class="cal-ev-pill" data-cat="gastro">Fête de la Bouillabaisse</span>
+            </div>
+          </div>
+
+          <div class="cal-cell" data-day="25" role="gridcell"><div class="cal-day-num">25</div></div>
+          <div class="cal-cell" data-day="26" role="gridcell"><div class="cal-day-num">26</div></div>
+          <div class="cal-cell" data-day="27" role="gridcell"><div class="cal-day-num">27</div></div>
+
+          <!-- 28 -->
+          <div class="cal-cell cal-cell--has-events" data-day="28" role="gridcell" tabindex="0" aria-label="28 mai — 1 événement">
+            <div class="cal-day-num">28</div>
+            <div class="cal-dots">
+              <span class="cal-dot" data-cat="concert"></span>
+            </div>
+            <div class="cal-ev-pills">
+              <span class="cal-ev-pill" data-cat="concert">Variétés Françaises</span>
+            </div>
+          </div>
+
+          <div class="cal-cell" data-day="29" role="gridcell"><div class="cal-day-num">29</div></div>
+
+          <!-- 30 -->
+          <div class="cal-cell cal-cell--has-events" data-day="30" role="gridcell" tabindex="0" aria-label="30 mai — 1 événement">
+            <div class="cal-day-num">30</div>
+            <div class="cal-dots">
+              <span class="cal-dot" data-cat="festival"></span>
+            </div>
+            <div class="cal-ev-pills">
+              <span class="cal-ev-pill" data-cat="festival">Festival Musiques du Monde</span>
+            </div>
+          </div>
+
+          <div class="cal-cell" data-day="31" role="gridcell"><div class="cal-day-num">31</div></div>
+
+        </div>
+      </div>
+
+      <!-- Légende catégories -->
+      <div class="cal-legend" aria-label="Légende des catégories">
+        <span class="legend-item"><span class="legend-dot" data-cat="festival"></span>Festival</span>
+        <span class="legend-item"><span class="legend-dot" data-cat="concert"></span>Concert</span>
+        <span class="legend-item"><span class="legend-dot" data-cat="expo"></span>Exposition</span>
+        <span class="legend-item"><span class="legend-dot" data-cat="theatre"></span>Théâtre</span>
+        <span class="legend-item"><span class="legend-dot" data-cat="gastro"></span>Gastronomie</span>
+        <span class="legend-item"><span class="legend-dot" data-cat="sport"></span>Sport</span>
+      </div>
+    </section>
+
+    <!-- ======= VUE LISTE ======= -->
+    <section class="agenda-section hidden" id="view-list" aria-labelledby="list-label">
+      <h2 class="sr-only" id="list-label">Liste des événements</h2>
+      <div id="list-container">
+
+        <div class="list-group">
+          <div class="list-group-title">Mai 2025</div>
+
+          <article class="list-card" data-day="1" data-cat="concert">
+            <div class="list-card-date"><div class="day">1</div><div class="month">Mai</div></div>
+            <div class="list-card-body">
+              <span class="list-card-cat" data-cat="concert">Concert</span>
+              <div class="list-card-title">Soirée Jazz Vieux-Port</div>
+              <div class="list-card-meta">📍 Dock des Suds &nbsp;·&nbsp; 🕐 20h00</div>
+            </div>
+          </article>
+
+          <article class="list-card" data-day="8" data-cat="expo">
+            <div class="list-card-date"><div class="day">8</div><div class="month">Mai</div></div>
+            <div class="list-card-body">
+              <span class="list-card-cat" data-cat="expo">Exposition</span>
+              <div class="list-card-title">Lumières de Provence</div>
+              <div class="list-card-meta">📍 Musée des Beaux-Arts &nbsp;·&nbsp; 🕐 10h00</div>
+            </div>
+          </article>
+
+          <article class="list-card" data-day="10" data-cat="gastro">
+            <div class="list-card-date"><div class="day">10</div><div class="month">Mai</div></div>
+            <div class="list-card-body">
+              <span class="list-card-cat" data-cat="gastro">Gastronomie</span>
+              <div class="list-card-title">Marché des Saveurs</div>
+              <div class="list-card-meta">📍 Cours Julien &nbsp;·&nbsp; 🕐 09h00</div>
+            </div>
+          </article>
+
+          <article class="list-card" data-day="15" data-cat="festival">
+            <div class="list-card-date"><div class="day">15</div><div class="month">Mai</div></div>
+            <div class="list-card-body">
+              <span class="list-card-cat" data-cat="festival">Festival</span>
+              <div class="list-card-title">Festival Marsatac</div>
+              <div class="list-card-meta">📍 Parc Borély &nbsp;·&nbsp; 🕐 18h00</div>
+            </div>
+          </article>
+
+          <article class="list-card" data-day="15" data-cat="concert">
+            <div class="list-card-date"><div class="day">15</div><div class="month">Mai</div></div>
+            <div class="list-card-body">
+              <span class="list-card-cat" data-cat="concert">Concert</span>
+              <div class="list-card-title">Nuit des Guitaristes</div>
+              <div class="list-card-meta">📍 Salle Vallier &nbsp;·&nbsp; 🕐 21h00</div>
+            </div>
+          </article>
+
+          <article class="list-card" data-day="17" data-cat="sport">
+            <div class="list-card-date"><div class="day">17</div><div class="month">Mai</div></div>
+            <div class="list-card-body">
+              <span class="list-card-cat" data-cat="sport">Sport</span>
+              <div class="list-card-title">OM vs PSG</div>
+              <div class="list-card-meta">📍 Stade Vélodrome &nbsp;·&nbsp; 🕐 21h00</div>
+            </div>
+          </article>
+
+          <article class="list-card" data-day="19" data-cat="expo">
+            <div class="list-card-date"><div class="day">19</div><div class="month">Mai</div></div>
+            <div class="list-card-body">
+              <span class="list-card-cat" data-cat="expo">Exposition</span>
+              <div class="list-card-title">Art Contemporain Méditerranée</div>
+              <div class="list-card-meta">📍 MUCEM &nbsp;·&nbsp; 🕐 11h00</div>
+            </div>
+          </article>
+
+          <article class="list-card" data-day="22" data-cat="theatre">
+            <div class="list-card-date"><div class="day">22</div><div class="month">Mai</div></div>
+            <div class="list-card-body">
+              <span class="list-card-cat" data-cat="theatre">Théâtre</span>
+              <div class="list-card-title">Molière en Plein Air</div>
+              <div class="list-card-meta">📍 Château d'If &nbsp;·&nbsp; 🕐 19h30</div>
+            </div>
+          </article>
+
+          <article class="list-card" data-day="24" data-cat="gastro">
+            <div class="list-card-date"><div class="day">24</div><div class="month">Mai</div></div>
+            <div class="list-card-body">
+              <span class="list-card-cat" data-cat="gastro">Gastronomie</span>
+              <div class="list-card-title">Fête de la Bouillabaisse</div>
+              <div class="list-card-meta">📍 Vallon des Auffes &nbsp;·&nbsp; 🕐 12h00</div>
+            </div>
+          </article>
+
+          <article class="list-card" data-day="28" data-cat="concert">
+            <div class="list-card-date"><div class="day">28</div><div class="month">Mai</div></div>
+            <div class="list-card-body">
+              <span class="list-card-cat" data-cat="concert">Concert</span>
+              <div class="list-card-title">Variétés Françaises</div>
+              <div class="list-card-meta">📍 Opéra de Marseille &nbsp;·&nbsp; 🕐 20h00</div>
+            </div>
+          </article>
+
+          <article class="list-card" data-day="30" data-cat="festival">
+            <div class="list-card-date"><div class="day">30</div><div class="month">Mai</div></div>
+            <div class="list-card-body">
+              <span class="list-card-cat" data-cat="festival">Festival</span>
+              <div class="list-card-title">Festival Musiques du Monde</div>
+              <div class="list-card-meta">📍 Friche la Belle de Mai &nbsp;·&nbsp; 🕐 17h00</div>
+            </div>
+          </article>
+        </div>
+
+        <div class="list-group">
+          <div class="list-group-title">Juin 2025</div>
+
+          <article class="list-card" data-day="5" data-cat="concert">
+            <div class="list-card-date"><div class="day">5</div><div class="month">Juin</div></div>
+            <div class="list-card-body">
+              <span class="list-card-cat" data-cat="concert">Concert</span>
+              <div class="list-card-title">Jazz à la Friche</div>
+              <div class="list-card-meta">📍 Friche la Belle de Mai &nbsp;·&nbsp; 🕐 19h00</div>
+            </div>
+          </article>
+
+          <article class="list-card" data-day="7" data-cat="sport">
+            <div class="list-card-date"><div class="day">7</div><div class="month">Juin</div></div>
+            <div class="list-card-body">
+              <span class="list-card-cat" data-cat="sport">Sport</span>
+              <div class="list-card-title">Tournoi de Pétanque</div>
+              <div class="list-card-meta">📍 Plage du Prophète &nbsp;·&nbsp; 🕐 10h00</div>
+            </div>
+          </article>
+
+          <article class="list-card" data-day="12" data-cat="theatre">
+            <div class="list-card-date"><div class="day">12</div><div class="month">Juin</div></div>
+            <div class="list-card-body">
+              <span class="list-card-cat" data-cat="theatre">Théâtre</span>
+              <div class="list-card-title">Festival de Théâtre Amateur</div>
+              <div class="list-card-meta">📍 Théâtre du Gymnase &nbsp;·&nbsp; 🕐 18h30</div>
+            </div>
+          </article>
+
+          <article class="list-card" data-day="14" data-cat="expo">
+            <div class="list-card-date"><div class="day">14</div><div class="month">Juin</div></div>
+            <div class="list-card-body">
+              <span class="list-card-cat" data-cat="expo">Exposition</span>
+              <div class="list-card-title">Paysages Marins</div>
+              <div class="list-card-meta">📍 Centre Régional d'Art &nbsp;·&nbsp; 🕐 10h00</div>
+            </div>
+          </article>
+
+          <article class="list-card" data-day="21" data-cat="festival">
+            <div class="list-card-date"><div class="day">21</div><div class="month">Juin</div></div>
+            <div class="list-card-body">
+              <span class="list-card-cat" data-cat="festival">Festival</span>
+              <div class="list-card-title">Fête de la Musique</div>
+              <div class="list-card-meta">📍 Toute la ville &nbsp;·&nbsp; 🕐 17h00</div>
+            </div>
+          </article>
+
+          <article class="list-card" data-day="28" data-cat="gastro">
+            <div class="list-card-date"><div class="day">28</div><div class="month">Juin</div></div>
+            <div class="list-card-body">
+              <span class="list-card-cat" data-cat="gastro">Gastronomie</span>
+              <div class="list-card-title">Marché Nocturne du Panier</div>
+              <div class="list-card-meta">📍 Le Panier &nbsp;·&nbsp; 🕐 19h00</div>
+            </div>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======= PANNEAU DÉTAIL (sidebar event) ======= -->
+    <aside class="event-panel" id="event-panel" aria-modal="false" aria-hidden="true" aria-label="Détail de l'événement">
+      <div class="event-panel-inner">
+        <button class="panel-close" id="panel-close" aria-label="Fermer le panneau">✕</button>
+        <div id="panel-content"></div>
+      </div>
+    </aside>
+    <div class="panel-overlay" id="panel-overlay" aria-hidden="true"></div>
+
+  </main>
+
+  <!-- ======= FOOTER ======= -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="../html/index.html" class="logo" aria-label="VilleNova - Accueil">
+          <svg viewBox="0 0 32 32" fill="none" width="24" aria-hidden="true">
+            <circle cx="16" cy="16" r="14" fill="#D17B49" opacity=".2"/>
+            <path d="M8 20 L16 10 L24 20" stroke="#E6D3B3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M11 20 L11 24 M21 20 L21 24" stroke="#D17B49" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="16" cy="10" r="2.5" fill="#D17B49"/>
+          </svg>
+          Ville<span class="accent">Nova</span>
+        </a>
+        <p>L'agenda événementiel de référence pour Marseille et sa métropole.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Événements</h3>
+        <a href="#">Concerts</a><a href="#">Expositions</a><a href="#">Festivals</a><a href="#">Théâtre</a><a href="#">Gastronomie</a>
+      </div>
+      <div class="footer-col">
+        <h3>VilleNova</h3>
+        <a href="#">À propos</a><a href="contact.html">Contact</a><a href="#">Partenaires</a><a href="#">Accessibilité</a>
+      </div>
+      <div class="footer-col">
+        <h3>Légal</h3>
+        <a href="#">Mentions légales</a><a href="#">CGU</a><a href="#">Confidentialité</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 VilleNova – Marseille</span>
+      <span>RGAA 4.1 · WCAG 2.1 AA</span>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div class="toast-container" aria-live="polite" aria-atomic="true" role="status"></div>
+
+  <script src="../js/agenda.js"defer></script>
+  
+  
+
+</body>
+</html>

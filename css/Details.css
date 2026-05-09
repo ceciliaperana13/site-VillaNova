@@ -1,0 +1,97 @@
+/* detail.css — styles spécifiques page détail */
+
+/* Breadcrumb */
+.breadcrumb-nav {
+  background: var(--blanc-casse);
+  border-bottom: 1px solid var(--sable-moyen);
+  padding: .6rem 1.5rem;
+}
+.breadcrumb-list {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: .5rem;
+  align-items: center;
+  font-size: .82rem;
+  color: var(--gris-fonce);
+  flex-wrap: wrap;
+}
+.breadcrumb-list a {
+  color: var(--terracotta);
+  font-weight: 500;
+  transition: color var(--transition);
+}
+.breadcrumb-list a:hover { color: var(--brun-chaud); }
+.breadcrumb-list [aria-current="page"] { color: var(--gris-fonce); font-weight: 600; }
+
+/* Accessibilité */
+.access-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.access-item {
+  display: flex;
+  gap: .75rem;
+  align-items: flex-start;
+  background: var(--sable-clair);
+  border: 1px solid var(--sable-moyen);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+}
+.access-icon { font-size: 1.5rem; flex-shrink: 0; }
+.access-item strong { display: block; color: var(--brun-chaud); font-size: .9rem; margin-bottom: .2rem; }
+.access-item p { font-size: .82rem; color: var(--gris-fonce); line-height: 1.55; margin: 0; }
+
+/* Météo widget */
+.weather-widget {
+  background: linear-gradient(135deg, #4a90d9 0%, #2e6db4 100%);
+  border-radius: var(--radius-lg);
+  padding: 1.2rem 1.4rem;
+  color: #fff;
+  margin-top: 1rem;
+  box-shadow: var(--ombre);
+}
+.weather-header {
+  display: flex;
+  gap: .75rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: .95rem;
+  font-weight: 600;
+}
+.weather-days {
+  display: flex;
+  justify-content: space-between;
+}
+.weather-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .3rem;
+  font-size: .88rem;
+}
+.weather-day span:first-child { opacity: .8; font-size: .78rem; }
+.weather-day span:last-child { font-weight: 700; }
+
+/* Grille événements similaires */
+.similar-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  margin-top: 1rem;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 768px) {
+  .access-grid { grid-template-columns: 1fr; }
+  .similar-grid { grid-template-columns: 1fr; }
+  .detail-layout { grid-template-columns: 1fr !important; }
+  .detail-sidebar { position: static !important; }
+}
+
+@media (max-width: 480px) {
+  .breadcrumb-list { font-size: .78rem; }
+  .weather-days { gap: .5rem; }
+}

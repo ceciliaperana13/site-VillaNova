@@ -1,0 +1,82 @@
+// =========================================
+// CARTES ÉVÉNEMENTIEL — VilleNova
+// =========================================
+
+.event-card {
+  background: var(--blanc-casse);
+  border: 1px solid var(--sable-moyen);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease),
+              border-color var(--dur) var(--ease);
+  box-shadow: var(--shadow-card);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--sable-fonce);
+
+    .card-img-wrap img {
+      transform: scale(1.04);
+    }
+  }
+}
+
+// Image
+.card-img-wrap {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: var(--sable-moyen);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .45s ease;
+  }
+}
+
+// Corps
+.card-body {
+  padding: 1rem 1.1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+
+// Grille événements
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap-cards);
+}
+
+// Carte vedette
+.event-featured {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+
+  .card-img-wrap {
+    aspect-ratio: unset;
+    min-height: 260px;
+  }
+
+  .card-body {
+    padding: 1.6rem 1.8rem;
+    justify-content: center;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+  }
+
+  .card-desc {
+    -webkit-line-clamp: 4;
+  }
+}

@@ -1,0 +1,39 @@
+// =========================================
+// BANDE STATS — VilleNova
+// =========================================
+
+.stats-band {
+  background: var(--brun-chaud);
+  padding: 2.5rem clamp(1rem, 4vw, 2rem);
+}
+
+.stats-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .4rem;
+
+  strong {
+    font-family: var(--font-titre);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 900;
+    color: var(--sable-clair);
+    line-height: 1;
+  }
+
+  span {
+    font-size: .85rem;
+    font-weight: 500;
+    color: var(--sable-moyen);
+    letter-spacing: .03em;
+  }
+}

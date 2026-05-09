@@ -1,0 +1,41 @@
+# ══════════════════════════════════════════
+# robots.txt — VilleNova Marseille
+# À placer à la racine du site :
+# https://villenova.fr/robots.txt
+# ══════════════════════════════════════════
+
+# ── Google (Googlebot) ──────────────────
+User-agent: Googlebot
+Allow: /
+
+# ── Google Images ───────────────────────
+User-agent: Googlebot-Image
+Allow: /
+
+# ── Bing / Yahoo (Bingbot) ──────────────
+User-agent: Bingbot
+Allow: /
+
+# ── DuckDuckGo (DuckDuckBot) ────────────
+User-agent: DuckDuckBot
+Allow: /
+
+# ── Yandex ──────────────────────────────
+User-agent: YandexBot
+Allow: /
+
+# ── Qwant ───────────────────────────────
+User-agent: Qwant
+Allow: /
+
+# ── Ecosia (utilise Bing) ───────────────
+User-agent: *
+Allow: /
+
+# ── Dossiers à ne PAS indexer ───────────
+Disallow: /SCSS/
+Disallow: /assets/videos/
+Disallow: /node_modules/
+
+# ── Sitemap ─────────────────────────────
+Sitemap: https://villenova.fr/sitemap.xml

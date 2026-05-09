@@ -1,0 +1,97 @@
+/* =========================================
+   MODAL VIDÉO
+========================================= */
+
+.video-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(43,43,43,.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 800;
+  padding: 1.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .3s ease, visibility .3s ease;
+
+  &.open,
+  &:not([aria-hidden="true"]) {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  video {
+    width: 100%;
+    max-width: 900px;      /* ← tu modifies ici la taille */
+    max-height: 80vh;
+    border-radius: var(--r-md);
+    object-fit: contain;
+    outline: none;
+  }
+}
+
+.video-modal-close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.2);
+  color: #fff;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--dur) var(--ease);
+  z-index: 810;
+
+  &:hover {
+    background: rgba(255,255,255,.35);
+  }
+}
+
+/* =========================================
+   IMAGE D’APERÇU AVEC FILTRE + PLAY
+========================================= */
+
+.media-item.has-video {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: var(--r-md);
+}
+
+.media-item.has-video::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25); /* filtre léger */
+  transition: background .3s ease;
+  z-index: 2;
+}
+
+.media-item.has-video::after {
+  content: "▶";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  color: white;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  opacity: .9;
+  z-index: 3;
+  pointer-events: none;
+  transition: transform .3s ease, opacity .3s ease;
+}
+
+.media-item.has-video:hover::before {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.media-item.has-video:hover::after {
+  transform: translate(-50%, -50%) scale(1.1);
+  opacity: 1;
+}

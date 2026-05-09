@@ -1,0 +1,31 @@
+// =========================================
+// TAGS ÉDITORIAUX
+// =========================================
+
+.detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+}
+
+.detail-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--brun-chaud);
+  background: var(--sable-clair);
+  padding: .35rem .85rem;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--sable-moyen);
+  transition: background var(--dur) var(--ease),
+              border-color var(--dur) var(--ease),
+              transform var(--dur) var(--ease);
+
+  &:hover {
+    background: var(--sable-moyen);
+    border-color: var(--sable-fonce);
+    transform: translateY(-2px);
+  }
+}

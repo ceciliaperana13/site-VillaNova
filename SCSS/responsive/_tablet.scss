@@ -1,0 +1,62 @@
+// =========================================
+// RESPONSIVE — TABLETTE (≥ 768px)
+// =========================================
+@use '../abstracts/mixins' as *;
+
+/* =========================================
+   TABLETTE — GRILLES & CARTES
+========================================= */
+@include respond(md) {
+
+  .events-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .event-featured {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stats-inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+}
+
+/* =========================================
+   CALENDRIER TABLETTE (≥ 768px)
+========================================= */
+@include respond(md) {
+
+  .stats-inner { 
+    grid-template-columns: repeat(2, 1fr); 
+  }
+
+  .footer-inner { 
+    grid-template-columns: 1fr 1fr; 
+  }
+
+  .footer-brand { 
+    grid-column: 1 / -1; 
+  }
+
+  .cal-cell {
+    min-height: 70px;
+    padding: .35rem .3rem;
+  }
+
+  .cal-ev-pills {
+    .cal-ev-pill:nth-child(n+2) { 
+      display: none; 
+    }
+  }
+}

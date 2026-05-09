@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- ══════════════════════════════════════
+       SITEMAP VilleNova — Marseille
+       https://villenova.fr/sitemap.xml
+  ══════════════════════════════════════ -->
+
+  <!-- Page d'accueil -->
+  <url>
+    <loc>https://villenova.fr/html/index.html</loc>
+    <lastmod>2025-05-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Événements -->
+  <url>
+    <loc>https://villenova.fr/html/evenement-detail.html</loc>
+    <lastmod>2025-05-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Agenda -->
+  <url>
+    <loc>https://villenova.fr/html/agenda.html</loc>
+    <lastmod>2025-05-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Billetterie -->
+  <url>
+    <loc>https://villenova.fr/html/billetterie.html</loc>
+    <lastmod>2025-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Carte -->
+  <url>
+    <loc>https://villenova.fr/html/carte.html</loc>
+    <lastmod>2025-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Contact -->
+  <url>
+    <loc>https://villenova.fr/html/contact.html</loc>
+    <lastmod>2025-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+</urlset>

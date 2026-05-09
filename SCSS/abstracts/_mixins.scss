@@ -1,0 +1,61 @@
+// ===============================================
+// BREAKPOINT SYSTEM — PRODUCTION READY (Sass 3.0)
+// ===============================================
+
+// Import du module map
+@use "sass:map";
+
+// 1. Définition des breakpoints (mobile-first)
+$breakpoints: (
+  xs: 480px,   // Extra small
+  sm: 576px,   // Small / mobile large
+  md: 768px,   // Tablet
+  lg: 1200px,  // Desktop
+  xl: 1400px   // Large desktop
+);
+
+// 2. Mixin universel — min-width
+@mixin respond($bp) {
+  $value: map.get($breakpoints, $bp);
+
+  @if $value == null {
+    @error "❌ Breakpoint `#{$bp}` not found in $breakpoints map.";
+  }
+
+  @media (min-width: $value) {
+    @content;
+  }
+}
+
+// 3. Mixin max-width
+@mixin respond-max($bp) {
+  $value: map.get($breakpoints, $bp);
+
+  @if $value == null {
+    @error "❌ Breakpoint `#{$bp}` not found in $breakpoints map.";
+  }
+
+  @media (max-width: $value) {
+    @content;
+  }
+}
+
+// 4. Mixin entre deux breakpoints
+@mixin between($min, $max) {
+  $minVal: map.get($breakpoints, $min);
+  $maxVal: map.get($breakpoints, $max);
+
+  @if $minVal == null or $maxVal == null {
+    @error "❌ Breakpoints `#{$min}` or `#{$max}` not found.";
+  }
+
+  @media (min-width: $minVal) and (max-width: $maxVal) {
+    @content;
+  }
+}
+// ===============================================
+// TYPOGRAPHIE FLUIDE — PRO
+// ===============================================
+@mixin fluid-type($min, $max) {
+  font-size: clamp(#{$min}, 1rem + 1.5vw, #{$max});
+}

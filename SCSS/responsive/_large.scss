@@ -1,0 +1,19 @@
+/* =========================================
+   LARGE DESKTOP (≥ 1400px)
+========================================= */
+@use '../abstracts/mixins' as *;
+
+@include respond(xl) {
+
+  body {
+    font-size: 1.375rem;
+  }
+
+  .container {
+    max-width: 60%;
+  }
+
+  header {
+    padding: 3rem 0;
+  }
+}
