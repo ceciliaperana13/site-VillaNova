@@ -217,3 +217,9 @@
     flex-wrap: nowrap;
   }
 }
+/* ============================
+     HERO BILLETTERIE DESKTOP
+  ============================ */
+  .hero-billet {
+    min-height: calc(100dvh - 80px);
+  }

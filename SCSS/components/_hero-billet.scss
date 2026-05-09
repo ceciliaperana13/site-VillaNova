@@ -1,9 +1,13 @@
 .hero-billet {
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr auto;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   gap: 3rem;
   padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem);
   background: var(--sable-clair);
+  min-height: calc(100dvh - 70px);
+  box-sizing: border-box;
 }
