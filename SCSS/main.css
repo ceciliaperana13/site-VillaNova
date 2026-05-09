@@ -1000,7 +1000,7 @@ p {
 }
 
 /* =========================================
-   MODAL VIDÉO
+   MODAL VIDÉO-iAUDIO — VilleNova-index
 ========================================= */
 .video-modal {
   position: fixed;
@@ -2623,7 +2623,7 @@ p {
 .panel-img-wrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 16/9; /* ← ratio fixe, image jamais coupée */
+  aspect-ratio: 16/9;
   flex-shrink: 0;
   overflow: hidden;
   background: var(--sable-moyen, #C2A27C);
