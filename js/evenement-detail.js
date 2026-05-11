@@ -8,7 +8,7 @@ const OA_AGENDA_UID  = "2119473";              // Musées de Marseille
 const OA_AGENDA_SLUG = "musees-de-marseille";  // Slug public pour les liens
 const OA_BASE        = "https://api.openagenda.com/v2";
 
-// ✅ Event par défaut quand aucun ?id= dans l'URL
+//  Event par défaut quand aucun ?id= dans l'URL
 const DEFAULT_EVENT_UID  = "27089585";
 const DEFAULT_EVENT_SLUG = "sequence-douverture-saison-mediterranee-3972861";
 
@@ -215,7 +215,7 @@ function displayEvent(ev) {
   const slug       = ev.slug || DEFAULT_EVENT_SLUG;
   const kw         = (ev.keywords?.fr || []).slice(0, 2).join(' · ') || 'Musique · Concert';
 
-  // ✅ Lien public OpenAgenda
+  //  Lien public OpenAgenda
   const lienOA = `https://openagenda.com/${OA_AGENDA_SLUG}/events/${slug}`;
 
   console.log('[VilleNova] Event reçu :', ev);
