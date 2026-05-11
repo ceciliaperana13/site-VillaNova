@@ -2,7 +2,7 @@
    VilleNova — agenda.js
    Mêmes agendas que main.js (OA_AGENDA_UID = "2119473")
    Les agendas ne retournent pas "timings" mais "dateRange.fr"
-   en français (ex: "Mardi 5 mai, 21h30").
+   en français, avec des formats variés (voir parseFrenchDateRange).
    Ce fichier parse ces chaînes pour placer les pastilles.
    ============================================================ */
 'use strict';
