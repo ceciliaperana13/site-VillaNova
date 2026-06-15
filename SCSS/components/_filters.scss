@@ -3,8 +3,8 @@
 ============================ */
 .filters-bar,
 .filters-band {
-  padding: .5rem 0;        /* ← 0 sur les côtés, le scroll doit dépasser */
-  overflow: visible;        /* ← le parent ne doit PAS clipper */
+  padding: .5rem 0;       
+  overflow: visible;       
 }
 
 .filters-inner {

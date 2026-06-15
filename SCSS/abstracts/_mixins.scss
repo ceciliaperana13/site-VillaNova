@@ -1,7 +1,3 @@
-// ===============================================
-// BREAKPOINT SYSTEM — PRODUCTION READY (Sass 3.0)
-// ===============================================
-
 // Import du module map
 @use "sass:map";
 
@@ -53,9 +49,8 @@ $breakpoints: (
     @content;
   }
 }
-// ===============================================
-// TYPOGRAPHIE FLUIDE — PRO
-// ===============================================
+
+// TYPOGRAPHIE FLUIDE 
 @mixin fluid-type($min, $max) {
   font-size: clamp(#{$min}, 1rem + 1.5vw, #{$max});
 }

@@ -1,10 +1,6 @@
-// =============================================
-// PLACEHOLDERS — VilleNova
-// =============================================
 
-// ------------------------------
+
 // Base card
-// ------------------------------
 %card-base {
   background: var(--blanc-casse);
   border: 1px solid var(--sable-moyen);
@@ -23,10 +19,7 @@
   }
 }
 
-
-// ------------------------------
 // Base badge
-// ------------------------------
 %badge-base {
   display: inline-flex;
   align-items: center;
@@ -38,11 +31,7 @@
   letter-spacing: .04em;
   text-transform: uppercase;
 }
-
-
-// ------------------------------
 // Base button
-// ------------------------------
 %btn-base {
   display: inline-flex;
   align-items: center;
@@ -55,22 +44,14 @@
   transition: all var(--dur) var(--ease);
   cursor: pointer;
 }
-
-
-// ------------------------------
 // Base section wrapper
-// ------------------------------
 %section-base {
   width: 100%;
   max-width: var(--container-max);
   margin-inline: auto;
   padding: var(--section-pad);
 }
-
-
-// ------------------------------
 // Base image wrapper
-// ------------------------------
 %img-cover {
   width: 100%;
   height: 100%;
@@ -79,9 +60,8 @@
 }
 
 
-// ------------------------------
+
 // Skeleton shimmer
-// ------------------------------
 %skeleton {
   background: linear-gradient(
     90deg,
@@ -95,9 +75,9 @@
 }
 
 
-// ------------------------------
+
 // Title base
-// ------------------------------
+
 %title-base {
   font-family: var(--font-titre);
   font-weight: 800;
@@ -106,9 +86,9 @@
 }
 
 
-// ------------------------------
+
 // Text clamp
-// ------------------------------
+
 %clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
