@@ -1,12 +1,6 @@
-/* =========================================
-   VilleNova — billetterie.js
-   ========================================= */
-
 'use strict';
 
-/* ══════════════════════════════════════════
-   OPENAGENDA — CONFIG
-   ══════════════════════════════════════════ */
+/*OPENAGENDA — CONFIG*/
 const OA_KEY          = "832ecfba688a4dda9e6beb28922ee893";
 const OA_AGENDA_UID   = "2119473";
 const OA_AGENDA_SLUG  = "musees-de-marseille";
@@ -18,9 +12,7 @@ const OA_BASE         = "https://api.openagenda.com/v2";
 const FEATURED_EVENT_UID  = "27089585";
 const FEATURED_EVENT_SLUG = "sequence-douverture-saison-mediterranee-3972861";
 
-/* ══════════════════════════════════════════
-   1. ÉTAT GLOBAL DU PANIER
-   ══════════════════════════════════════════ */
+/*1. ÉTAT GLOBAL DU PANIER */
 const cart = {
   items: {},
   promoApplied: false,
@@ -51,9 +43,7 @@ const cart = {
   },
 };
 
-/* ══════════════════════════════════════════
-   2. LOADER
-   ══════════════════════════════════════════ */
+/*2. LOADER*/
 window.addEventListener('load', () => {
   const loader = document.getElementById('page-loader');
   if (!loader) return;
@@ -63,9 +53,7 @@ window.addEventListener('load', () => {
   }, 700);
 });
 
-/* ══════════════════════════════════════════
-   3. NAVIGATION BURGER
-   ══════════════════════════════════════════ */
+/*3. NAVIGATION BURGER*/
 function initNav() {
   const burger   = document.getElementById('nav-burger');
   const navLinks = document.querySelector('.nav-links');
@@ -99,9 +87,7 @@ function initNav() {
   });
 }
 
-/* ══════════════════════════════════════════
-   4. FILTRES PAR CATÉGORIE
-   ══════════════════════════════════════════ */
+/*4. FILTRES PAR CATÉGORIE */
 function initFilters() {
   const chips = document.querySelectorAll('.filter-chip');
   const count = document.getElementById('results-count');
@@ -134,9 +120,7 @@ function initFilters() {
   });
 }
 
-/* ══════════════════════════════════════════
-   5. TRI
-   ══════════════════════════════════════════ */
+/*5. TRI */
 function initSort() {
   const sel  = document.getElementById('sort-select');
   const grid = document.getElementById('events-grid');
@@ -161,10 +145,6 @@ function initSort() {
     });
   });
 }
-
-/* ══════════════════════════════════════════
-   6. CONTRÔLES QUANTITÉ — avec animation total
-   ══════════════════════════════════════════ */
 
 /**
  * Attache les listeners +/- sur tous les .qty-btn présents dans un conteneur.
@@ -219,9 +199,7 @@ function attachQtyListeners(container = document) {
   });
 }
 
-/* ══════════════════════════════════════════
-   7. RENDU PANIER — avec animations
-   ══════════════════════════════════════════ */
+/*7. RENDU PANIER — avec animations */
 function renderCart() {
   const itemsEl    = document.getElementById('cart-items');
   const footerEl   = document.getElementById('cart-footer');
@@ -280,10 +258,7 @@ function removeCartItem(id) {
   showToast('Billet retiré du panier', 'info', 2000);
 }
 
-/* ══════════════════════════════════════════
-   8. ANIMATION TOTAL PANIER (mini flottant)
-   Affiche le total en direct sur le bouton panier
-   ══════════════════════════════════════════ */
+/*8. ANIMATION TOTAL PANIER (mini flottant) */
 function animateCartTotal() {
   // Mini bulle flottante au-dessus du bouton panier
   const toggle = document.getElementById('cart-toggle');
@@ -326,9 +301,7 @@ function animateCartTotal() {
   toggle.classList.add('bump');
 }
 
-/* ══════════════════════════════════════════
-   9. BADGE PANIER HEADER
-   ══════════════════════════════════════════ */
+/*9. BADGE PANIER HEADER*/
 function updateCartBadge() {
   const badge = document.getElementById('cart-count');
   if (!badge) return;
@@ -350,9 +323,7 @@ function updateCartBadge() {
   }
 }
 
-/* ══════════════════════════════════════════
-   10. PANNEAU PANIER (DRAWER)
-   ══════════════════════════════════════════ */
+/*10. PANNEAU PANIER (DRAWER) */
 function initCartDrawer() {
   const toggle   = document.getElementById('cart-toggle');
   const drawer   = document.getElementById('cart-drawer');
@@ -387,9 +358,7 @@ function initCartDrawer() {
   });
 }
 
-/* ══════════════════════════════════════════
-   11. CODE PROMO
-   ══════════════════════════════════════════ */
+/*11. CODE PROMO */
 function initPromo() {
   const promoBtn   = document.getElementById('promo-btn');
   const promoInput = document.getElementById('promo-input');
@@ -427,9 +396,7 @@ function initPromo() {
   });
 }
 
-/* ══════════════════════════════════════════
-   12. PAIEMENT — avec animation "traitement"
-   ══════════════════════════════════════════ */
+/*12. PAIEMENT — avec animation "traitement" */
 function initCheckout() {
   const btn = document.getElementById('btn-checkout');
   if (!btn) return;
@@ -567,9 +534,7 @@ function launchConfetti() {
   }
 }
 
-/* ══════════════════════════════════════════
-   14. ANIMATIONS AU SCROLL
-   ══════════════════════════════════════════ */
+/* 14. ANIMATIONS AU SCROLL*/
 function initScrollAnimations() {
   if (!('IntersectionObserver' in window)) {
     document.querySelectorAll('.animate-in').forEach(el => el.classList.add('visible'));
@@ -585,9 +550,7 @@ function initScrollAnimations() {
   document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
 }
 
-/* ══════════════════════════════════════════
-   15. TOAST
-   ══════════════════════════════════════════ */
+/*15. TOAST */
 function showToast(message, type = 'info', duration = 3500) {
   const container = document.getElementById('toast-container') || document.querySelector('.toast-container');
   if (!container) return;
@@ -818,9 +781,7 @@ function extractAllTarifs(ev) {
   return [{ id: `${ev.uid}-default`, label: 'Billet standard', price: 0, desc: 'Voir les conditions sur place' }];
 }
 
-/* ══════════════════════════════════════════
-   CONSTRUIRE UNE LIGNE TARIF
-   ══════════════════════════════════════════ */
+/*CONSTRUIRE UNE LIGNE TARIF */
 function buildTarifRow(tarif) {
   const row = document.createElement('div');
   row.className = 'tarif-row';
@@ -858,9 +819,7 @@ function buildTarifRow(tarif) {
   return row;
 }
 
-/* ══════════════════════════════════════════
-   INJECTER UN EVENT DANS UNE BILLET-CARD
-   ══════════════════════════════════════════ */
+/*INJECTER UN EVENT DANS UNE BILLET-CARD */
 function fillBilletCard(prefix, ev) {
   const $ = id => document.getElementById(`${prefix}-${id}`);
   const fallback = 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&q=80';
@@ -1014,11 +973,9 @@ function escapeHtml(str) {
   return _escEl.innerHTML;
 }
 
-/* ══════════════════════════════════════════
-   POINT D'ENTRÉE
-   ══════════════════════════════════════════ */
+/*POINT D'ENTRÉ */
 document.addEventListener('DOMContentLoaded', () => {
-  injectAnimationStyles(); // CSS animations dynamiques
+  injectAnimationStyles(); 
 
   initNav();
   initFilters();

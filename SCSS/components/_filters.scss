@@ -1,49 +1,55 @@
+/* ============================
+   FILTRES — scroll horizontal mobile
+============================ */
 .filters-bar,
 .filters-band {
-  position: sticky;
-  top: var(--header-h);
-  z-index: 100;
-  background: rgba(244, 237, 228, .9);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--sable-moyen);
-  padding: .75rem clamp(1rem, 4vw, 2rem);
+  padding: .5rem 0;       
+  overflow: visible;       
 }
 
 .filters-inner {
-  max-width: var(--container-max);
-  margin: 0 auto;
-  display: flex;
-  gap: .6rem;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-wrap: nowrap;        /* ← annule wrap du desktop */
+  overflow-x: auto;
+  overflow-y: visible;
+  gap: .5rem;
+  padding: .3rem 1rem .5rem; /* ← padding latéral ICI, pas sur le parent */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 5%,
+    black 95%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 5%,
+    black 95%,
+    transparent 100%
+  );
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .filter-tag,
 .filter-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: .3rem;
-  padding: .4rem .95rem;
-  border-radius: var(--r-pill);
-  font-size: .85rem;
-  font-weight: 500;
-  color: var(--gris-fonce);
-  background: var(--blanc-casse);
-  border: 1.5px solid var(--gris-clair);
-  min-height: 36px;
-  cursor: pointer;
-  transition: all var(--dur) var(--ease);
+  flex-shrink: 0;
+  white-space: nowrap;
+  padding: .38rem .85rem;
+  font-size: .82rem;
+  min-height: 34px;
+}
 
-  &:hover {
-    border-color: var(--sable-fonce);
-    color: var(--brun-chaud);
-    background: var(--sable-clair);
-  }
+/* Tri — passe sous les filtres sur mobile */
+.filter-sep {
+  display: none;
+}
 
-  &.active,
-  &[aria-pressed="true"] {
-    background: var(--brun-chaud);
-    color: var(--blanc-casse);
-    border-color: var(--brun-chaud);
-  }
+.sort-label,
+.sort-select {
+  display: none;           
 }

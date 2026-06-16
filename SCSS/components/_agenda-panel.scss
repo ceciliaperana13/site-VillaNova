@@ -1,7 +1,4 @@
-/* ============================================================
-   PANNEAU LATÉRAL — VilleNova
-   Drawer fixe à droite, ~380px, image en ratio 16/9
-   ============================================================ */
+/*Drawer fixe à droite */
 
 /* ── Overlay ── */
 .panel-overlay {
@@ -88,7 +85,7 @@
 .panel-img-wrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;   /* ← ratio fixe, image jamais coupée */
+  aspect-ratio: 16 / 9;   
   flex-shrink: 0;
   overflow: hidden;
   background: var(--sable-moyen, #C2A27C);
@@ -97,7 +94,7 @@
 .panel-img-wrap img {
   width: 100%;
   height: 100%;
-  object-fit: cover;      /* remplit le ratio sans déformer */
+  object-fit: cover;      
   display: block;
 }
 

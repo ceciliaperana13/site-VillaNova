@@ -1,22 +1,18 @@
 'use strict';
 
-/* ══════════════════════════════════════════
-   CONFIG OPENAGENDA
-   ══════════════════════════════════════════ */
+/*CONFIG OPENAGENDA*/
 const OA_KEY         = "832ecfba688a4dda9e6beb28922ee893";
-const OA_AGENDA_UID  = "2119473";              // Musées de Marseille
+const OA_AGENDA_UID  = "2119473";              
 const OA_AGENDA_SLUG = "musees-de-marseille";  // Slug public pour les liens
 const OA_BASE        = "https://api.openagenda.com/v2";
 
-// ✅ Event par défaut quand aucun ?id= dans l'URL
+//  Event par défaut quand aucun ?id= dans l'URL
 const DEFAULT_EVENT_UID  = "27089585";
 const DEFAULT_EVENT_SLUG = "sequence-douverture-saison-mediterranee-3972861";
 
 const FALLBACK_IMG = 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=1400&q=80';
 
-/* ══════════════════════════════════════════
-   UTILITAIRES
-   ══════════════════════════════════════════ */
+/*UTILITAIRES*/
 const _xssEl = document.createElement('div');
 function escapeHtml(str) {
   _xssEl.textContent = String(str ?? '');
@@ -133,9 +129,7 @@ function getTags(ev) {
   return [...new Set([...tags, ...keywords.slice(0, 3)])];
 }
 
-/* ══════════════════════════════════════════
-   FETCH — par ID (depuis URL ?id=)
-   ══════════════════════════════════════════ */
+/*FETCH — par ID (depuis URL ?id=) */
 async function fetchById(id) {
   const url = `${OA_BASE}/agendas/${OA_AGENDA_UID}/events/${id}?key=${OA_KEY}&lang=fr`;
   console.log('[VilleNova] Fetch par ID :', url);
@@ -145,10 +139,6 @@ async function fetchById(id) {
   return data.event || null;
 }
 
-/* ══════════════════════════════════════════
-   FETCH — auto : cible l'event Concert Sofiane Saidi
-   uid 27089585 | slug sequence-douverture-saison-mediterranee-3972861
-   ══════════════════════════════════════════ */
 async function fetchAutoEvent() {
   console.log('[VilleNova] Fetch event par défaut uid:', DEFAULT_EVENT_UID);
   try {
@@ -181,9 +171,7 @@ async function fetchAutoEvent() {
   );
 }
 
-/* ══════════════════════════════════════════
-   INJECTION DANS LE DOM
-   ══════════════════════════════════════════ */
+/*INJECTION DANS LE DOm*/
 function displayEvent(ev) {
   const titre = getText(ev.title) || 'Événement';
 
@@ -215,7 +203,7 @@ function displayEvent(ev) {
   const slug       = ev.slug || DEFAULT_EVENT_SLUG;
   const kw         = (ev.keywords?.fr || []).slice(0, 2).join(' · ') || 'Musique · Concert';
 
-  // ✅ Lien public OpenAgenda
+  //  Lien public OpenAgenda
   const lienOA = `https://openagenda.com/${OA_AGENDA_SLUG}/events/${slug}`;
 
   console.log('[VilleNova] Event reçu :', ev);
@@ -337,9 +325,7 @@ function setText(id, value) {
   if (el) el.textContent = value;
 }
 
-/* ══════════════════════════════════════════
-   ÉTAT D'ERREUR
-   ══════════════════════════════════════════ */
+/*ÉTAT D'ERREUR*/
 function displayError() {
   setText('detail-title', 'Événement introuvable');
   setText('detail-desc',  'Impossible de charger cet événement. Vérifiez votre connexion ou revenez plus tard.');
@@ -347,9 +333,7 @@ function displayError() {
   if (imgEl) imgEl.src = FALLBACK_IMG;
 }
 
-/* ══════════════════════════════════════════
-   TOAST
-   ══════════════════════════════════════════ */
+/*TOAST*/
 function showToast(message, type = 'info') {
   const icons = { success: '✓', error: '✕', info: 'ℹ' };
   let container = document.querySelector('.toast-container');
@@ -366,9 +350,7 @@ function showToast(message, type = 'info') {
   setTimeout(() => toast.remove(), 3400);
 }
 
-/* ══════════════════════════════════════════
-   BOUTONS
-   ══════════════════════════════════════════ */
+/*BOUTONS*/
 function initBtnFavoris() {
   const btn = document.getElementById('btn-favoris');
   if (!btn) return;
@@ -424,9 +406,7 @@ function initBtnShare() {
   });
 }
 
-/* ══════════════════════════════════════════
-   NAV BURGER
-   ══════════════════════════════════════════ */
+/*NAV BURGER*/
 function initNav() {
   const burger   = document.getElementById('nav-burger');
   const navLinks = document.getElementById('nav-links');
@@ -454,9 +434,7 @@ function initNav() {
   });
 }
 
-/* ══════════════════════════════════════════
-   LOADER
-   ══════════════════════════════════════════ */
+/*LOADER*/
 function initLoader() {
   window.addEventListener('load', () => {
     const loader = document.getElementById('page-loader');
@@ -468,9 +446,7 @@ function initLoader() {
   });
 }
 
-/* ══════════════════════════════════════════
-   POINT D'ENTRÉE
-   ══════════════════════════════════════════ */
+/*POINT D'ENTRÉE*/
 async function init() {
   initLoader();
   initNav();

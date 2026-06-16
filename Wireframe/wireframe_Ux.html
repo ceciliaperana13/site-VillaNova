@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VilleNova — Wireframes UX</title>
+  <link rel="stylesheet" href="./wireframe.css">
+</head>
+<body>
+<div class="page">
+
+  <h1>VilleNova — Wireframes UX</h1>
+  <p class="intro">Maquettes fil-de-fer pour les pages principales · Focus sur l'UX et la hiérarchie de l'information · Responsive (Desktop / Tablette / Mobile)</p>
+
+  <!--Légende-->
+  <div class="ux-legend">
+    <div class="ux-legend-item">
+      <div class="ux-legend-color" style="background:#e0e0e0; border:1px solid #ccc;"></div>
+      Zone contenu générique
+    </div>
+    <div class="ux-legend-item">
+      <div class="ux-legend-color" style="background:#bdbdbd;"></div>
+      Éléments importants / CTA
+    </div>
+    <div class="ux-legend-item">
+      <div class="ux-legend-color" style="background:#555;"></div>
+      Zones sombres (footer, hero)
+    </div>
+    <div class="ux-legend-item">
+      <span style="color:#c44; font-weight:700;">[ annotation ]</span>
+      Annotations UX
+    </div>
+  </div>
+
+  <!-- PAGE 1 : ACCUEIL-->
+  <div class="wireframe-section" style="margin-top:2.5rem;">
+    <h2>Page 1 — Accueil (Liste des événements)</h2>
+    <p class="desc">Priorités UX : découverte rapide des événements · filtres accessibles · barre de recherche visible · CTA billetterie clair</p>
+
+    <div class="devices">
+
+      <!-- Desktop -->
+      <div>
+        <div class="device-label">💻 Desktop (1280px+)</div>
+        <div class="wf-desktop">
+
+          <!-- Header -->
+          <div class="wf-header">
+            <div class="wf-logo"></div>
+            <div class="wf-nav">
+              <div class="wf-nav-item"></div>
+              <div class="wf-nav-item"></div>
+              <div class="wf-nav-item"></div>
+              <div class="wf-nav-item"></div>
+              <div class="wf-nav-item"></div>
+              <div class="wf-nav-cta"></div>
+            </div>
+          </div>
+
+          <!-- Hero -->
+          <div class="wf-hero">
+            <div class="wf-hero-tag"></div>
+            <div class="wf-hero-h1"></div>
+            <div class="wf-hero-h1b"></div>
+            <div class="wf-hero-p"></div>
+            <div class="wf-hero-p2"></div>
+            <div class="wf-hero-btns">
+              <div class="wf-btn">Explorer →</div>
+              <div class="wf-btn" style="background:rgba(255,255,255,.3);">Agenda</div>
+            </div>
+          </div>
+
+          <!-- Stats -->
+          <div class="wf-stats">
+            <div class="wf-stat"><div class="wf-stat-num"></div><div class="wf-stat-label"></div></div>
+            <div class="wf-stat"><div class="wf-stat-num"></div><div class="wf-stat-label"></div></div>
+            <div class="wf-stat"><div class="wf-stat-num"></div><div class="wf-stat-label"></div></div>
+            <div class="wf-stat"><div class="wf-stat-num"></div><div class="wf-stat-label"></div></div>
+          </div>
+
+          <!-- Titre section événements -->
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 12px 0;">
+            <div class="wf-line" style="height:16px; width:200px;"></div>
+            <div class="wf-line" style="height:10px; width:60px;"></div>
+          </div>
+
+          <!-- Recherche -->
+          <div style="padding:8px 12px;">
+            <div class="wf-search" style="max-width:300px;">
+              <span style="font-size:.65rem; color:#aaa;">🔍</span>
+              <div style="flex:1; height:8px; background:var(--box); border-radius:3px;"></div>
+            </div>
+          </div>
+
+          <!-- Filtres -->
+          <div class="wf-filters">
+            <div class="wf-filter-tag active">Tous</div>
+            <div class="wf-filter-tag">Concerts</div>
+            <div class="wf-filter-tag">Expositions</div>
+            <div class="wf-filter-tag">Festivals</div>
+            <div class="wf-filter-tag">Théâtre</div>
+            <div class="wf-filter-tag">Gastro</div>
+            <div class="wf-filter-tag">Sport</div>
+          </div>
+
+          <!-- Événement vedette -->
+          <div style="padding:12px 12px 0;">
+            <div class="wf-card-featured">
+              <div class="wf-card-img" style="height:auto; min-height:100px; position:relative;">
+                <div class="wf-card-badge"></div>
+                <div class="wf-card-a11y"><span></span><span></span><span></span></div>
+              </div>
+              <div class="wf-card-body" style="padding:12px; display:flex; flex-direction:column; gap:6px; justify-content:center;">
+                <div class="wf-card-meta"></div>
+                <div class="wf-card-title" style="height:14px;"></div>
+                <div class="wf-card-title" style="height:14px; width:70%;"></div>
+                <div class="wf-card-desc"></div>
+                <div class="wf-card-desc2"></div>
+                <div style="display:flex; gap:4px; margin-top:4px;">
+                  <div class="wf-filter-tag">Jazz</div>
+                  <div class="wf-filter-tag">Gratuit</div>
+                  <div class="wf-filter-tag">Air libre</div>
+                </div>
+                <div class="wf-btn" style="width:fit-content; margin-top:4px;">Voir →</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Grid 3 colonnes -->
+          <div class="wf-grid">
+            <div class="wf-card">
+              <div class="wf-card-img"><div class="wf-card-badge"></div><div class="wf-card-a11y"><span></span></div></div>
+              <div class="wf-card-body"><div class="wf-card-meta"></div><div class="wf-card-title"></div><div class="wf-card-desc"></div><div class="wf-card-desc2"></div></div>
+              <div class="wf-card-footer"><div class="wf-card-price"></div><div class="wf-card-cta"></div></div>
+            </div>
+            <div class="wf-card">
+              <div class="wf-card-img"><div class="wf-card-badge"></div><div class="wf-card-a11y"><span></span><span></span></div></div>
+              <div class="wf-card-body"><div class="wf-card-meta"></div><div class="wf-card-title"></div><div class="wf-card-desc"></div><div class="wf-card-desc2"></div></div>
+              <div class="wf-card-footer"><div class="wf-card-price"></div><div class="wf-card-cta"></div></div>
+            </div>
+            <div class="wf-card">
+              <div class="wf-card-img"><div class="wf-card-badge"></div><div class="wf-card-a11y"><span></span><span></span><span></span></div></div>
+              <div class="wf-card-body"><div class="wf-card-meta"></div><div class="wf-card-title"></div><div class="wf-card-desc"></div><div class="wf-card-desc2"></div></div>
+              <div class="wf-card-footer"><div class="wf-card-price"></div><div class="wf-card-cta"></div></div>
+            </div>
+          </div>
+
+          <!-- Pagination -->
+          <div class="wf-pagination">
+            <div class="wf-page-btn">←</div>
+            <div class="wf-page-btn active">1</div>
+            <div class="wf-page-btn">2</div>
+            <div class="wf-page-btn">3</div>
+            <div class="wf-page-btn">→</div>
+          </div>
+
+          <!-- Newsletter -->
+          <div class="wf-newsletter">
+            <div class="wf-line"></div>
+            <div class="wf-line short"></div>
+            <div class="wf-newsletter-form">
+              <div class="wf-newsletter-input"></div>
+              <div class="wf-btn">S'abonner</div>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="wf-footer">
+            <div class="wf-footer-col">
+              <div class="wf-logo" style="background:rgba(255,255,255,.2);"></div>
+              <div class="wf-line"></div><div class="wf-line"></div><div class="wf-line short"></div>
+            </div>
+            <div class="wf-footer-col">
+              <div class="wf-line" style="height:10px;"></div>
+              <div class="wf-line short"></div><div class="wf-line short"></div><div class="wf-line short"></div>
+            </div>
+            <div class="wf-footer-col">
+              <div class="wf-line" style="height:10px;"></div>
+              <div class="wf-line short"></div><div class="wf-line short"></div><div class="wf-line short"></div>
+            </div>
+            <div class="wf-footer-col">
+              <div class="wf-line" style="height:10px;"></div>
+              <div class="wf-line short"></div><div class="wf-line short"></div>
+            </div>
+          </div>
+
+        </div><!-- /wf-desktop -->
+
+        <div class="annotations">
+          <span class="annotation">1. Logo + nav collante</span>
+          <span class="annotation">2. Hero avec 2 CTA</span>
+          <span class="annotation">3. Stats animées</span>
+          <span class="annotation">4. Recherche + filtres</span>
+          <span class="annotation">5. Événement vedette (featured)</span>
+          <span class="annotation">6. Grille 3 colonnes</span>
+          <span class="annotation">7. Pagination</span>
+        </div>
+      </div>
+
+      <!-- Mobile -->
+      <div>
+        <div class="device-label">📱 Mobile (&lt; 768px)</div>
+        <div class="wf-mobile">
+
+          <!-- Header mobile -->
+          <div class="wf-header" style="padding:6px 8px;">
+            <div class="wf-logo" style="width:50px; height:14px;"></div>
+            <div class="wf-burger"><span></span><span></span><span></span></div>
+          </div>
+
+          <!-- Hero mobile -->
+          <div class="wf-hero" style="padding:16px 8px;">
+            <div class="wf-hero-tag"></div>
+            <div class="wf-hero-h1" style="height:18px;"></div>
+            <div class="wf-hero-h1b" style="height:18px;"></div>
+            <div class="wf-hero-p" style="height:8px;"></div>
+            <div class="wf-hero-p2" style="height:8px;"></div>
+            <div style="display:flex; flex-direction:column; gap:5px; align-items:center;">
+              <div class="wf-btn" style="width:80%;">Explorer →</div>
+              <div class="wf-btn" style="width:80%; background:rgba(255,255,255,.25);">Agenda</div>
+            </div>
+          </div>
+
+          <!--Filtres mobile-->
+          <div style="display:flex; gap:4px; padding:6px 8px; overflow:hidden;">
+            <div class="wf-filter-tag active" style="white-space:nowrap;">Tous</div>
+            <div class="wf-filter-tag" style="white-space:nowrap;">Concerts</div>
+            <div class="wf-filter-tag" style="white-space:nowrap;">Expos</div>
+            <div style="font-size:.6rem; color:#aaa; align-self:center;">→</div>
+          </div>
+
+          <!--Recherche mobile-->
+          <div style="padding:0 8px 6px;">
+            <div class="wf-search">
+              <span style="font-size:.6rem; color:#aaa;">🔍</span>
+              <div style="flex:1; height:7px; background:var(--box); border-radius:3px;"></div>
+            </div>
+          </div>
+
+          <!--Cartes mobile -->
+          <div class="wf-grid-1">
+            <div class="wf-card">
+              <div class="wf-card-img" style="height:80px;"><div class="wf-card-badge"></div></div>
+              <div class="wf-card-body"><div class="wf-card-meta"></div><div class="wf-card-title"></div><div class="wf-card-desc"></div></div>
+              <div class="wf-card-footer"><div class="wf-card-price"></div><div class="wf-card-cta"></div></div>
+            </div>
+            <div class="wf-card">
+              <div class="wf-card-img" style="height:80px;"><div class="wf-card-badge"></div></div>
+              <div class="wf-card-body"><div class="wf-card-meta"></div><div class="wf-card-title"></div><div class="wf-card-desc"></div></div>
+              <div class="wf-card-footer"><div class="wf-card-price"></div><div class="wf-card-cta"></div></div>
+            </div>
+          </div>
+
+          <!-- Footer mobile compact -->
+          <div style="background:#555; padding:8px; display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+            <div>
+              <div class="wf-line" style="background:rgba(255,255,255,.3); margin-bottom:4px;"></div>
+              <div class="wf-line short" style="background:rgba(255,255,255,.2);"></div>
+            </div>
+            <div>
+              <div class="wf-line" style="background:rgba(255,255,255,.3); margin-bottom:4px;"></div>
+              <div class="wf-line short" style="background:rgba(255,255,255,.2);"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="annotations" style="max-width:200px;">
+          <span class="annotation">Menu burger</span>
+          <span class="annotation">Filtres scroll →</span>
+          <span class="annotation">1 col grille</span>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- wireframe-section accueil-->
+
+  <!-- PAGE 2 : DÉTAIL ÉVÉNEMENT-->
+  <div class="wireframe-section">
+    <h2>Page 2 — Fiche Détaillée d'un Événement</h2>
+    <p class="desc">Priorités UX : photo immersive · infos clés visibles · CTA réservation sticky · accessibilité explicite · galerie média</p>
+
+    <div class="devices">
+
+      <!-- Desktop détail-->
+      <div>
+        <div class="device-label">💻 Desktop — Fiche Événement</div>
+        <div class="wf-desktop">
+
+          <!-- Header -->
+          <div class="wf-header">
+            <div class="wf-logo"></div>
+            <div class="wf-nav">
+              <div class="wf-nav-item"></div><div class="wf-nav-item"></div>
+              <div class="wf-nav-item"></div><div class="wf-nav-item"></div>
+              <div class="wf-nav-cta"></div>
+            </div>
+          </div>
+
+          <!-- Breadcrumb -->
+          <div style="background:#f9f9f9; border-bottom:1px solid var(--border); padding:5px 12px; display:flex; gap:6px; align-items:center;">
+            <div style="height:8px; width:40px; background:var(--box); border-radius:2px;"></div>
+            <span style="color:#ccc; font-size:.7rem;">›</span>
+            <div style="height:8px; width:60px; background:var(--box); border-radius:2px;"></div>
+            <span style="color:#ccc; font-size:.7rem;">›</span>
+            <div style="height:8px; width:100px; background:var(--box-dark); border-radius:2px;"></div>
+          </div>
+
+          <!-- Hero image -->
+          <div class="wf-detail-hero">
+            <div class="wf-detail-hero-text">
+              <div class="wf-detail-breadcrumb"></div>
+              <div class="wf-detail-title"></div>
+              <div class="wf-detail-title2"></div>
+            </div>
+          </div>
+
+          <!-- Layout détail : corps + sidebar -->
+          <div class="wf-detail-layout">
+
+            <!-- Corps principal -->
+            <div>
+              <!-- Tags accessibilité -->
+              <div class="wf-tags">
+                <div class="wf-tag">🎵 Jazz</div>
+                <div class="wf-tag">✨ Gratuit</div>
+                <div class="wf-tag">🤟 LSF</div>
+                <div class="wf-tag">💬 Sous-titres</div>
+                <div class="wf-tag">♿ PMR</div>
+              </div>
+
+              <!-- Texte de description -->
+              <div style="padding:0 0 8px;">
+                <div class="wf-line" style="height:14px; width:55%; margin:8px 0 6px;"></div>
+                <div class="wf-line"></div><div class="wf-line"></div><div class="wf-line short"></div>
+                <div class="wf-line" style="height:14px; width:40%; margin:8px 0 6px;"></div>
+                <div style="padding-left:8px; display:flex; flex-direction:column; gap:3px;">
+                  <div class="wf-line"></div><div class="wf-line short"></div>
+                  <div class="wf-line"></div><div class="wf-line short"></div>
+                </div>
+              </div>
+
+              <!-- Galerie médias -->
+              <div class="wf-line" style="height:14px; width:35%; margin:4px 0 6px;"></div>
+              <div class="wf-media-grid">
+                <div class="wf-media-main">▶ Vidéo</div>
+                <div class="wf-media-sm"></div>
+                <div class="wf-media-sm"></div>
+              </div>
+
+              <!-- Carte interactive -->
+              <div class="wf-line" style="height:14px; width:25%; margin:8px 0 4px;"></div>
+              <div style="background:var(--box); border-radius:6px; height:50px; display:flex; align-items:center; justify-content:center; font-size:.65rem; color:#888;">Carte interactive</div>
+
+              <!-- Accessibilité détail -->
+              <div class="wf-line" style="height:14px; width:40%; margin:8px 0 4px;"></div>
+              <div class="wf-a11y-grid">
+                <div class="wf-a11y-item">
+                  <div class="wf-a11y-icon">♿</div>
+                  <div class="wf-a11y-text"><div class="wf-line" style="height:9px;"></div><div class="wf-line short" style="height:7px;"></div></div>
+                </div>
+                <div class="wf-a11y-item">
+                  <div class="wf-a11y-icon">🤟</div>
+                  <div class="wf-a11y-text"><div class="wf-line" style="height:9px;"></div><div class="wf-line short" style="height:7px;"></div></div>
+                </div>
+                <div class="wf-a11y-item">
+                  <div class="wf-a11y-icon">💬</div>
+                  <div class="wf-a11y-text"><div class="wf-line" style="height:9px;"></div><div class="wf-line short" style="height:7px;"></div></div>
+                </div>
+                <div class="wf-a11y-item">
+                  <div class="wf-a11y-icon">🔊</div>
+                  <div class="wf-a11y-text"><div class="wf-line" style="height:9px;"></div><div class="wf-line short" style="height:7px;"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <!--Sidebar réservation-->
+            <div class="wf-sidebar">
+              <div class="wf-sidebar-header">
+                <div class="wf-line" style="height:8px; width:50%; background:rgba(255,255,255,.4); margin-bottom:4px;"></div>
+                <div class="wf-line" style="height:20px; width:70%; background:rgba(255,255,255,.7);"></div>
+              </div>
+              <div class="wf-sidebar-body">
+                <div class="wf-info-row"><div class="wf-info-icon"></div><div class="wf-info-text"></div></div>
+                <div class="wf-info-row"><div class="wf-info-icon"></div><div class="wf-info-text"></div></div>
+                <div class="wf-info-row"><div class="wf-info-icon"></div><div class="wf-info-text"></div></div>
+                <div class="wf-info-row"><div class="wf-info-icon"></div><div class="wf-info-text"></div></div>
+                <!--Jauge de remplissage-->
+                <div style="background:var(--box); height:6px; border-radius:50px; margin:4px 0; overflow:hidden;">
+                  <div style="height:100%; width:35%; background:var(--box-dark); border-radius:50px;"></div>
+                </div>
+                <div class="wf-reserve-btn"></div>
+                <div class="wf-reserve-btn" style="background:transparent; border:1px solid var(--box-dark);"></div>
+                <!-- Partage -->
+                <div style="display:flex; gap:3px; margin-top:4px; flex-wrap:wrap;">
+                  <div style="height:14px; background:var(--box); border-radius:3px; width:45px;"></div>
+                  <div style="height:14px; background:var(--box); border-radius:3px; width:45px;"></div>
+                  <div style="height:14px; background:var(--box); border-radius:3px; width:45px;"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Footer -->
+          <div class="wf-footer" style="margin-top:8px;">
+            <div class="wf-footer-col">
+              <div class="wf-logo" style="background:rgba(255,255,255,.2); margin-bottom:4px;"></div>
+              <div class="wf-line"></div><div class="wf-line short"></div>
+            </div>
+            <div class="wf-footer-col">
+              <div class="wf-line" style="height:10px;"></div>
+              <div class="wf-line short"></div><div class="wf-line short"></div>
+            </div>
+            <div class="wf-footer-col">
+              <div class="wf-line" style="height:10px;"></div>
+              <div class="wf-line short"></div>
+            </div>
+            <div class="wf-footer-col">
+              <div class="wf-line" style="height:10px;"></div>
+              <div class="wf-line short"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="annotations">
+          <span class="annotation">Photo héro plein largeur</span>
+          <span class="annotation">Breadcrumb navigation</span>
+          <span class="annotation">Tags accessibilité visibles</span>
+          <span class="annotation">Sidebar sticky</span>
+          <span class="annotation">Galerie + vidéo</span>
+          <span class="annotation">Jauge de remplissage</span>
+          <span class="annotation">Météo contextuelle</span>
+        </div>
+      </div>
+
+      <!-- Mobile détail-->
+      <div>
+        <div class="device-label"> Mobile — Fiche Événement</div>
+        <div class="wf-mobile">
+
+          <!-- Header mobile -->
+          <div class="wf-header" style="padding:6px 8px;">
+            <div class="wf-logo" style="width:50px; height:14px;"></div>
+            <div class="wf-burger"><span></span><span></span><span></span></div>
+          </div>
+
+          <!-- Hero mobile -->
+          <div style="background:var(--box-dark); height:100px; position:relative; display:flex; align-items:flex-end; padding:6px;">
+            <div style="display:flex; flex-direction:column; gap:3px;">
+              <div style="height:8px; width:80px; background:rgba(255,255,255,.4); border-radius:50px;"></div>
+              <div style="height:12px; width:120px; background:rgba(255,255,255,.7); border-radius:3px;"></div>
+            </div>
+          </div>
+
+          <!-- Tags mobile -->
+          <div style="display:flex; gap:3px; padding:6px 8px; overflow:hidden; flex-wrap:wrap;">
+            <div class="wf-tag">🎵 Jazz</div>
+            <div class="wf-tag">♿</div>
+            <div class="wf-tag">🤟 LSF</div>
+          </div>
+
+          <!--Sidebar mobile-->
+          <div class="wf-sidebar" style="margin:0 8px 8px;">
+            <div class="wf-sidebar-header">
+              <div style="height:14px; width:50%; background:rgba(255,255,255,.6); border-radius:3px;"></div>
+            </div>
+            <div class="wf-sidebar-body">
+              <div class="wf-info-row"><div class="wf-info-icon"></div><div class="wf-info-text"></div></div>
+              <div class="wf-info-row"><div class="wf-info-icon"></div><div class="wf-info-text"></div></div>
+              <div class="wf-reserve-btn"></div>
+            </div>
+          </div>
+
+          <!--Contenu texte-->
+          <div style="padding:0 8px;">
+            <div class="wf-line" style="height:12px; width:70%; margin-bottom:5px;"></div>
+            <div class="wf-line"></div><div class="wf-line"></div><div class="wf-line short"></div>
+          </div>
+
+          <!--Média mobile-->
+          <div style="padding:6px 8px 0;">
+            <div style="background:var(--box); height:80px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:.65rem; color:#888;">▶ Vidéo</div>
+          </div>
+
+          <!--Footer compact-->
+          <div style="background:#555; padding:8px; margin-top:8px;">
+            <div class="wf-line" style="background:rgba(255,255,255,.2);"></div>
+            <div class="wf-line short" style="background:rgba(255,255,255,.15); margin-top:3px;"></div>
+          </div>
+
+        </div><!--wf-mobile-->
+
+        <div class="annotations" style="max-width:200px;">
+          <span class="annotation">Sidebar en haut</span>
+          <span class="annotation">Layout 1 col</span>
+          <span class="annotation">CTA sticky bottom</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!--Footer page-->
+  <footer class="site-footer">
+    VilleNova — Wireframes UX v1.0 · Les annotations en rouge [ ] indiquent les points d'attention UX
+  </footer>
+
+</div>
+</body>
+</html>

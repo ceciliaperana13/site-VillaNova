@@ -1,6 +1,5 @@
 # ══════════════════════════════════════════
 # robots.txt — VilleNova Marseille
-# À placer à la racine du site :
 # https://villenova.fr/robots.txt
 # ══════════════════════════════════════════
 

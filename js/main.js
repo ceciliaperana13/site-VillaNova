@@ -1,7 +1,3 @@
-/* =========================================
-   VilleNova — JavaScript Global (main.js)
-   ========================================= */
-
 'use strict';
 
 /* ---- LOADER ---- */
@@ -160,9 +156,7 @@ function initStickyHeader() {
   observer.observe(sentinel);
 }
 
-/* ============================================================
-   OPENAGENDA — CONFIG
-   ============================================================ */
+/*  OPENAGENDA — CONFIG*/
 const OA_KEY          = "832ecfba688a4dda9e6beb28922ee893";
 const OA_AGENDA_UID   = "2119473";    // Agenda principal Marseille
 const OA_THEATRE_UID  = "65855330";
@@ -173,10 +167,7 @@ const OA_BASE         = "https://api.openagenda.com/v2";
 // Événement vedette fixe
 const FEATURED_EVENT_UID = "27089585";
 
-/* ============================================================
-   CATÉGORIE — détectée depuis le contenu réel de l'API
-   Utilisée pour data-category + badge + filtre
-   ============================================================ */
+/*CATÉGORIE — détectée depuis le contenu réel de l'API*/
 const CAT_LABELS = {
   concert:  '🎵 Concert',
   expo:     '🖼 Exposition',
@@ -237,9 +228,7 @@ function getDesc(ev, maxLen = 150) {
   return clean.length > maxLen ? clean.substring(0, maxLen) + '…' : clean;
 }
 
-/* ============================================================
-   EXTRACTION IMAGE
-   ============================================================ */
+/*EXTRACTION IMAGE*/
 function extractImage(ev) {
   const fallback = 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&q=80';
   if (!ev.image) return fallback;
@@ -251,9 +240,7 @@ function extractImage(ev) {
   return fallback;
 }
 
-/* ============================================================
-   FETCH HELPERS
-   ============================================================ */
+/*FETCH HELPERS */
 async function oaFetch(uid, params = {}) {
   const url = `${OA_BASE}/agendas/${uid}/events?` +
     new URLSearchParams({ key: OA_KEY, lang: 'fr', ...params });
@@ -279,10 +266,8 @@ async function oaFetchOne(uid, eventId) {
   }
 }
 
-/* ============================================================
-   REMPLIR UNE CARTE (ev1–ev6)
-   ── Met à jour data-category + badge depuis l'API ──
-   ============================================================ */
+/* REMPLIR UNE CARTE (ev1–ev6)
+   ── Met à jour data-category + badge depuis l'API */
 function fillCard(prefix, ev) {
   const $ = (id) => document.getElementById(`${prefix}-${id}`);
 
@@ -329,9 +314,7 @@ function fillCard(prefix, ev) {
   }
 }
 
-/* ============================================================
-   REMPLIR LA CARD VEDETTE
-   ============================================================ */
+/*REMPLIR LA CARD VEDETTE*/
 function fillFeaturedCard(ev) {
   const fallback = 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800&q=80';
   const titre    = ev.title?.fr || ev.title?.en || 'Événement';
@@ -392,9 +375,7 @@ function fillFeaturedCard(ev) {
   console.log(`[VilleNova] ✅ Vedette : "${titre}" | cat: ${cat}`);
 }
 
-/* ============================================================
-   CHARGER TOUTES LES CARTES
-   ============================================================ */
+/*CHARGER TOUTES LES CARTES */
 async function loadOpenAgendaCards() {
   const [featuredEv, eventsMain, eventsTheatre, eventsFestival, eventsSport] = await Promise.all([
     oaFetchOne(OA_AGENDA_UID, FEATURED_EVENT_UID),
@@ -422,16 +403,12 @@ async function loadOpenAgendaCards() {
   if (eventsFestival[0]) fillCard('ev5', eventsFestival[0]);
   if (eventsSport[0])    fillCard('ev6', eventsSport[0]);
 
-  /* ── Ré-appliquer le filtre actif après injection ──
-     Permet que les cartes fraîchement remplies respectent
-     le filtre déjà sélectionné par l'utilisateur */
+
   const activeFilter = document.querySelector('.filter-tag.active')?.dataset.filter || 'all';
   if (activeFilter !== 'all') applyFilter(activeFilter);
 }
 
-/* ============================================================
-   COMPTEURS ANIMÉS
-   ============================================================ */
+/*COMPTEURS ANIMÉS*/
 function animateCount(el, target, duration = 1400) {
   const start = performance.now();
   const update = (now) => {
@@ -516,9 +493,7 @@ function escapeAttr(str) {
     .replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-/* ============================================================
-   INIT
-   ============================================================ */
+/*INIT */
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initFilters();

@@ -1,21 +1,15 @@
-/* ============================================================
-   VilleNova — agenda.js
-   Mêmes agendas que main.js (OA_AGENDA_UID = "2119473")
-   Les agendas ne retournent pas "timings" mais "dateRange.fr"
-   en français (ex: "Mardi 5 mai, 21h30").
-   Ce fichier parse ces chaînes pour placer les pastilles.
-   ============================================================ */
+
 'use strict';
 
-/* ── CONFIG — synchronisée avec main.js ──────────────────── */
+/*CONFIG — synchronisée */
 const OA_KEY          = "832ecfba688a4dda9e6beb28922ee893";
-const OA_AGENDA_UID   = "2119473";    // ← même que main.js
+const OA_AGENDA_UID   = "2119473";    
 const OA_THEATRE_UID  = "65855330";
 const OA_FESTIVAL_UID = "46290899";
 const OA_SPORT_UID    = "94552197";
 const OA_BASE         = "https://api.openagenda.com/v2";
 
-/* ── ÉTAT ─────────────────────────────────────────────────── */
+/*ÉTAT */
 let EVENTS = [];
 const state = {
   currentDate:  new Date(),
@@ -44,16 +38,7 @@ const CAT_META = {
   autre:    { emoji:'📌', label:'Autre',       color:'#7A7A9D' },
 };
 
-/* ══════════════════════════════════════════════════════════
-   PARSER DE DATE FRANÇAISE
-   Gère :
-   - "Mardi 5 mai, 21h30"            → 5 mai année courante
-   - "5 mai 2026"                    → 5 mai 2026
-   - "Du 11 au 26 juillet 2026"      → [11 juillet, 26 juillet]
-   - "11 AU 26 JUILLET 2026"         → [11 juillet, 26 juillet]
-   - "Vendredi 22 mai, 20h30"        → 22 mai
-   - "1 mai au 30 juin 2026"         → plage mois différents
-══════════════════════════════════════════════════════════ */
+
 
 const MOIS_PATTERN = Object.keys(MOIS_MAP).join('|');
 const RE_SINGLE = new RegExp(
@@ -135,9 +120,7 @@ async function oaFetch(uid, params) {
   }
 }
 
-/* ══════════════════════════════════════════════════════════
-   EXTRACTION IMAGE — identique à main.js
-══════════════════════════════════════════════════════════ */
+/* EXTRACTION IMAGE*/
 
 function extractImage(ev) {
   const fallback = 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&q=80';
@@ -150,10 +133,7 @@ function extractImage(ev) {
   return fallback;
 }
 
-/* ══════════════════════════════════════════════════════════
-   DÉTECTION CATÉGORIE — identique à main.js
-   Inclut : titre + keywords + type + lieu + description
-══════════════════════════════════════════════════════════ */
+
 
 function guessCat(source, ev) {
   // Source forcée depuis l'agenda d'origine
@@ -190,10 +170,6 @@ function guessCat(source, ev) {
   return 'autre';
 }
 
-/* ══════════════════════════════════════════════════════════
-   MAPPING — construit l'objet event normalisé
-══════════════════════════════════════════════════════════ */
-
 function mapEvent(ev, source) {
   const dateRangeFr = ev.dateRange?.fr || '';
   const { debut, fin, heure } = parseFrenchDateRange(dateRangeFr);
@@ -227,9 +203,7 @@ function mapEvent(ev, source) {
   };
 }
 
-/* ══════════════════════════════════════════════════════════
-   CHARGEMENT — mêmes agendas que main.js
-══════════════════════════════════════════════════════════ */
+/*CHARGEMENT  */
 
 async function loadSixEvents() {
   const title = document.getElementById('month-title');
@@ -276,9 +250,7 @@ async function loadSixEvents() {
   refresh();
 }
 
-/* ══════════════════════════════════════════════════════════
-   UTILITAIRES DATES
-══════════════════════════════════════════════════════════ */
+/* UTILITAIRES DATES*/
 
 function parseDate(str) {
   if (!str) return null;
@@ -327,9 +299,7 @@ function getFilteredInMonth() {
   });
 }
 
-/* ══════════════════════════════════════════════════════════
-   CALENDRIER
-══════════════════════════════════════════════════════════ */
+/*CALENDRIER*/
 
 function renderCalendar() {
   const year  = state.currentDate.getFullYear();
@@ -404,9 +374,7 @@ function renderCalendar() {
   updateSummary(getFilteredInMonth());
 }
 
-/* ══════════════════════════════════════════════════════════
-   LISTE
-══════════════════════════════════════════════════════════ */
+/*LISTE*/
 
 function renderList() {
   const container = document.getElementById('list-container');
@@ -613,9 +581,7 @@ function refresh() {
   state.view === 'calendar' ? renderCalendar() : renderList();
 }
 
-/* ══════════════════════════════════════════════════════════
-   INIT
-══════════════════════════════════════════════════════════ */
+/*INIt */
 
 async function init() {
   window.addEventListener('load', () => {

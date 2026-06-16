@@ -532,54 +532,47 @@ p {
   background: var(--brun-chaud);
 }
 
+/* ============================
+   FILTRES — scroll horizontal mobile
+============================ */
 .filters-bar,
 .filters-band {
-  position: sticky;
-  top: var(--header-h);
-  z-index: 100;
-  background: rgba(244, 237, 228, 0.9);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--sable-moyen);
-  padding: 0.75rem clamp(1rem, 4vw, 2rem);
+  padding: 0.5rem 0; /* ← 0 sur les côtés, le scroll doit dépasser */
+  overflow: visible; /* ← le parent ne doit PAS clipper */
 }
 
 .filters-inner {
-  max-width: var(--container-max);
-  margin: 0 auto;
-  display: flex;
-  gap: 0.6rem;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-wrap: nowrap; /* ← annule wrap du desktop */
+  overflow-x: auto;
+  overflow-y: visible;
+  gap: 0.5rem;
+  padding: 0.3rem 1rem 0.5rem; /* ← padding latéral ICI, pas sur le parent */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+.filters-inner::-webkit-scrollbar {
+  display: none;
 }
 
 .filter-tag,
 .filter-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.4rem 0.95rem;
-  border-radius: var(--r-pill);
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--gris-fonce);
-  background: var(--blanc-casse);
-  border: 1.5px solid var(--gris-clair);
-  min-height: 36px;
-  cursor: pointer;
-  transition: all var(--dur) var(--ease);
+  flex-shrink: 0;
+  white-space: nowrap;
+  padding: 0.38rem 0.85rem;
+  font-size: 0.82rem;
+  min-height: 34px;
 }
-.filter-tag:hover,
-.filter-chip:hover {
-  border-color: var(--sable-fonce);
-  color: var(--brun-chaud);
-  background: var(--sable-clair);
+
+/* Tri — passe sous les filtres sur mobile */
+.filter-sep {
+  display: none;
 }
-.filter-tag.active, .filter-tag[aria-pressed=true],
-.filter-chip.active,
-.filter-chip[aria-pressed=true] {
-  background: var(--brun-chaud);
-  color: var(--blanc-casse);
-  border-color: var(--brun-chaud);
+
+.sort-label,
+.sort-select {
+  display: none;
 }
 
 .card-badge {
@@ -1000,7 +993,7 @@ p {
 }
 
 /* =========================================
-   MODAL VIDÉO
+   MODAL VIDÉO-iAUDIO — VilleNova-index
 ========================================= */
 .video-modal {
   position: fixed;
@@ -2623,7 +2616,7 @@ p {
 .panel-img-wrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 16/9; /* ← ratio fixe, image jamais coupée */
+  aspect-ratio: 16/9;
   flex-shrink: 0;
   overflow: hidden;
   background: var(--sable-moyen, #C2A27C);
@@ -2855,7 +2848,7 @@ p {
 }
 
 /* =========================================
-   MOBILE-FIRST — BASE (mobile par défaut)
+   MOBILE-FIRST — BASE
    ========================================= */
 /* ============================
    NAVIGATION
@@ -2947,27 +2940,37 @@ p {
 }
 
 /* ============================
-   FILTRES — scroll visible
+   FILTRES — 2-3 lignes sur mobile
 ============================ */
-.filters-inner {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  gap: 0.6rem;
-  padding: 0.4rem 0.2rem 0.6rem;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
+.filters-bar,
+.filters-band {
+  padding: 0.6rem 1rem;
 }
 
-.filters-inner::-webkit-scrollbar {
+.filters-inner {
+  flex-wrap: wrap; /* chips sur 2-3 lignes */
+  overflow: visible;
+  gap: 0.45rem;
+  padding: 0.2rem 0;
+}
+
+.filter-tag,
+.filter-chip {
+  flex-shrink: 0;
+  white-space: nowrap;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.8rem;
+  min-height: 32px;
+}
+
+/* Séparateur et tri masqués sur mobile */
+.filter-sep {
   display: none;
 }
 
-.filter-tag {
-  flex-shrink: 0;
-  white-space: nowrap;
-  padding: 0.55rem 1.1rem;
-  font-size: 0.9rem;
+.sort-label,
+.sort-select {
+  display: none;
 }
 
 /* ============================
@@ -3039,7 +3042,7 @@ p {
 }
 
 /* ============================
-   BILLETERIE — CARDS
+   BILLETTERIE — CARDS
 ============================ */
 .billet-featured {
   grid-template-columns: 1fr;
@@ -3150,7 +3153,7 @@ p {
 }
 
 /* ============================
-   ★ AGENDA — MOBILE
+   AGENDA — MOBILE
 ============================ */
 .agenda-hero {
   padding: 2rem 1.2rem 1.5rem;
@@ -3275,7 +3278,7 @@ p {
 }
 
 /* =========================================
-   EXTRA SMALL (≥ 480px)
+   EXTRA SMALL — ≥ 480px
 ========================================= */
 @media (min-width: 480px) {
   .card,
@@ -3303,9 +3306,12 @@ p {
     width: 100%;
     aspect-ratio: 1/1;
   }
-  .filter-tag {
-    padding: 0.45rem 0.9rem;
-    font-size: 0.82rem;
+  /* Filtres — xs : chips légèrement plus grands */
+  .filter-tag,
+  .filter-chip {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.84rem;
+    min-height: 36px;
   }
   .breadcrumb-list {
     font-size: 0.78rem;

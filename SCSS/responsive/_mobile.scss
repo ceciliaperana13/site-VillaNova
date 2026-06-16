@@ -1,5 +1,5 @@
 /* =========================================
-   MOBILE-FIRST — BASE (mobile par défaut)
+   MOBILE-FIRST — BASE
    ========================================= */
 
 @use '../abstracts/mixins' as *;
@@ -97,27 +97,37 @@
 }
 
 /* ============================
-   FILTRES — scroll visible
+   FILTRES — 2-3 lignes sur mobile
 ============================ */
-.filters-inner {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  gap: .6rem;
-  padding: .4rem .2rem .6rem;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
+.filters-bar,
+.filters-band {
+  padding: .6rem 1rem;
 }
 
-.filters-inner::-webkit-scrollbar {
+.filters-inner {
+  flex-wrap: wrap;              /* chips sur 2-3 lignes */
+  overflow: visible;
+  gap: .45rem;
+  padding: .2rem 0;
+}
+
+.filter-tag,
+.filter-chip {
+  flex-shrink: 0;
+  white-space: nowrap;
+  padding: .35rem .8rem;
+  font-size: .8rem;
+  min-height: 32px;
+}
+
+/* Séparateur et tri masqués sur mobile */
+.filter-sep {
   display: none;
 }
 
-.filter-tag {
-  flex-shrink: 0;
-  white-space: nowrap;
-  padding: .55rem 1.1rem;
-  font-size: .9rem;
+.sort-label,
+.sort-select {
+  display: none;
 }
 
 /* ============================
@@ -189,7 +199,7 @@
 }
 
 /* ============================
-   BILLETERIE — CARDS
+   BILLETTERIE — CARDS
 ============================ */
 .billet-featured {
   grid-template-columns: 1fr;
@@ -301,7 +311,7 @@
 }
 
 /* ============================
-   ★ AGENDA — MOBILE
+   AGENDA — MOBILE
 ============================ */
 .agenda-hero {
   padding: 2rem 1.2rem 1.5rem;
@@ -435,7 +445,7 @@
 }
 
 /* =========================================
-   EXTRA SMALL (≥ 480px)
+   EXTRA SMALL — ≥ 480px
 ========================================= */
 @include respond(xs) {
 
@@ -470,9 +480,12 @@
     aspect-ratio: 1 / 1;
   }
 
-  .filter-tag {
-    padding: .45rem .9rem;
-    font-size: .82rem;
+  /* Filtres — xs : chips légèrement plus grands */
+  .filter-tag,
+  .filter-chip {
+    padding: .4rem .9rem;
+    font-size: .84rem;
+    min-height: 36px;
   }
 
   .breadcrumb-list {
