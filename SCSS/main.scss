@@ -1,6 +1,3 @@
-// =========================================
-// VilleNova — main.scss (version optimisée)
-// =========================================
 
 // 1. Abstracts
 @use 'abstracts/variables' as *;
@@ -51,9 +48,8 @@
 @use 'components/stats' as *;
 @use 'components/pagination' as *;
 
-// =========================================
+
 // PAGE DÉTAIL — NOUVEAUX COMPOSANTS
-// =========================================
 @use 'components/detail-hero' as *;
 @use 'components/detail-layout' as *;
 @use 'components/detail-tags' as *;
@@ -65,10 +61,8 @@
 @use 'components/weather' as *;
 @use 'components/similar-events' as *;
 
-// =========================================
-// AGENDA — emplacement CORRECT
-// =========================================
 
+// AGENDA 
 // La PAGE agenda (hero, filtres, recherche, contrôles)
 @use 'pages/agenda' as *;
 
@@ -81,9 +75,8 @@
 // Le PANNEAU latéral
 @use 'components/agenda-panel' as *;
 
-// =========================================
+
 // Responsive
-// =========================================
 @use 'responsive/mobile' as *;
 @use 'responsive/tablet' as *;
 @use 'responsive/desktop' as *;
