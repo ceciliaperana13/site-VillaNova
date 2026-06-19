@@ -7,7 +7,6 @@
   --border:   #ccc;
 }
 
-/*Reset & base */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -21,14 +20,12 @@ body {
   font-size: 12px;
 }
 
-/*Layout*/
 .page {
   max-width: 1100px;
   margin: 0 auto;
   padding: 2rem;
 }
 
-/*En-tête*/
 h1 {
   font-size: 1.5rem;
   color: #333;
@@ -41,7 +38,6 @@ h1 {
   font-size: .85rem;
 }
 
-/*Légende */
 .ux-legend {
   display: flex;
   gap: 1.5rem;
@@ -67,7 +63,6 @@ h1 {
   border-radius: 3px;
 }
 
-/*Sections wireframe*/
 .wireframe-section {
   margin-bottom: 4rem;
 }
@@ -84,7 +79,6 @@ h1 {
   margin-bottom: 1.2rem;
 }
 
-/* Conteneurs de devices*/
 .devices {
   display: flex;
   gap: 2.5rem;
@@ -102,7 +96,6 @@ h1 {
   text-transform: uppercase;
 }
 
-/*Frames de device*/
 .wf-desktop {
   width: 680px;
   background: #fff;
@@ -127,7 +120,6 @@ h1 {
   overflow: hidden;
 }
 
-/* Primitives wireframe*/
 .wf-block {
   background: var(--box);
   border: 1px solid var(--border);
@@ -162,7 +154,6 @@ h1 {
   font-weight: 700;
 }
 
-/* Header*/
 .wf-header {
   display: flex;
   align-items: center;
@@ -198,7 +189,6 @@ h1 {
   border-radius: 50px;
 }
 
-/*Hero*/
 .wf-hero {
   background: #d5d5d5;
   padding: 20px 12px;
@@ -217,7 +207,6 @@ h1 {
   justify-content: center;
 }
 
-/* Filtres*/
 .wf-filters {
   display: flex;
   gap: 5px;
@@ -240,7 +229,6 @@ h1 {
 
 .wf-filter-tag.active { background: var(--box-dark); }
 
-/* Recherche*/
 .wf-search {
   background: #f5f5f5;
   border: 1px solid var(--border);
@@ -252,7 +240,6 @@ h1 {
   gap: 6px;
 }
 
-/*Grilles de cartes*/
 .wf-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -274,7 +261,6 @@ h1 {
   padding: 8px;
 }
 
-/*Carte standard*/
 .wf-card {
   background: #f9f9f9;
   border: 1px solid var(--border);
@@ -334,7 +320,6 @@ h1 {
 .wf-card-price { height: 9px;  width: 40px; background: var(--box-dark); border-radius: 2px; }
 .wf-card-cta   { height: 16px; width: 35px; background: var(--box-dark); border-radius: 50px; }
 
-/*Carte vedette (featured)*/
 .wf-card-featured {
   background: #f9f9f9;
   border: 1px solid var(--border);
@@ -357,7 +342,6 @@ h1 {
   gap: 5px;
 }
 
-/* Stats*/
 .wf-stats {
   background: var(--box-dark);
   display: grid;
@@ -384,7 +368,6 @@ h1 {
   margin: 0 auto;
 }
 
-/*Footer*/
 .wf-footer {
   background: #555;
   display: grid;
@@ -401,7 +384,6 @@ h1 {
 
 .wf-footer-col .wf-line { background: rgba(255,255,255,.25); }
 
-/*Page détail */
 .wf-detail-hero {
   background: var(--box-dark);
   height: 120px;
@@ -436,7 +418,6 @@ h1 {
   padding: 12px;
 }
 
-/*Sidebar*/
 .wf-sidebar {
   background: #f9f9f9;
   border: 1px solid var(--border);
@@ -484,7 +465,6 @@ h1 {
   width: 100%;
 }
 
-/* Galerie médias */
 .wf-media-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -511,7 +491,6 @@ h1 {
   height: 34px;
 }
 
-/*Accessibilité items*/
 .wf-a11y-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -543,7 +522,6 @@ h1 {
   flex: 1;
 }
 
-/* Newsletter*/
 .wf-newsletter {
   background: var(--box-dark);
   margin: 0 12px 12px;
@@ -572,7 +550,6 @@ h1 {
   border-radius: 50px;
 }
 
-/*Pagination */
 .wf-pagination {
   display: flex;
   gap: 4px;
@@ -593,7 +570,6 @@ h1 {
 
 .wf-page-btn.active { background: var(--box-dark); }
 
-/* Tags */
 .wf-tags {
   display: flex;
   gap: 4px;
@@ -612,7 +588,6 @@ h1 {
   align-items: center;
 }
 
-/*Burger menu*/
 .wf-burger {
   display: flex;
   flex-direction: column;
@@ -627,7 +602,6 @@ h1 {
   border-radius: 1px;
 }
 
-/* Annotations*/
 .annotation {
   font-size: .68rem;
   color: #c44;
@@ -646,7 +620,6 @@ h1 {
   padding: 0 12px 8px;
 }
 
-/*Footer page */
 .site-footer {
   text-align: center;
   padding: 1.5rem;
