@@ -1,13 +1,13 @@
 'use strict';
 
-/* ---- LOADER ---- */
+/*LOADER*/
 document.addEventListener('DOMContentLoaded', () => {
   const loader = document.getElementById('page-loader');
   if (!loader) return;
   requestAnimationFrame(() => loader.classList.add('hidden'));
 });
 
-/* ---- NAVIGATION MOBILE ---- */
+/* MOBILE NAVIGATION*/
 function initNav() {
   const burger   = document.querySelector('.nav-burger');
   const navLinks = document.querySelector('.nav-links');
@@ -38,11 +38,9 @@ function initNav() {
   });
 }
 
-/* ---- FILTRES ÉVÉNEMENTS ---- */
-/*
-   Les cartes ont un data-category mis à jour dynamiquement par fillCard()
-   dès que l'API répond. On réobserve donc les cartes à ce moment-là.
-*/
+/*  EVENT FILTERS  */
+/*The cards have a data category that is dynamically updated by fillCard()
+as soon as the API responds. Therefore, the cards are re-observed at that time.*/
 function initFilters() {
   const filterTags = document.querySelectorAll('.filter-tag');
   if (!filterTags.length) return;
@@ -61,7 +59,7 @@ function initFilters() {
 }
 
 function applyFilter(cat) {
-  /* On relit les cartes à chaque clic : elles ont pu être mises à jour par l'API */
+  
   const cards = document.querySelectorAll('.event-card[data-category]');
   cards.forEach(card => {
     const match = cat === 'all' || card.dataset.category === cat;
@@ -79,7 +77,7 @@ function applyFilter(cat) {
   });
 }
 
-/* ---- BARRE DE RECHERCHE ---- */
+/* SEARCH BAR*/
 function initSearch() {
   const searchInput = document.getElementById('search-input');
   const searchBtn   = document.getElementById('search-btn');
@@ -111,7 +109,7 @@ function filterCardsBySearch(query) {
   });
 }
 
-/* ---- ANIMATIONS SCROLL ---- */
+/*ANIMATIONS SCROLL*/
 function initScrollAnimations() {
   if (!('IntersectionObserver' in window)) return;
   const observer = new IntersectionObserver((entries) => {
@@ -125,7 +123,7 @@ function initScrollAnimations() {
   document.querySelectorAll('.animate-in').forEach(t => observer.observe(t));
 }
 
-/* ---- TOAST ---- */
+/*TOAST*/
 function showToast(message, type = 'info') {
   const icons = { success: '✓', error: '✕', info: 'ℹ' };
   const container = document.querySelector('.toast-container') || createToastContainer();
@@ -142,7 +140,7 @@ function createToastContainer() {
   return c;
 }
 
-/* ---- STICKY HEADER ---- */
+/*STICKY HEADER*/
 function initStickyHeader() {
   const header = document.querySelector('.site-header');
   if (!header) return;
@@ -158,13 +156,13 @@ function initStickyHeader() {
 
 /*  OPENAGENDA — CONFIG*/
 const OA_KEY          = "832ecfba688a4dda9e6beb28922ee893";
-const OA_AGENDA_UID   = "2119473";    // Agenda principal Marseille
+const OA_AGENDA_UID   = "2119473";    
 const OA_THEATRE_UID  = "65855330";
 const OA_FESTIVAL_UID = "46290899";
 const OA_SPORT_UID    = "94552197";
 const OA_BASE         = "https://api.openagenda.com/v2";
 
-// Événement vedette fixe
+// fixed featured event
 const FEATURED_EVENT_UID = "27089585";
 
 /*CATÉGORIE — détectée depuis le contenu réel de l'API*/
@@ -178,7 +176,7 @@ const CAT_LABELS = {
   autre:    '📌 Autre',
 };
 
-// ─── APRÈS — ajoute lieu + description dans la détection ─────
+// APRÈS — ajoute lieu + description dans la détection 
 function guessCat(ev) {
   const titre    = (ev.title?.fr    || ev.title?.en    || '').toLowerCase();
   const keywords = (ev.keywords?.fr || ev.keywords?.en || []).join(' ').toLowerCase();
@@ -212,10 +210,7 @@ function guessCat(ev) {
 
   return 'autre';
 }
-/* ============================================================
-   DESCRIPTION — priorité longDescription > description > summary
-      + fallback si trop courte
-   ============================================================ */
+/*DESCRIPTION — priorité longDescription > description > summary */
 function getDesc(ev, maxLen = 150) {
   const raw =
     ev.longDescription?.fr ||
@@ -280,7 +275,7 @@ function fillCard(prefix, ev) {
   const cat      = guessCat(ev);
   const fallback = 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&q=80';
 
-  /* ── Image ── */
+  /*Image */
   const imgEl = $('img');
   if (imgEl) {
     imgEl.src = imgSrc;
@@ -288,20 +283,20 @@ function fillCard(prefix, ev) {
     imgEl.onerror = () => { imgEl.src = fallback; imgEl.onerror = null; };
   }
 
-  /* ── Textes ── */
+  /*Textes */
   const titleEl = $('title');  if (titleEl)  titleEl.textContent  = titre;
   const descEl  = $('desc');   if (descEl)   descEl.textContent   = desc;
   const dateEl  = $('date');   if (dateEl)   dateEl.textContent   = '📅 ' + date;
   const placeEl = $('place');  if (placeEl)  placeEl.textContent  = '📍 ' + lieu;
   const prixEl  = $('prix');   if (prixEl)   prixEl.textContent   = prix;
 
-  /* ── Lien détail ── */
+  /*Lien détail */
   const linkEl = $('link');
   if (linkEl) {
     linkEl.href = `/html/evenement-detail.html?id=${encodeURIComponent(ev.uid || ev.slug)}`;
   }
 
-  /* ── Badge catégorie — mis à jour depuis l'API ── */
+  /*Badge catégorie — mis à jour depuis l'API */
   const badgeEl = $('badge');
   if (badgeEl) badgeEl.textContent = CAT_LABELS[cat] || CAT_LABELS.autre;
 
@@ -432,7 +427,7 @@ function initCounters() {
   document.querySelectorAll('[data-count]').forEach(el => obs.observe(el));
 }
 
-/* ---- MODAL VIDÉO ---- */
+/* MODAL VIDÉO */
 function initVideoModal() {
   const modal    = document.getElementById('video-modal');
   const trigger  = document.querySelector('[data-video-trigger]');
@@ -449,7 +444,7 @@ function initVideoModal() {
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
 }
 
-/* ---- PAGINATION ---- */
+/* PAGINATION */
 function initPagination() {
   document.querySelectorAll('.page-btn').forEach(btn => {
     btn.addEventListener('click', function () {
@@ -465,7 +460,7 @@ function initPagination() {
   });
 }
 
-/* ---- NEWSLETTER ---- */
+/* NEWSLETTER */
 function handleNewsletter(e) {
   e.preventDefault();
   const email = document.getElementById('newsletter-email')?.value?.trim();
@@ -484,7 +479,7 @@ function handleNewsletter(e) {
   }, 800);
 }
 
-/* ---- UTILITAIRES ANTI-XSS ---- */
+/* UTILITAIRES */
 const _xssEl = document.createElement('div');
 function escapeHtml(str) { _xssEl.textContent = String(str ?? ''); return _xssEl.innerHTML; }
 function escapeAttr(str) {

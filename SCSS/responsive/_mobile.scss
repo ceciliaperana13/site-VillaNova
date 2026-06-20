@@ -1,12 +1,8 @@
-/* =========================================
-   MOBILE-FIRST — BASE
-   ========================================= */
+/*MOBILE-FIRST — BASE*/
 
 @use '../abstracts/mixins' as *;
 
-/* ============================
-   NAVIGATION
-============================ */
+/*NAVIGATION */
 .nav-links {
   display: none;
   position: fixed;
@@ -51,9 +47,7 @@
   display: flex;
 }
 
-/* ============================
-   HERO
-============================ */
+/*HERO*/
 .hero {
   min-height: 320px;
 }
@@ -68,9 +62,7 @@
   max-width: 300px;
 }
 
-/* ============================
-   HERO BILLETTERIE
-============================ */
+/*HERO BILLETTERIE*/
 .hero-billet {
   grid-template-columns: 1fr;
   gap: 1.5rem;
@@ -89,23 +81,19 @@
   gap: .8rem;
 }
 
-/* ============================
-   STATS
-============================ */
+/*STATS */
 .stats-inner {
   grid-template-columns: repeat(2, 1fr);
 }
 
-/* ============================
-   FILTRES — 2-3 lignes sur mobile
-============================ */
+/*FILTRES — 2-3 lignes sur mobile */
 .filters-bar,
 .filters-band {
   padding: .6rem 1rem;
 }
 
 .filters-inner {
-  flex-wrap: wrap;              /* chips sur 2-3 lignes */
+  flex-wrap: wrap;            
   overflow: visible;
   gap: .45rem;
   padding: .2rem 0;
@@ -130,9 +118,7 @@
   display: none;
 }
 
-/* ============================
-   UNIVERSAL CARDS GRID
-============================ */
+/*UNIVERSAL CARDS GRID */
 .cards-grid,
 .events-grid,
 .events-billet-grid,
@@ -143,9 +129,7 @@
   gap: 1.2rem;
 }
 
-/* ============================
-   CARDS — STRUCTURE MOBILE
-============================ */
+/*CARDS — STRUCTURE MOBILE */
 .card,
 .event-card,
 .billet-card {
@@ -176,9 +160,7 @@
   padding: .8rem .9rem 1rem;
 }
 
-/* ============================
-   ÉVÉNEMENTIEL — CARDS
-============================ */
+/*ÉVÉNEMENTIEL — CARDS*/
 .card-img-wrap {
   aspect-ratio: 4 / 3;
 }
@@ -198,9 +180,7 @@
   padding: 1.2rem 1rem;
 }
 
-/* ============================
-   BILLETTERIE — CARDS
-============================ */
+/*BILLETTERIE — CARDS*/
 .billet-featured {
   grid-template-columns: 1fr;
   display: flex;
@@ -216,9 +196,7 @@
   padding: 1.2rem 1rem;
 }
 
-/* ============================
-   BADGES & ACCESSIBILITÉ
-============================ */
+/*BADGES & ACCESSIBILITÉ */
 .billet-card-img,
 .card-img-wrap {
   position: relative;
@@ -243,9 +221,7 @@
   }
 }
 
-/* ============================
-   PAGE DÉTAIL ÉVÉNEMENTIEL
-============================ */
+/*PAGE DÉTAIL ÉVÉNEMENTIEL*/
 .detail-layout {
   display: grid;
   grid-template-columns: 1fr !important;
@@ -290,9 +266,7 @@
   margin-bottom: .4rem;
 }
 
-/* ============================
-   FOOTER
-============================ */
+/*FOOTER*/
 .footer-inner {
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
@@ -302,17 +276,13 @@
   grid-column: 1 / -1;
 }
 
-/* ============================
-   TOAST
-============================ */
+/*TOAST*/
 .toast-container {
   bottom: 1rem;
   right: 1rem;
 }
 
-/* ============================
-   AGENDA — MOBILE
-============================ */
+/*AGENDA — MOBILE */
 .agenda-hero {
   padding: 2rem 1.2rem 1.5rem;
   text-align: center;
@@ -444,9 +414,7 @@
   }
 }
 
-/* =========================================
-   EXTRA SMALL — ≥ 480px
-========================================= */
+/*EXTRA SMALL — ≥ 480px */
 @include respond(xs) {
 
   .card,

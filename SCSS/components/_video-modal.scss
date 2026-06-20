@@ -1,6 +1,4 @@
-/* =========================================
-   MODAL VIDÉO-iAUDIO — VilleNova-index
-========================================= */
+/*MODAL VIDÉO-iAUDIO — VilleNova-index */
 
 .video-modal {
   position: fixed;
@@ -23,7 +21,7 @@
 
   video {
     width: 100%;
-    max-width: 900px;      /* ← tu modifies ici la taille */
+    max-width: 900px;     
     max-height: 80vh;
     border-radius: var(--r-md);
     object-fit: contain;
@@ -52,9 +50,7 @@
   }
 }
 
-/* =========================================
-   IMAGE D’APERÇU AVEC FILTRE + PLAY
-========================================= */
+/*IMAGE D’APERÇU AVEC FILTRE + PLAY */
 
 .media-item.has-video {
   position: relative;

@@ -1,11 +1,8 @@
-// =========================================
 // RESPONSIVE — TABLETTE (≥ 768px)
-// =========================================
+
 @use '../abstracts/mixins' as *;
 
-/* =========================================
-   TABLETTE — GRILLES & CARTES
-========================================= */
+/*TABLETTE — GRILLES & CARTES*/
 @include respond(md) {
 
   .events-grid {
@@ -32,9 +29,7 @@
   }
 }
 
-/* =========================================
-   CALENDRIER TABLETTE (≥ 768px)
-========================================= */
+/*CALENDRIER TABLETTE (≥ 768px) */
 @include respond(md) {
 
   .stats-inner { 

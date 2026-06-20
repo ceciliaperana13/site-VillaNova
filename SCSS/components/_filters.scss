@@ -1,6 +1,4 @@
-/* ============================
-   FILTRES — scroll horizontal mobile
-============================ */
+/*FILTRES — scroll horizontal mobile */
 .filters-bar,
 .filters-band {
   padding: .5rem 0;       
@@ -8,11 +6,11 @@
 }
 
 .filters-inner {
-  flex-wrap: nowrap;        /* ← annule wrap du desktop */
+  flex-wrap: nowrap;        
   overflow-x: auto;
   overflow-y: visible;
   gap: .5rem;
-  padding: .3rem 1rem .5rem; /* ← padding latéral ICI, pas sur le parent */
+  padding: .3rem 1rem .5rem; 
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   -webkit-mask-image: linear-gradient(

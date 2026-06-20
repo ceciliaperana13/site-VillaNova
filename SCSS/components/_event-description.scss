@@ -1,6 +1,5 @@
-// =========================================
 // DESCRIPTION ÉVÉNEMENT — Page Détail
-// =========================================
+
 
 .event-description {
   background: var(--blanc-casse);
@@ -13,9 +12,8 @@
   gap: 2rem;
 }
 
-// -----------------------------
-// BADGES (Jazz · Festival · Gratuit · etc.)
-// -----------------------------
+
+// BADGES 
 .event-tags {
   display: flex;
   flex-wrap: wrap;
@@ -44,9 +42,8 @@
   }
 }
 
-// -----------------------------
+
 // TITRE SECTIONS
-// -----------------------------
 .event-section-title {
   font-family: var(--font-titre);
   font-size: 1.3rem;
@@ -66,9 +63,8 @@
   }
 }
 
-// -----------------------------
+
 // TEXTE À PROPOS
-// -----------------------------
 .event-about {
   font-size: .95rem;
   color: var(--gris-fonce);

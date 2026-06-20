@@ -1,6 +1,5 @@
-// =========================================
 // CARTES BILLETTERIE — VilleNova
-// =========================================
+
 
 .billet-card {
   background: var(--blanc-casse);
@@ -21,9 +20,8 @@
   }
 }
 
-// -----------------------------------------
+
 // IMAGE
-// -----------------------------------------
 .billet-card-img {
   position: relative;
   overflow: hidden;
@@ -42,18 +40,16 @@
   transform: scale(1.05);
 }
 
-// -----------------------------------------
+
 // GRILLE BILLETERIE
-// -----------------------------------------
 .events-billet-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--gap-cards);
 }
 
-// -----------------------------------------
+
 // CARTE VEDETTE
-// -----------------------------------------
 .billet-featured {
   grid-column: 1 / -1;
   display: grid;
@@ -78,11 +74,8 @@
   }
 }
 
-// =========================================
-// QUANTITÉS — Boutons - / +
-// (UNIQUEMENT les boutons, rien d'autre)
-// =========================================
 
+// QUANTITÉS — Boutons - / +
 .ticket-line {
   display: flex;
   justify-content: space-between;
@@ -111,14 +104,14 @@
   }
 }
 
-/* --- TON CONTENEUR RÉEL --- */
+/*  TON CONTENEUR RÉEL  */
 .qty-control {
   display: flex;
   align-items: center;
   gap: .5rem; /* espace entre - / nombre / + */
 }
 
-/* --- Boutons – et + --- */
+/*  Boutons – et +  */
 .qty-btn {
   width: 28px;
   height: 28px;
@@ -148,5 +141,5 @@
   font-size: .95rem;
   font-weight: 600;
   color: var(--brun-chaud);
-  display: inline-block; /* IMPORTANT pour l’alignement */
+  display: inline-block; 
 }

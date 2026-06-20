@@ -146,10 +146,7 @@ function initSort() {
   });
 }
 
-/**
- * Attache les listeners +/- sur tous les .qty-btn présents dans un conteneur.
- * Appelé aussi bien sur les cartes statiques que sur les cartes OA injectées.
- */
+/*Attache les listeners +/- sur tous les .qty-btn présents dans un conteneur*/
 function attachQtyListeners(container = document) {
   container.querySelectorAll('.qty-btn').forEach(btn => {
     // Éviter les doublons
@@ -464,9 +461,7 @@ function initCheckout() {
   });
 }
 
-/* ══════════════════════════════════════════
-   13. MODAL CONFIRMATION + CONFETTIS
-   ══════════════════════════════════════════ */
+/*13. MODAL CONFIRMATION */
 function showConfirmModal() {
   const modal   = document.getElementById('confirm-modal');
   const details = document.getElementById('confirm-details');
@@ -565,9 +560,7 @@ function showToast(message, type = 'info', duration = 3500) {
   }, duration);
 }
 
-/* ══════════════════════════════════════════
-   16. MICRO-INTERACTIONS CARTES (tilt 3D)
-   ══════════════════════════════════════════ */
+/*16. MICRO-INTERACTIONS CARTES*/
 function initCardInteractions() {
   document.querySelectorAll('.billet-card').forEach(card => {
     if (!window.matchMedia('(hover: hover)').matches) return;
@@ -588,10 +581,7 @@ function initCardInteractions() {
   });
 }
 
-/* ══════════════════════════════════════════
-   ANIMATIONS CSS INJECTÉES EN JS
-   (bubbleIn/Out, cartItemIn, shake, spinner)
-   ══════════════════════════════════════════ */
+/*ANIMATIONS CSS INJECTÉES EN JS */
 function injectAnimationStyles() {
   if (document.getElementById('vn-anim-styles')) return;
   const style = document.createElement('style');
@@ -672,9 +662,7 @@ function injectAnimationStyles() {
   document.head.appendChild(style);
 }
 
-/* ══════════════════════════════════════════
-   OPENAGENDA — FETCH HELPERS
-   ══════════════════════════════════════════ */
+/*OPENAGENDA — FETCH HELPERS */
 async function oaBilletFetch(uid, params = {}) {
   const url = `${OA_BASE}/agendas/${uid}/events?` +
     new URLSearchParams({ key: OA_KEY, lang: 'fr', ...params });
@@ -700,9 +688,7 @@ async function oaBilletFetchOne(uid, eventId) {
   }
 }
 
-/* ══════════════════════════════════════════
-   OPENAGENDA — EXTRACTION
-   ══════════════════════════════════════════ */
+/*OPENAGENDA — EXTRACTION*/
 function extractImage(ev) {
   const fallback = 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&q=80';
   if (!ev.image) return fallback;
@@ -729,10 +715,7 @@ function getHeures(ev) {
     : 'Voir programme';
 }
 
-/**
- * Extrait TOUS les tarifs réels depuis un event OA.
- * Retourne tableau de { id, label, price, desc }
- */
+/*Extrait TOUS les tarifs réels depuis un event OA*/
 function extractAllTarifs(ev) {
   // Gratuit
   if (ev.free === 1 || ev.free === true) {
@@ -910,7 +893,7 @@ function fillBilletCard(prefix, ev) {
     }
   }
 
-  // ── TARIFS ──
+  // TARIFS 
   const tarifsEl = $('tarifs');
   if (tarifsEl) {
     tarifsEl.innerHTML = '';
@@ -922,13 +905,11 @@ function fillBilletCard(prefix, ev) {
   console.log(`[Billetterie] ✅ "${titre}" | ${date} | ${lieu} | ${tarifs.length} tarif(s)`);
 }
 
-/* ══════════════════════════════════════════
-   CHARGEMENT DES CARTES OA
+/*CHARGEMENT DES CARTES OA
    bev1  = Concert Sofiane Saidi (vedette, fetchOne)
    bev2–3 = Autres musées
    bev4  = Festival
-   bev5  = Sport
-   ══════════════════════════════════════════ */
+   bev5  = Sport */
 async function loadOABilletCards() {
   console.log('[Billetterie] Chargement des events…');
 
@@ -961,12 +942,10 @@ async function loadOABilletCards() {
   // Micro-interactions 3D
   initCardInteractions();
 
-  console.log('[Billetterie] ✅ Toutes les cartes chargées.');
+  console.log('[Billetterie]  Toutes les cartes chargées.');
 }
 
-/* ══════════════════════════════════════════
-   UTILITAIRE XSS
-   ══════════════════════════════════════════ */
+/*UTILITAIRE XSS */
 const _escEl = document.createElement('div');
 function escapeHtml(str) {
   _escEl.textContent = String(str ?? '');

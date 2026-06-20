@@ -18,7 +18,7 @@ const state = {
   searchQuery:  '',
 };
 
-/* ── LIBELLÉS ─────────────────────────────────────────────── */
+/* LIBELLÉS */
 const MOIS_FR = ['Janvier','Février','Mars','Avril','Mai','Juin',
   'Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
 
@@ -59,10 +59,7 @@ function toDateStr(day, monthStr, yearStr) {
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 
-/**
- * Parse une chaîne dateRange.fr et retourne { debut, fin, heure }.
- * debut/fin sont "YYYY-MM-DD", heure est "21h30" ou "".
- */
+/*Parse une chaîne dateRange.fr et retourne { debut, fin, heure }*/
 function parseFrenchDateRange(str) {
   if (!str) return { debut: null, fin: null, heure: '' };
 
@@ -102,9 +99,7 @@ function parseFrenchDateRange(str) {
   return { debut: null, fin: null, heure };
 }
 
-/* ══════════════════════════════════════════════════════════
-   FETCH
-══════════════════════════════════════════════════════════ */
+/*FETCH */
 
 async function oaFetch(uid, params) {
   const url = `${OA_BASE}/agendas/${uid}/events?` +
@@ -121,7 +116,6 @@ async function oaFetch(uid, params) {
 }
 
 /* EXTRACTION IMAGE*/
-
 function extractImage(ev) {
   const fallback = 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&q=80';
   if (!ev.image) return fallback;
@@ -204,7 +198,6 @@ function mapEvent(ev, source) {
 }
 
 /*CHARGEMENT  */
-
 async function loadSixEvents() {
   const title = document.getElementById('month-title');
   if (title) title.style.opacity = '0.4';
@@ -251,7 +244,6 @@ async function loadSixEvents() {
 }
 
 /* UTILITAIRES DATES*/
-
 function parseDate(str) {
   if (!str) return null;
   try {
@@ -300,7 +292,6 @@ function getFilteredInMonth() {
 }
 
 /*CALENDRIER*/
-
 function renderCalendar() {
   const year  = state.currentDate.getFullYear();
   const month = state.currentDate.getMonth();
@@ -434,10 +425,7 @@ function buildCard(ev) {
   return card;
 }
 
-/* ══════════════════════════════════════════════════════════
-   PANNEAUX
-══════════════════════════════════════════════════════════ */
-
+/* PANNEAUX */
 function openEventPanel(ev) {
   const meta    = CAT_META[ev.categorie] || CAT_META.autre;
   const panel   = document.getElementById('event-panel');
@@ -524,10 +512,7 @@ function closePanel() {
   document.body.style.overflow = '';
 }
 
-/* ══════════════════════════════════════════════════════════
-   FILTRES, NAVIGATION, VUE
-══════════════════════════════════════════════════════════ */
-
+/* FILTRES, NAVIGATION, VUE*/
 function setFilter(f) {
   state.activeFilter = f;
   document.querySelectorAll('.filter-tag').forEach(btn => {
@@ -582,7 +567,6 @@ function refresh() {
 }
 
 /*INIt */
-
 async function init() {
   window.addEventListener('load', () => {
     setTimeout(() => {

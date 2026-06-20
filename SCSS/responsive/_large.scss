@@ -1,6 +1,4 @@
-/* =========================================
-   LARGE DESKTOP (≥ 1400px)
-========================================= */
+/*LARGE DESKTOP (≥ 1400px) */
 @use '../abstracts/mixins' as *;
 
 @include respond(xl) {
