@@ -1,7 +1,7 @@
 
 'use strict';
 
-/*CONFIG — synchronisée */
+/* CONFIG — synchronised */
 const OA_KEY          = "832ecfba688a4dda9e6beb28922ee893";
 const OA_AGENDA_UID   = "2119473";    
 const OA_THEATRE_UID  = "65855330";
@@ -9,7 +9,7 @@ const OA_FESTIVAL_UID = "46290899";
 const OA_SPORT_UID    = "94552197";
 const OA_BASE         = "https://api.openagenda.com/v2";
 
-/*ÉTAT */
+/* STATE */
 let EVENTS = [];
 const state = {
   currentDate:  new Date(),
@@ -18,7 +18,7 @@ const state = {
   searchQuery:  '',
 };
 
-/* LIBELLÉS */
+/* LABELS */
 const MOIS_FR = ['Janvier','Février','Mars','Avril','Mai','Juin',
   'Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
 
@@ -37,8 +37,6 @@ const CAT_META = {
   sport:    { emoji:'⚽', label:'Sport',       color:'#4A789C' },
   autre:    { emoji:'📌', label:'Autre',       color:'#7A7A9D' },
 };
-
-
 
 const MOIS_PATTERN = Object.keys(MOIS_MAP).join('|');
 const RE_SINGLE = new RegExp(
@@ -59,14 +57,14 @@ function toDateStr(day, monthStr, yearStr) {
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 
-/*Parse une chaîne dateRange.fr et retourne { debut, fin, heure }*/
+/* Parses a dateRange.fr string and returns { debut, fin, heure } */
 function parseFrenchDateRange(str) {
   if (!str) return { debut: null, fin: null, heure: '' };
 
   const heureMatch = str.match(/(\d{1,2}h\d{2})/i);
   const heure = heureMatch ? heureMatch[1].toLowerCase() : '';
 
-  // Plage même mois : "11 au 26 juillet 2026"
+  // Same-month range: "11 au 26 juillet 2026"
   const rangeMatch = str.match(RE_RANGE);
   if (rangeMatch) {
     return {
@@ -76,7 +74,7 @@ function parseFrenchDateRange(str) {
     };
   }
 
-  // Plage mois différents : "1 mai au 30 juin 2026"
+  // Cross-month range: "1 mai au 30 juin 2026"
   const range2Match = str.match(RE_RANGE2);
   if (range2Match) {
     return {
@@ -86,7 +84,7 @@ function parseFrenchDateRange(str) {
     };
   }
 
-  // Date unique : "Mardi 5 mai, 21h30"
+  // Single date: "Mardi 5 mai, 21h30"
   const singleMatch = str.match(RE_SINGLE);
   if (singleMatch) {
     return {
@@ -99,8 +97,7 @@ function parseFrenchDateRange(str) {
   return { debut: null, fin: null, heure };
 }
 
-/*FETCH */
-
+/* FETCH */
 async function oaFetch(uid, params) {
   const url = `${OA_BASE}/agendas/${uid}/events?` +
     new URLSearchParams({ key: OA_KEY, lang: 'fr', ...params });
@@ -115,7 +112,7 @@ async function oaFetch(uid, params) {
   }
 }
 
-/* EXTRACTION IMAGE*/
+/* IMAGE EXTRACTION */
 function extractImage(ev) {
   const fallback = 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&q=80';
   if (!ev.image) return fallback;
@@ -127,15 +124,13 @@ function extractImage(ev) {
   return fallback;
 }
 
-
-
 function guessCat(source, ev) {
-  // Source forcée depuis l'agenda d'origine
+  // Category forced from the source agenda
   if (source === 'theatre')  return 'theatre';
   if (source === 'festival') return 'festival';
   if (source === 'sport')    return 'sport';
 
-  // Détection depuis le contenu réel de l'API
+  // Detection from the actual API content
   const titre    = (ev.title?.fr    || ev.title?.en    || '').toLowerCase();
   const keywords = (ev.keywords?.fr || ev.keywords?.en || []).join(' ').toLowerCase();
   const type     = (ev.type?.fr     || ev.type?.en     || '').toLowerCase();
@@ -168,7 +163,7 @@ function mapEvent(ev, source) {
   const dateRangeFr = ev.dateRange?.fr || '';
   const { debut, fin, heure } = parseFrenchDateRange(dateRangeFr);
 
-  /* Description — longDescription en priorité, seuil 20 chars */
+  /* Description — longDescription takes priority, minimum 20 chars */
   const rawDesc =
     ev.longDescription?.fr ||
     ev.description?.fr     ||
@@ -197,7 +192,7 @@ function mapEvent(ev, source) {
   };
 }
 
-/*CHARGEMENT  */
+/* LOADING */
 async function loadSixEvents() {
   const title = document.getElementById('month-title');
   if (title) title.style.opacity = '0.4';
@@ -218,7 +213,7 @@ async function loadSixEvents() {
     evSport[0]    ? mapEvent(evSport[0],    'sport')    : null,
   ].filter(Boolean);
 
-  /* Dédoublonnage par UID */
+  /* Deduplication by UID */
   const seen = new Set();
   EVENTS = raw.filter(ev => {
     if (seen.has(ev.id)) return false;
@@ -226,24 +221,24 @@ async function loadSixEvents() {
     return true;
   });
 
-  console.log(`[Agenda] ${EVENTS.length} events chargés :`,
+  console.log(`[Agenda] ${EVENTS.length} events loaded:`,
     EVENTS.map(e => `${e.titre} (${e.categorie}) → ${e.date}`));
 
-  /* Navigation auto vers le mois du 1er event avec date */
+  /* Auto-navigate to the month of the first event with a date */
   const dates = EVENTS.map(e => parseDate(e.date)).filter(Boolean).sort((a, b) => a - b);
   if (dates.length) {
     state.currentDate = new Date(dates[0].getFullYear(), dates[0].getMonth(), 1);
-    console.log('[Agenda] → Navigation vers', MOIS_FR[dates[0].getMonth()], dates[0].getFullYear());
+    console.log('[Agenda] → Navigating to', MOIS_FR[dates[0].getMonth()], dates[0].getFullYear());
   } else {
-    console.warn('[Agenda] Aucune date parsée — vérifier le format de dateRange.fr');
-    EVENTS.forEach(ev => { if (!ev.date) console.log('  Sans date :', ev.titre, '|', ev.dateRangeFr); });
+    console.warn('[Agenda] No dates parsed — check the dateRange.fr format');
+    EVENTS.forEach(ev => { if (!ev.date) console.log('  No date:', ev.titre, '|', ev.dateRangeFr); });
   }
 
   if (title) title.style.opacity = '';
   refresh();
 }
 
-/* UTILITAIRES DATES*/
+/* DATE UTILITIES */
 function parseDate(str) {
   if (!str) return null;
   try {
@@ -291,7 +286,7 @@ function getFilteredInMonth() {
   });
 }
 
-/*CALENDRIER*/
+/* CALENDAR */
 function renderCalendar() {
   const year  = state.currentDate.getFullYear();
   const month = state.currentDate.getMonth();
@@ -365,8 +360,7 @@ function renderCalendar() {
   updateSummary(getFilteredInMonth());
 }
 
-/*LISTE*/
-
+/* LIST */
 function renderList() {
   const container = document.getElementById('list-container');
   container.innerHTML = '';
@@ -425,7 +419,7 @@ function buildCard(ev) {
   return card;
 }
 
-/* PANNEAUX */
+/* PANELS */
 function openEventPanel(ev) {
   const meta    = CAT_META[ev.categorie] || CAT_META.autre;
   const panel   = document.getElementById('event-panel');
@@ -512,7 +506,7 @@ function closePanel() {
   document.body.style.overflow = '';
 }
 
-/* FILTRES, NAVIGATION, VUE*/
+/* FILTERS, NAVIGATION, VIEW */
 function setFilter(f) {
   state.activeFilter = f;
   document.querySelectorAll('.filter-tag').forEach(btn => {
@@ -566,7 +560,7 @@ function refresh() {
   state.view === 'calendar' ? renderCalendar() : renderList();
 }
 
-/*INIt */
+/* INIT */
 async function init() {
   window.addEventListener('load', () => {
     setTimeout(() => {
@@ -608,7 +602,7 @@ async function init() {
   document.getElementById('panel-overlay')?.addEventListener('click', closePanel);
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
 
-  /* Piège de focus dans le panneau */
+  /* Focus trap inside the panel */
   const panel = document.getElementById('event-panel');
   panel?.addEventListener('keydown', e => {
     if (e.key !== 'Tab') return;
@@ -642,7 +636,7 @@ async function init() {
     ).observe(s);
   }
 
-  /* Animations scroll */
+  /* Scroll animations */
   if ('IntersectionObserver' in window) {
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => {

@@ -1,13 +1,13 @@
 'use strict';
 
-/*LOADER*/
+/* LOADER */
 document.addEventListener('DOMContentLoaded', () => {
   const loader = document.getElementById('page-loader');
   if (!loader) return;
   requestAnimationFrame(() => loader.classList.add('hidden'));
 });
 
-/* MOBILE NAVIGATION*/
+/* MOBILE NAVIGATION */
 function initNav() {
   const burger   = document.querySelector('.nav-burger');
   const navLinks = document.querySelector('.nav-links');
@@ -38,9 +38,8 @@ function initNav() {
   });
 }
 
-/*  EVENT FILTERS  */
-/*The cards have a data category that is dynamically updated by fillCard()
-as soon as the API responds. Therefore, the cards are re-observed at that time.*/
+/* EVENT FILTERS
+   Cards have a data-category updated by fillCard() once the API responds. */
 function initFilters() {
   const filterTags = document.querySelectorAll('.filter-tag');
   if (!filterTags.length) return;
@@ -59,25 +58,24 @@ function initFilters() {
 }
 
 function applyFilter(cat) {
-  
   const cards = document.querySelectorAll('.event-card[data-category]');
   cards.forEach(card => {
     const match = cat === 'all' || card.dataset.category === cat;
     if (match) {
       card.style.display = '';
       requestAnimationFrame(() => {
-        card.style.opacity  = '1';
+        card.style.opacity   = '1';
         card.style.transform = 'translateY(0)';
       });
     } else {
-      card.style.opacity  = '0';
+      card.style.opacity   = '0';
       card.style.transform = 'translateY(8px)';
       setTimeout(() => { card.style.display = 'none'; }, 280);
     }
   });
 }
 
-/* SEARCH BAR*/
+/* SEARCH BAR */
 function initSearch() {
   const searchInput = document.getElementById('search-input');
   const searchBtn   = document.getElementById('search-btn');
@@ -88,7 +86,7 @@ function initSearch() {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => filterCardsBySearch(searchInput.value.trim().toLowerCase()), 280);
   });
-  searchBtn?.addEventListener('click',  () => filterCardsBySearch(searchInput.value.trim().toLowerCase()));
+  searchBtn?.addEventListener('click',   () => filterCardsBySearch(searchInput.value.trim().toLowerCase()));
   searchInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') filterCardsBySearch(searchInput.value.trim().toLowerCase());
   });
@@ -109,7 +107,7 @@ function filterCardsBySearch(query) {
   });
 }
 
-/*ANIMATIONS SCROLL*/
+/* SCROLL ANIMATIONS */
 function initScrollAnimations() {
   if (!('IntersectionObserver' in window)) return;
   const observer = new IntersectionObserver((entries) => {
@@ -123,11 +121,11 @@ function initScrollAnimations() {
   document.querySelectorAll('.animate-in').forEach(t => observer.observe(t));
 }
 
-/*TOAST*/
+/* TOAST */
 function showToast(message, type = 'info') {
-  const icons = { success: '✓', error: '✕', info: 'ℹ' };
+  const icons     = { success: '✓', error: '✕', info: 'ℹ' };
   const container = document.querySelector('.toast-container') || createToastContainer();
-  const toast = document.createElement('div');
+  const toast     = document.createElement('div');
   toast.className = `toast ${type}`;
   toast.innerHTML = `<span>${icons[type]}</span> ${message}`;
   container.appendChild(toast);
@@ -140,7 +138,7 @@ function createToastContainer() {
   return c;
 }
 
-/*STICKY HEADER*/
+/* STICKY HEADER */
 function initStickyHeader() {
   const header = document.querySelector('.site-header');
   if (!header) return;
@@ -154,18 +152,17 @@ function initStickyHeader() {
   observer.observe(sentinel);
 }
 
-/*  OPENAGENDA — CONFIG*/
+/* OPENAGENDA — CONFIG */
 const OA_KEY          = "832ecfba688a4dda9e6beb28922ee893";
-const OA_AGENDA_UID   = "2119473";    
+const OA_AGENDA_UID   = "2119473";
 const OA_THEATRE_UID  = "65855330";
 const OA_FESTIVAL_UID = "46290899";
 const OA_SPORT_UID    = "94552197";
 const OA_BASE         = "https://api.openagenda.com/v2";
 
-// fixed featured event
 const FEATURED_EVENT_UID = "27089585";
 
-/*CATÉGORIE — détectée depuis le contenu réel de l'API*/
+/* CATEGORY LABELS */
 const CAT_LABELS = {
   concert:  '🎵 Concert',
   expo:     '🖼 Exposition',
@@ -176,54 +173,49 @@ const CAT_LABELS = {
   autre:    '📌 Autre',
 };
 
-// APRÈS — ajoute lieu + description dans la détection 
+/* CATEGORY DETECTION — from title, keywords, location and description */
 function guessCat(ev) {
   const titre    = (ev.title?.fr    || ev.title?.en    || '').toLowerCase();
   const keywords = (ev.keywords?.fr || ev.keywords?.en || []).join(' ').toLowerCase();
   const type     = (ev.type?.fr     || ev.type?.en     || '').toLowerCase();
-  const lieu     = (ev.location?.name || '').toLowerCase();          
-  const desc     = (                                                 
+  const lieu     = (ev.location?.name || '').toLowerCase();
+  const desc     = (
     ev.longDescription?.fr ||
     ev.description?.fr     ||
     ev.summary?.fr         || ''
-  ).toLowerCase().slice(0, 300); 
+  ).toLowerCase().slice(0, 300);
 
   const all = `${titre} ${keywords} ${type} ${lieu} ${desc}`;
 
   if (/concert|jazz|rock|blues|musique|boeuf|live|chanson|chant|électro|electro|dj|rap|hip.?hop|clubbing/.test(all))
     return 'concert';
-
   if (/expo|exposition|musée|musee|galerie|photographie|photo|peinture|sculpture|art contemporain|beaux.arts|vernissage/.test(all))
     return 'expo';
-
   if (/festival/.test(all))
     return 'festival';
-
   if (/théâtre|theatre|comédie|spectacle|pièce|danse|cirque|opéra|opera|ballet/.test(all))
     return 'theatre';
-
   if (/gastro|food|cuisine|marché|dégustation|vin|bière|restaurant/.test(all))
     return 'gastro';
-
   if (/sport|foot|rugby|match|natation|lutte|tennis|basket|vélo|course|marathon/.test(all))
     return 'sport';
 
   return 'autre';
 }
-/*DESCRIPTION — priorité longDescription > description > summary */
+
+/* DESCRIPTION — priority: longDescription > description > summary */
 function getDesc(ev, maxLen = 150) {
   const raw =
     ev.longDescription?.fr ||
     ev.description?.fr     ||
     ev.summary?.fr         ||
-    ev.body?.fr            ||
-    '';
+    ev.body?.fr            || '';
   const clean = raw.trim();
   if (clean.length < 20) return 'Un événement à ne pas manquer !';
   return clean.length > maxLen ? clean.substring(0, maxLen) + '…' : clean;
 }
 
-/*EXTRACTION IMAGE*/
+/* IMAGE EXTRACTION */
 function extractImage(ev) {
   const fallback = 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&q=80';
   if (!ev.image) return fallback;
@@ -235,13 +227,14 @@ function extractImage(ev) {
   return fallback;
 }
 
-/*FETCH HELPERS */
+/* FETCH HELPERS */
 async function oaFetch(uid, params = {}) {
   const url = `${OA_BASE}/agendas/${uid}/events?` +
     new URLSearchParams({ key: OA_KEY, lang: 'fr', ...params });
   try {
     const res  = await fetch(url);
     const data = await res.json();
+    console.log(`[VilleNova] oaFetch uid=${uid} → ${(data.events||[]).length} events`);
     return data.events || [];
   } catch (e) {
     console.error('[VilleNova] oaFetch error:', e);
@@ -261,47 +254,45 @@ async function oaFetchOne(uid, eventId) {
   }
 }
 
-/* REMPLIR UNE CARTE (ev1–ev6)
-   ── Met à jour data-category + badge depuis l'API */
+/* FILL A CARD (ev1–ev6) — updates data-category + badge from the API */
 function fillCard(prefix, ev) {
-  const $ = (id) => document.getElementById(`${prefix}-${id}`);
+  const get = (id) => document.getElementById(`${prefix}-${id}`);
 
-  const titre    = ev.title?.fr || ev.title?.en || 'Événement';
-  const desc     = getDesc(ev, 150);
-  const date     = ev.dateRange?.fr || '';
-  const lieu     = ev.location?.name || '';
-  const prix     = ev.free ? 'Gratuit' : 'Voir détails';
-  const imgSrc   = extractImage(ev);
-  const cat      = guessCat(ev);
+  const titre  = ev.title?.fr || ev.title?.en || 'Événement';
+  const desc   = getDesc(ev, 150);
+  const date   = ev.dateRange?.fr || '';
+  const lieu   = ev.location?.name || '';
+  const prix   = ev.free ? 'Gratuit' : 'Voir détails';
+  const imgSrc = extractImage(ev);
+  const cat    = guessCat(ev);
   const fallback = 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&q=80';
 
-  /*Image */
-  const imgEl = $('img');
+  /* Image */
+  const imgEl = get('img');
   if (imgEl) {
     imgEl.src = imgSrc;
     imgEl.alt = titre;
     imgEl.onerror = () => { imgEl.src = fallback; imgEl.onerror = null; };
   }
 
-  /*Textes */
-  const titleEl = $('title');  if (titleEl)  titleEl.textContent  = titre;
-  const descEl  = $('desc');   if (descEl)   descEl.textContent   = desc;
-  const dateEl  = $('date');   if (dateEl)   dateEl.textContent   = '📅 ' + date;
-  const placeEl = $('place');  if (placeEl)  placeEl.textContent  = '📍 ' + lieu;
-  const prixEl  = $('prix');   if (prixEl)   prixEl.textContent   = prix;
+  /* Texts */
+  const titleEl = get('title'); if (titleEl) titleEl.textContent = titre;
+  const descEl  = get('desc');  if (descEl)  descEl.textContent  = desc;
+  const dateEl  = get('date');  if (dateEl)  dateEl.textContent  = '📅 ' + date;
+  const placeEl = get('place'); if (placeEl) placeEl.textContent = '📍 ' + lieu;
+  const prixEl  = get('prix');  if (prixEl)  prixEl.textContent  = prix;
 
-  /*Lien détail */
-  const linkEl = $('link');
+  /* Detail link */
+  const linkEl = get('link');
   if (linkEl) {
-    linkEl.href = `/html/evenement-detail.html?id=${encodeURIComponent(ev.uid || ev.slug)}`;
+    linkEl.href = `../html/evenement-detail.html?id=${encodeURIComponent(ev.uid || ev.slug)}`;
   }
 
-  /*Badge catégorie — mis à jour depuis l'API */
-  const badgeEl = $('badge');
+  /* Category badge */
+  const badgeEl = get('badge');
   if (badgeEl) badgeEl.textContent = CAT_LABELS[cat] || CAT_LABELS.autre;
 
-  /* ── data-category sur l'article — clé du filtre ──
-     On remonte jusqu'à l'article depuis n'importe quel élément connu */
+  /* data-category on the article — used by the filter */
   const article = (titleEl || imgEl)?.closest('.event-card');
   if (article) {
     article.dataset.category = cat;
@@ -309,15 +300,15 @@ function fillCard(prefix, ev) {
   }
 }
 
-/*REMPLIR LA CARD VEDETTE*/
+/* FILL THE FEATURED CARD */
 function fillFeaturedCard(ev) {
   const fallback = 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800&q=80';
-  const titre    = ev.title?.fr || ev.title?.en || 'Événement';
-  const desc     = getDesc(ev, 220);
-  const date     = ev.dateRange?.fr || '';
-  const lieu     = ev.location?.name || '';
-  const cat      = guessCat(ev);
-  const imgSrc   = extractImage(ev);
+  const titre  = ev.title?.fr || ev.title?.en || 'Événement';
+  const desc   = getDesc(ev, 220);
+  const date   = ev.dateRange?.fr || '';
+  const lieu   = ev.location?.name || '';
+  const cat    = guessCat(ev);
+  const imgSrc = extractImage(ev);
 
   /* Image */
   const imgEl = document.getElementById('ev-feat-img');
@@ -331,7 +322,7 @@ function fillFeaturedCard(ev) {
   const badgeEl = document.getElementById('ev-feat-badge');
   if (badgeEl) badgeEl.textContent = CAT_LABELS[cat] || CAT_LABELS.autre;
 
-  /* Textes */
+  /* Texts */
   const titleEl = document.getElementById('ev-feat-title');
   if (titleEl) titleEl.textContent = titre;
 
@@ -356,56 +347,72 @@ function fillFeaturedCard(ev) {
       .join('');
   }
 
-  /* Lien */
+  /* Link */
   const linkEl = document.getElementById('ev-feat-link');
   if (linkEl) {
-    linkEl.href = `/html/evenement-detail.html?id=${encodeURIComponent(ev.uid || ev.slug)}`;
+    linkEl.href = `../html/evenement-detail.html?id=${encodeURIComponent(ev.uid || ev.slug)}`;
     linkEl.setAttribute('aria-label', `Voir l'événement : ${titre}`);
   }
 
-  /* data-category sur l'article vedette */
+  /* data-category on the featured article */
   const article = linkEl?.closest('.event-card');
   if (article) article.dataset.category = cat;
 
-  console.log(`[VilleNova] ✅ Vedette : "${titre}" | cat: ${cat}`);
+  console.log(`[VilleNova] ✅ Featured: "${titre}" | cat: ${cat}`);
 }
 
-/*CHARGER TOUTES LES CARTES */
+/* LOAD ALL CARDS */
 async function loadOpenAgendaCards() {
+  const commonParams = {
+    'relative[0]': 'current',
+    'relative[1]': 'upcoming',
+  };
+
   const [featuredEv, eventsMain, eventsTheatre, eventsFestival, eventsSport] = await Promise.all([
     oaFetchOne(OA_AGENDA_UID, FEATURED_EVENT_UID),
-    oaFetch(OA_AGENDA_UID,   { limit: 3, 'relative[0]': 'current', 'relative[1]': 'upcoming' }),
-    oaFetch(OA_THEATRE_UID,  { limit: 2 }),
-    oaFetch(OA_FESTIVAL_UID, { limit: 1 }),
-    oaFetch(OA_SPORT_UID,    { limit: 1, 'relative[0]': 'current', 'relative[1]': 'upcoming' }),
+    oaFetch(OA_AGENDA_UID,   { limit: 10, ...commonParams }),
+    oaFetch(OA_THEATRE_UID,  { limit: 3,  ...commonParams }),
+    oaFetch(OA_FESTIVAL_UID, { limit: 2,  ...commonParams }),
+    oaFetch(OA_SPORT_UID,    { limit: 2,  ...commonParams }),
   ]);
 
-  /* Card vedette */
+  console.log('[VilleNova] Results — Main:', eventsMain.length,
+    '| Theatre:', eventsTheatre.length,
+    '| Festival:', eventsFestival.length,
+    '| Sport:', eventsSport.length);
+
+  /* Featured card */
   if (featuredEv) {
     fillFeaturedCard(featuredEv);
   } else {
-    console.warn('[VilleNova] Vedette introuvable — fallback sur 1er event principal');
+    console.warn('[VilleNova] Featured event not found — falling back to first main event');
     if (eventsMain[0]) fillFeaturedCard(eventsMain[0]);
   }
 
-  /* Cartes ev1–ev6 : on exclut l'event vedette des cartes normales */
+  /* ev1–ev6: exclude the featured event from normal cards */
   const filteredMain = eventsMain.filter(e => String(e.uid) !== String(FEATURED_EVENT_UID));
 
-  if (filteredMain[0])   fillCard('ev1', filteredMain[0]);
-  if (filteredMain[1])   fillCard('ev2', filteredMain[1]);
-  if (eventsTheatre[0])  fillCard('ev3', eventsTheatre[0]);
-  if (eventsTheatre[1])  fillCard('ev4', eventsTheatre[1]);
-  if (eventsFestival[0]) fillCard('ev5', eventsFestival[0]);
-  if (eventsSport[0])    fillCard('ev6', eventsSport[0]);
+  /* Build a pool for ev3–ev6, falling back to main events if specialist agendas are empty */
+  const pool3 = eventsTheatre[0]  || filteredMain[2] || null;
+  const pool4 = eventsTheatre[1]  || filteredMain[3] || null;
+  const pool5 = eventsFestival[0] || filteredMain[4] || null;
+  const pool6 = eventsSport[0]    || filteredMain[5] || null;
 
+  if (filteredMain[0]) fillCard('ev1', filteredMain[0]);
+  if (filteredMain[1]) fillCard('ev2', filteredMain[1]);
+  if (pool3)           fillCard('ev3', pool3);
+  if (pool4)           fillCard('ev4', pool4);
+  if (pool5)           fillCard('ev5', pool5);
+  if (pool6)           fillCard('ev6', pool6);
 
+  /* Re-apply active filter now that data-category values are set */
   const activeFilter = document.querySelector('.filter-tag.active')?.dataset.filter || 'all';
   if (activeFilter !== 'all') applyFilter(activeFilter);
 }
 
-/*COMPTEURS ANIMÉS*/
+/* ANIMATED COUNTERS */
 function animateCount(el, target, duration = 1400) {
-  const start = performance.now();
+  const start  = performance.now();
   const update = (now) => {
     const progress = Math.min((now - start) / duration, 1);
     el.textContent = Math.round((1 - Math.pow(1 - progress, 3)) * target).toLocaleString('fr-FR');
@@ -427,21 +434,34 @@ function initCounters() {
   document.querySelectorAll('[data-count]').forEach(el => obs.observe(el));
 }
 
-/* MODAL VIDÉO */
+/* VIDEO MODAL */
 function initVideoModal() {
   const modal    = document.getElementById('video-modal');
   const trigger  = document.querySelector('[data-video-trigger]');
   const closeBtn = document.querySelector('.video-modal-close');
   if (!modal) return;
 
-  const openModal  = () => { modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); closeBtn?.focus(); };
-  const closeModal = () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); modal.querySelector('video')?.pause(); trigger?.focus(); };
+  const openModal  = () => {
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    closeBtn?.focus();
+  };
+  const closeModal = () => {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    modal.querySelector('video')?.pause();
+    trigger?.focus();
+  };
 
   trigger?.addEventListener('click', openModal);
-  trigger?.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(); } });
+  trigger?.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(); }
+  });
   closeBtn?.addEventListener('click', closeModal);
   modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
 }
 
 /* PAGINATION */
@@ -450,7 +470,8 @@ function initPagination() {
     btn.addEventListener('click', function () {
       if (['←', '→'].includes(this.textContent.trim())) return;
       document.querySelectorAll('.page-btn').forEach(b => {
-        b.classList.remove('active'); b.removeAttribute('aria-current');
+        b.classList.remove('active');
+        b.removeAttribute('aria-current');
       });
       this.classList.add('active');
       this.setAttribute('aria-current', 'page');
@@ -469,26 +490,26 @@ function handleNewsletter(e) {
 
   const orig = btn.textContent;
   btn.textContent = 'Envoi…';
-  btn.disabled = true;
+  btn.disabled    = true;
 
   setTimeout(() => {
     showToast(`Inscription confirmée pour ${email} ! 🎉`, 'success');
     e.target.reset();
     btn.textContent = orig;
-    btn.disabled = false;
+    btn.disabled    = false;
   }, 800);
 }
 
-/* UTILITAIRES */
+/* UTILITIES */
 const _xssEl = document.createElement('div');
 function escapeHtml(str) { _xssEl.textContent = String(str ?? ''); return _xssEl.innerHTML; }
 function escapeAttr(str) {
   return String(str ?? '')
-    .replace(/&/g,'&amp;').replace(/"/g,'&quot;')
-    .replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    .replace(/&/g, '&amp;').replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-/*INIT */
+/* INIT */
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initFilters();

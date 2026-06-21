@@ -1,32 +1,32 @@
 'use strict';
 
-/*CONFIG OPENAGENDA*/
+/* CONFIG OPENAGENDA */
 const OA_KEY         = "832ecfba688a4dda9e6beb28922ee893";
-const OA_AGENDA_UID  = "2119473";              
-const OA_AGENDA_SLUG = "musees-de-marseille";  // Slug public pour les liens
+const OA_AGENDA_UID  = "2119473";
+const OA_AGENDA_SLUG = "musees-de-marseille";  // Public slug for links
 const OA_BASE        = "https://api.openagenda.com/v2";
 
-//  Event par défaut quand aucun ?id= dans l'URL
+// Default event when no ?id= in the URL
 const DEFAULT_EVENT_UID  = "27089585";
 const DEFAULT_EVENT_SLUG = "sequence-douverture-saison-mediterranee-3972861";
 
 const FALLBACK_IMG = 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=1400&q=80';
 
-/*UTILITAIRES*/
+/* UTILITIES */
 const _xssEl = document.createElement('div');
 function escapeHtml(str) {
   _xssEl.textContent = String(str ?? '');
   return _xssEl.innerHTML;
 }
 
-/** Extrait un texte depuis un champ OA (string | { fr, en } | …) */
+/** Extracts text from an OA field (string | { fr, en } | …) */
 function getText(field) {
   if (!field) return '';
   if (typeof field === 'string') return field;
   return field.fr || field.en || Object.values(field)[0] || '';
 }
 
-/** Extrait l'URL image (3 formats OA) + optimisation + fallback */
+/** Extracts the image URL (3 OA formats) + optimisation + fallback */
 function extractImage(ev) {
   if (!ev.image) return FALLBACK_IMG;
 
@@ -45,7 +45,7 @@ function extractImage(ev) {
   return url + "?w=1200&auto=compress";
 }
 
-/** Date lisible */
+/** Human-readable date */
 function getDate(ev) {
   if (ev.dateRange?.fr) return ev.dateRange.fr;
   const begin = ev.firstTiming?.begin;
@@ -55,7 +55,7 @@ function getDate(ev) {
   });
 }
 
-/** Heure */
+/** Start time */
 function getHeure(ev) {
   const begin = ev.firstTiming?.begin;
   if (!begin) return '';
@@ -64,7 +64,7 @@ function getHeure(ev) {
   });
 }
 
-/** Heure de fin */
+/** End time */
 function getHeureFin(ev) {
   const end = ev.firstTiming?.end || ev.lastTiming?.end;
   if (!end) return '';
@@ -73,7 +73,7 @@ function getHeureFin(ev) {
   });
 }
 
-/** Tarif */
+/** Price */
 function getPrix(ev) {
   if (ev.free === 1 || ev.free === true) return 'Gratuit';
   if (Array.isArray(ev.registration) && ev.registration.length) {
@@ -89,13 +89,13 @@ function getPrix(ev) {
   return 'Voir détails';
 }
 
-/** Conditions complètes */
+/** Full conditions */
 function getConditions(ev) {
   if (ev.free === 1 || ev.free === true) return 'Gratuit dans la limite des places disponibles';
   return getText(ev.conditions) || '—';
 }
 
-/** Lien de réservation si dispo */
+/** Booking link if available */
 function getLienResa(ev) {
   if (Array.isArray(ev.registration) && ev.registration.length) {
     const withLink = ev.registration.find(r => r.url);
@@ -104,18 +104,18 @@ function getLienResa(ev) {
   return null;
 }
 
-/** Lieu complet */
+/** Full location */
 function getLieu(ev) {
   const loc = ev.location || {};
   return [loc.name, loc.city].filter(Boolean).join(', ') || 'Non précisé';
 }
 
-/** Crédits photo */
+/** Photo credits */
 function getCredits(ev) {
   return ev.imageCredits || ev.image?.credits || '';
 }
 
-/** Tags depuis keywords + catégorie devinée */
+/** Tags from keywords + guessed category */
 function getTags(ev) {
   const keywords = ev.keywords?.fr || [];
   const tags = [];
@@ -129,10 +129,10 @@ function getTags(ev) {
   return [...new Set([...tags, ...keywords.slice(0, 3)])];
 }
 
-/*FETCH — par ID (depuis URL ?id=) */
+/* FETCH — by ID (from URL ?id=) */
 async function fetchById(id) {
   const url = `${OA_BASE}/agendas/${OA_AGENDA_UID}/events/${id}?key=${OA_KEY}&lang=fr`;
-  console.log('[VilleNova] Fetch par ID :', url);
+  console.log('[VilleNova] Fetch by ID:', url);
   const res = await fetch(url);
   if (!res.ok) throw new Error(`API ${res.status}`);
   const data = await res.json();
@@ -140,16 +140,16 @@ async function fetchById(id) {
 }
 
 async function fetchAutoEvent() {
-  console.log('[VilleNova] Fetch event par défaut uid:', DEFAULT_EVENT_UID);
+  console.log('[VilleNova] Fetch default event uid:', DEFAULT_EVENT_UID);
   try {
     const ev = await fetchById(DEFAULT_EVENT_UID);
     if (ev) return ev;
   } catch (e) {
-    console.warn('[VilleNova] fetchById échoué, fallback liste…', e);
+    console.warn('[VilleNova] fetchById failed, falling back to list…', e);
   }
 
-  // Fallback : on cherche dans la liste par slug
-  console.log('[VilleNova] Fallback : recherche par slug dans la liste…');
+  // Fallback: search in the list by slug
+  console.log('[VilleNova] Fallback: searching by slug in list…');
   const url = `${OA_BASE}/agendas/${OA_AGENDA_UID}/events?` +
     new URLSearchParams({
       key: OA_KEY,
@@ -162,7 +162,7 @@ async function fetchAutoEvent() {
   const data = await res.json();
   const events = data.events || [];
 
-  // Cherche d'abord par slug exact, sinon par uid
+  // Try exact slug match first, then uid, then first result
   return (
     events.find(e => e.slug === DEFAULT_EVENT_SLUG) ||
     events.find(e => String(e.uid) === String(DEFAULT_EVENT_UID)) ||
@@ -171,17 +171,17 @@ async function fetchAutoEvent() {
   );
 }
 
-/*INJECTION DANS LE DOm*/
+/* DOM INJECTION */
 function displayEvent(ev) {
   const titre = getText(ev.title) || 'Événement';
 
-  // Description courte (sous-titre / résumé)
+  // Short description (subtitle / summary)
   const desc =
     getText(ev.description) ||
     getText(ev.summary) ||
     'Aucune description disponible.';
 
-  // Description longue (corps complet)
+  // Long description (full body)
   const longDesc =
     getText(ev.longDescription) ||
     ev.bodytext ||
@@ -203,12 +203,12 @@ function displayEvent(ev) {
   const slug       = ev.slug || DEFAULT_EVENT_SLUG;
   const kw         = (ev.keywords?.fr || []).slice(0, 2).join(' · ') || 'Musique · Concert';
 
-  //  Lien public OpenAgenda
+  // Public OpenAgenda link
   const lienOA = `https://openagenda.com/${OA_AGENDA_SLUG}/events/${slug}`;
 
-  console.log('[VilleNova] Event reçu :', ev);
+  console.log('[VilleNova] Event received:', ev);
 
-  /* ── Méta page ── */
+  /* ── Page meta ── */
   document.title = `${titre} | VilleNova`;
   const metaDesc = document.getElementById('page-desc');
   if (metaDesc) metaDesc.content = desc.slice(0, 160);
@@ -221,11 +221,11 @@ function displayEvent(ev) {
     imgEl.onerror = () => { imgEl.src = FALLBACK_IMG; imgEl.onerror = null; };
   }
 
-  /* ── Crédits photo ── */
+  /* ── Photo credits ── */
   const creditsEl = document.getElementById('detail-img-credits');
   if (creditsEl && credits) creditsEl.textContent = credits;
 
-  /* ── Photo galerie ── */
+  /* ── Gallery photo ── */
   const mediaImg = document.getElementById('media-img-1');
   if (mediaImg) {
     mediaImg.src = imgSrc;
@@ -237,18 +237,18 @@ function displayEvent(ev) {
   const bc = document.getElementById('detail-breadcrumb');
   if (bc) bc.textContent = `${ev.free ? 'Gratuit' : 'Payant'} · Marseille`;
 
-  /* ── Titre ── */
+  /* ── Title ── */
   const titleEl = document.getElementById('detail-title');
   if (titleEl) titleEl.textContent = titre;
 
-  /* ── Description courte (ex: "Saison Méditerranée 2026") ── */
+  /* ── Short description (e.g. "Saison Méditerranée 2026") ── */
   const descEl = document.getElementById('detail-desc');
   if (descEl) {
     descEl.textContent = desc;
     descEl.style.fontStyle = desc.length < 40 ? 'italic' : '';
   }
 
-  /* ── Description longue ── */
+  /* ── Long description ── */
   const longDescEl = document.getElementById('detail-long-desc');
   if (longDescEl) {
     if (longDesc) {
@@ -267,7 +267,7 @@ function displayEvent(ev) {
     ).join('');
   }
 
-  /* ── Accès texte ── */
+  /* ── Access text ── */
   const accesEl = document.getElementById('detail-acces');
   if (accesEl) {
     accesEl.textContent = lieuAdr
@@ -275,7 +275,7 @@ function displayEvent(ev) {
       : `L'événement se tient au ${lieuNom}.`;
   }
 
-  /* ── Carte lieu ── */
+  /* ── Venue map ── */
   const lieuNomEl = document.getElementById('detail-lieu-nom');
   if (lieuNomEl) lieuNomEl.textContent = lieuNom;
 
@@ -291,14 +291,14 @@ function displayEvent(ev) {
   setText('sidebar-conditions',  conditions);
   setText('sidebar-cat',         kw);
 
-  /* ── Bouton lien officiel OA ── */
+  /* ── Official OA link button ── */
   const btnOA = document.getElementById('btn-oa-link');
   if (btnOA) {
     btnOA.href = lienOA;
     btnOA.setAttribute('aria-label', `Voir la page officielle de ${titre} sur OpenAgenda`);
   }
 
-  /* ── Bouton réservation ── */
+  /* ── Booking button ── */
   const btnResa = document.getElementById('btn-reservation');
   if (btnResa) {
     btnResa.setAttribute('aria-label', `Réserver ma place pour ${titre}`);
@@ -309,23 +309,23 @@ function displayEvent(ev) {
     }
   }
 
-  /* ── Bouton favoris ── */
+  /* ── Favourites button ── */
   const btnFav = document.getElementById('btn-favoris');
   if (btnFav) {
     btnFav.setAttribute('aria-label', `Ajouter "${titre}" à mes favoris`);
   }
 
-  console.log(`[VilleNova] ✅ Affiché : "${titre}" | ${date} ${heure}–${heureFin} | ${lieu} | ${prix}`);
-  console.log(`[VilleNova] 🔗 Lien OA : ${lienOA}`);
+  console.log(`[VilleNova] ✅ Displayed: "${titre}" | ${date} ${heure}–${heureFin} | ${lieu} | ${prix}`);
+  console.log(`[VilleNova] 🔗 OA link: ${lienOA}`);
 }
 
-/** Raccourci injection textContent */
+/** Shortcut to inject textContent */
 function setText(id, value) {
   const el = document.getElementById(id);
   if (el) el.textContent = value;
 }
 
-/*ÉTAT D'ERREUR*/
+/* ERROR STATE */
 function displayError() {
   setText('detail-title', 'Événement introuvable');
   setText('detail-desc',  'Impossible de charger cet événement. Vérifiez votre connexion ou revenez plus tard.');
@@ -333,7 +333,7 @@ function displayError() {
   if (imgEl) imgEl.src = FALLBACK_IMG;
 }
 
-/*TOAST*/
+/* TOAST */
 function showToast(message, type = 'info') {
   const icons = { success: '✓', error: '✕', info: 'ℹ' };
   let container = document.querySelector('.toast-container');
@@ -350,7 +350,7 @@ function showToast(message, type = 'info') {
   setTimeout(() => toast.remove(), 3400);
 }
 
-/*BOUTONS*/
+/* BUTTONS */
 function initBtnFavoris() {
   const btn = document.getElementById('btn-favoris');
   if (!btn) return;
@@ -406,7 +406,7 @@ function initBtnShare() {
   });
 }
 
-/*NAV BURGER*/
+/* NAV BURGER */
 function initNav() {
   const burger   = document.getElementById('nav-burger');
   const navLinks = document.getElementById('nav-links');
@@ -434,7 +434,7 @@ function initNav() {
   });
 }
 
-/*LOADER*/
+/* LOADER */
 function initLoader() {
   window.addEventListener('load', () => {
     const loader = document.getElementById('page-loader');
@@ -446,7 +446,7 @@ function initLoader() {
   });
 }
 
-/*POINT D'ENTRÉE*/
+/* ENTRY POINT */
 async function init() {
   initLoader();
   initNav();
@@ -460,10 +460,10 @@ async function init() {
     let ev = null;
 
     if (eventId) {
-      // Mode normal : lien cliqué depuis une card (?id=XXXX)
+      // Normal mode: link clicked from a card (?id=XXXX)
       ev = await fetchById(eventId);
     } else {
-      // Mode autonome : charge le concert Sofiane Saidi (uid 27089585)
+      // Standalone mode: load the Sofiane Saidi concert (uid 27089585)
       ev = await fetchAutoEvent();
     }
 
@@ -471,7 +471,7 @@ async function init() {
     displayEvent(ev);
 
   } catch (err) {
-    console.error('[VilleNova] Erreur :', err);
+    console.error('[VilleNova] Error:', err);
     displayError();
     showToast('Impossible de charger l\'événement.', 'error');
   }

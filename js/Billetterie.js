@@ -12,7 +12,7 @@ const OA_BASE         = "https://api.openagenda.com/v2";
 const FEATURED_EVENT_UID  = "27089585";
 const FEATURED_EVENT_SLUG = "sequence-douverture-saison-mediterranee-3972861";
 
-/*1. ÉTAT GLOBAL DU PANIER */
+/*1. OVERALL BASKET STATUS */
 const cart = {
   items: {},
   promoApplied: false,
@@ -53,7 +53,7 @@ window.addEventListener('load', () => {
   }, 700);
 });
 
-/*3. NAVIGATION BURGER*/
+/*3.BURGER NAVIGATION*/
 function initNav() {
   const burger   = document.getElementById('nav-burger');
   const navLinks = document.querySelector('.nav-links');
@@ -87,7 +87,7 @@ function initNav() {
   });
 }
 
-/*4. FILTRES PAR CATÉGORIE */
+/*4. FILTERS BY CATEGORY */
 function initFilters() {
   const chips = document.querySelectorAll('.filter-chip');
   const count = document.getElementById('results-count');
@@ -120,7 +120,7 @@ function initFilters() {
   });
 }
 
-/*5. TRI */
+/*5. sort */
 function initSort() {
   const sel  = document.getElementById('sort-select');
   const grid = document.getElementById('events-grid');
@@ -146,10 +146,10 @@ function initSort() {
   });
 }
 
-/*Attache les listeners +/- sur tous les .qty-btn présents dans un conteneur*/
+/*Attach the +/- listeners to all .qty-btn objects present in a container*/
 function attachQtyListeners(container = document) {
   container.querySelectorAll('.qty-btn').forEach(btn => {
-    // Éviter les doublons
+    // Avoid duplicates
     if (btn.dataset.listenerAttached) return;
     btn.dataset.listenerAttached = 'true';
 
@@ -165,30 +165,30 @@ function attachQtyListeners(container = document) {
       let qty = parseInt(output.textContent, 10) || 0;
       qty = isMinus ? Math.max(0, qty - 1) : Math.min(10, qty + 1);
 
-      // Mise à jour affichage compteur
+      // Meter display update
       output.textContent = qty;
       output.classList.add('changed');
       output.addEventListener('animationend', () => output.classList.remove('changed'), { once: true });
 
-      // Style ligne active
+      // Active line style
       row.classList.toggle('has-qty', qty > 0);
       const minusBtn = row.querySelector('.qty-minus');
       if (minusBtn) minusBtn.disabled = qty === 0;
 
-      // Mise à jour panier
+      // Cart update
       cart.setItem(eid, name, price, qty);
       renderCart();
       updateCartBadge();
       animateCartTotal();
 
-      // Toast ajout
+      // Toast 
       if (!isMinus && qty > 0) {
         showToast(`✓ ${name} ajouté au panier`, 'success', 2000);
       }
     });
   });
 
-  // Désactiver tous les minus à 0
+  // Disable all minuses set to 0
   container.querySelectorAll('.qty-minus').forEach(btn => {
     const row    = btn.closest('.tarif-row');
     const output = row?.querySelector('.qty-val');
@@ -196,7 +196,7 @@ function attachQtyListeners(container = document) {
   });
 }
 
-/*7. RENDU PANIER — avec animations */
+/*7.SHOPPING CART RETURN — with animations */
 function renderCart() {
   const itemsEl    = document.getElementById('cart-items');
   const footerEl   = document.getElementById('cart-footer');
@@ -210,7 +210,7 @@ function renderCart() {
   if (footerEl) footerEl.hidden = isEmpty;
   if (!itemsEl) return;
 
-  // Supprimer les anciens items
+  // Delete the old items
   itemsEl.querySelectorAll('.cart-item').forEach(el => el.remove());
 
   Object.entries(cart.items).forEach(([id, item]) => {
@@ -237,7 +237,7 @@ function renderCart() {
 }
 
 function removeCartItem(id) {
-  // Remettre compteur à 0 dans la carte
+  // Reset the counter to 0 on the card
   document.querySelectorAll(`.qty-val[data-event="${id}"]`).forEach(output => {
     output.textContent = '0';
     const row = output.closest('.tarif-row');
@@ -255,13 +255,13 @@ function removeCartItem(id) {
   showToast('Billet retiré du panier', 'info', 2000);
 }
 
-/*8. ANIMATION TOTAL PANIER (mini flottant) */
+/*8. TOTAL BASKET ANIMATION (mini floating) */
 function animateCartTotal() {
-  // Mini bulle flottante au-dessus du bouton panier
+  // Small floating bubble above the shopping cart button
   const toggle = document.getElementById('cart-toggle');
   if (!toggle) return;
 
-  // Supprimer l'ancienne bulle si elle existe
+  // Delete the old bubble if it exists
   document.querySelector('.cart-total-bubble')?.remove();
 
   if (cart.grandTotal > 0) {
@@ -285,20 +285,20 @@ function animateCartTotal() {
     `;
     document.body.appendChild(bubble);
 
-    // Auto-disparaît après 2s
+    // Auto-disappears after 2s
     setTimeout(() => {
       bubble.style.animation = 'bubbleOut .25s ease forwards';
       bubble.addEventListener('animationend', () => bubble.remove(), { once: true });
     }, 2000);
   }
 
-  // Bump sur le bouton panier
+  // Bump on the shopping cart button
   toggle.classList.remove('bump');
   void toggle.offsetWidth;
   toggle.classList.add('bump');
 }
 
-/*9. BADGE PANIER HEADER*/
+/*9. BASKET HEADER BADGE*/
 function updateCartBadge() {
   const badge = document.getElementById('cart-count');
   if (!badge) return;
@@ -310,7 +310,7 @@ function updateCartBadge() {
     badge.classList.add('bump');
   }
 
-  // Affiche le total dans le header si > 0
+  // Displays the total in the header if > 0
   const headerTotal = document.getElementById('cart-header-total');
   if (headerTotal) {
     headerTotal.textContent = cart.grandTotal > 0
@@ -320,7 +320,7 @@ function updateCartBadge() {
   }
 }
 
-/*10. PANNEAU PANIER (DRAWER) */
+/*10. DRAWER BASKET PANEL */
 function initCartDrawer() {
   const toggle   = document.getElementById('cart-toggle');
   const drawer   = document.getElementById('cart-drawer');
@@ -329,7 +329,7 @@ function initCartDrawer() {
   if (!toggle || !drawer) return;
 
   const open = () => {
-    renderCart(); // toujours à jour à l'ouverture
+    renderCart(); 
     drawer.classList.add('open');
     overlay?.classList.add('open');
     drawer.setAttribute('aria-hidden', 'false');
@@ -355,7 +355,7 @@ function initCartDrawer() {
   });
 }
 
-/*11. CODE PROMO */
+/*11.PROMO CODE */
 function initPromo() {
   const promoBtn   = document.getElementById('promo-btn');
   const promoInput = document.getElementById('promo-input');
@@ -393,7 +393,7 @@ function initPromo() {
   });
 }
 
-/*12. PAIEMENT — avec animation "traitement" */
+/*12. PAYMENT — with "processing" animation */
 function initCheckout() {
   const btn = document.getElementById('btn-checkout');
   if (!btn) return;
@@ -401,13 +401,13 @@ function initCheckout() {
   btn.addEventListener('click', () => {
     if (cart.count === 0) {
       showToast('Votre panier est vide.', 'error', 2000);
-      // Secousse sur le bouton
+      // Shake the button
       btn.classList.add('shake');
       btn.addEventListener('animationend', () => btn.classList.remove('shake'), { once: true });
       return;
     }
 
-    // Animation chargement
+    // Loading animation
     const originalHTML = btn.innerHTML;
     btn.innerHTML = `
       <span class="btn-spinner"></span>
@@ -416,7 +416,7 @@ function initCheckout() {
     btn.disabled = true;
     btn.style.opacity = '.8';
 
-    // Étapes visuelles
+    // Visual steps
     setTimeout(() => {
       btn.innerHTML = `<span class="btn-spinner"></span> Sécurisation du paiement…`;
     }, 600);
@@ -426,14 +426,14 @@ function initCheckout() {
     }, 1200);
 
     setTimeout(() => {
-      // Succès
+      // Success
       btn.innerHTML = `✓ Paiement accepté !`;
       btn.style.background = '#2a7d4f';
       btn.style.opacity = '1';
 
       showConfirmModal();
 
-      // Réinitialisation panier
+      // Cart reset
       setTimeout(() => {
         cart.clear();
         renderCart();
@@ -443,7 +443,7 @@ function initCheckout() {
         document.getElementById('cart-overlay')?.classList.remove('open');
         document.body.style.overflow = '';
 
-        // Remettre tous les compteurs à 0
+        // Reset all counters to 0
         document.querySelectorAll('.qty-val').forEach(el => { el.textContent = '0'; });
         document.querySelectorAll('.tarif-row').forEach(row => {
           row.classList.remove('has-qty');
@@ -529,7 +529,7 @@ function launchConfetti() {
   }
 }
 
-/* 14. ANIMATIONS AU SCROLL*/
+/* 14. SCROLL ACTIVITIES*/
 function initScrollAnimations() {
   if (!('IntersectionObserver' in window)) {
     document.querySelectorAll('.animate-in').forEach(el => el.classList.add('visible'));
@@ -560,7 +560,7 @@ function showToast(message, type = 'info', duration = 3500) {
   }, duration);
 }
 
-/*16. MICRO-INTERACTIONS CARTES*/
+/*16. MICRO-INTERACTIONS CARDS*/
 function initCardInteractions() {
   document.querySelectorAll('.billet-card').forEach(card => {
     if (!window.matchMedia('(hover: hover)').matches) return;
@@ -581,7 +581,7 @@ function initCardInteractions() {
   });
 }
 
-/*ANIMATIONS CSS INJECTÉES EN JS */
+/*CSS ANIMATIONS INJECTED IN JS*/
 function injectAnimationStyles() {
   if (document.getElementById('vn-anim-styles')) return;
   const style = document.createElement('style');
@@ -715,9 +715,9 @@ function getHeures(ev) {
     : 'Voir programme';
 }
 
-/*Extrait TOUS les tarifs réels depuis un event OA*/
+/*Extracts ALL actual prices from an OA event*/
 function extractAllTarifs(ev) {
-  // Gratuit
+  // free
   if (ev.free === 1 || ev.free === true) {
     return [{
       id:    `${ev.uid}-gratuit`,
@@ -729,7 +729,7 @@ function extractAllTarifs(ev) {
 
   const tarifs = [];
 
-  // Tarifs dans registration[]
+  // Prices in registration[]
   if (Array.isArray(ev.registration) && ev.registration.length) {
     ev.registration.forEach((reg, i) => {
       if (typeof reg.price === 'number') {
@@ -745,7 +745,7 @@ function extractAllTarifs(ev) {
   }
   if (tarifs.length) return tarifs;
 
-  // Parse conditions textuelles
+  // Textual parse conditions
   const cond = getText(ev.conditions);
   if (cond) {
     const matches = [...cond.matchAll(/(\d+(?:[.,]\d{1,2})?)\s*€/g)];
@@ -764,7 +764,7 @@ function extractAllTarifs(ev) {
   return [{ id: `${ev.uid}-default`, label: 'Billet standard', price: 0, desc: 'Voir les conditions sur place' }];
 }
 
-/*CONSTRUIRE UNE LIGNE TARIF */
+/*BUILDING A FARE LINE */
 function buildTarifRow(tarif) {
   const row = document.createElement('div');
   row.className = 'tarif-row';
@@ -802,7 +802,7 @@ function buildTarifRow(tarif) {
   return row;
 }
 
-/*INJECTER UN EVENT DANS UNE BILLET-CARD */
+/*INJECT AN EVENT INTO A TICKET CARD */
 function fillBilletCard(prefix, ev) {
   const $ = id => document.getElementById(`${prefix}-${id}`);
   const fallback = 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&q=80';
@@ -822,7 +822,7 @@ function fillBilletCard(prefix, ev) {
   const lienOA = `https://openagenda.com/${OA_AGENDA_SLUG}/events/${slug}`;
   const lienDt = `/html/evenement-detail.html?id=${encodeURIComponent(ev.uid || slug)}`;
 
-  // Catégorie
+  // Categories
   const tl = titre.toLowerCase();
   const cat =
     /concert|musique|jazz/.test(tl) ? 'concert' :
@@ -842,18 +842,18 @@ function fillBilletCard(prefix, ev) {
     theatre: '🎭 Théâtre', sport: '⚽ Sport', culture: '🎭 Culture',
   }[cat];
 
-  // Image
+  //Picture
   const imgEl = $('img');
   if (imgEl) {
     imgEl.src = imgSrc; imgEl.alt = titre;
     imgEl.onerror = () => { imgEl.src = fallback; imgEl.onerror = null; };
   }
 
-  // Crédits
+  //Credits
   const creditsEl = $('credits');
   if (creditsEl) { creditsEl.textContent = credits; creditsEl.hidden = !credits; }
 
-  // Textes
+  // Texts
   const setText = (id, val) => { const el = $(id); if (el) el.textContent = val; };
   setText('title',   titre);
   setText('date',    date   ? `📅 ${date}`   : '');
@@ -877,14 +877,14 @@ function fillBilletCard(prefix, ev) {
     ? 'Gratuit dans la limite des places disponibles'
     : getText(ev.conditions) || '—';
 
-  // Liens
+  // Link
   const linkDetEl = $('link-detail');
   if (linkDetEl) { linkDetEl.href = lienDt; linkDetEl.setAttribute('aria-label', `Détail : ${titre}`); }
 
   const linkOAEl = $('link-oa');
   if (linkOAEl) { linkOAEl.href = lienOA; linkOAEl.setAttribute('aria-label', `Voir ${titre} sur OpenAgenda`); }
 
-  // Lien réservation si dispo dans registration
+  // Booking link if available in registration
   if (Array.isArray(ev.registration)) {
     const withLink = ev.registration.find(r => r.url);
     if (withLink) {
@@ -893,7 +893,7 @@ function fillBilletCard(prefix, ev) {
     }
   }
 
-  // TARIFS 
+  // PRICE 
   const tarifsEl = $('tarifs');
   if (tarifsEl) {
     tarifsEl.innerHTML = '';
@@ -905,11 +905,11 @@ function fillBilletCard(prefix, ev) {
   console.log(`[Billetterie] ✅ "${titre}" | ${date} | ${lieu} | ${tarifs.length} tarif(s)`);
 }
 
-/*CHARGEMENT DES CARTES OA
-   bev1  = Concert Sofiane Saidi (vedette, fetchOne)
-   bev2–3 = Autres musées
-   bev4  = Festival
-   bev5  = Sport */
+/*LOADING OA CARDS
+bev1 = Sofiane Saidi Concert (headliner, fetchOne)
+bev2–3 = Other Museums
+bev4 = Festival
+bev5 = Sport*/
 async function loadOABilletCards() {
   console.log('[Billetterie] Chargement des events…');
 
@@ -928,7 +928,7 @@ async function loadOABilletCards() {
     fillBilletCard('bev1', evMain[0]);
   }
 
-  // bev2–3 : autres musées (sans le vedette)
+  // bev2–3 : autres musées 
   const autres = evMain.filter(e => String(e.uid) !== String(FEATURED_EVENT_UID));
   if (autres[0]) fillBilletCard('bev2', autres[0]);
   if (autres[1]) fillBilletCard('bev3', autres[1]);
@@ -939,20 +939,20 @@ async function loadOABilletCards() {
   // bev5 : sport
   if (evSport[0])    fillBilletCard('bev5', evSport[0]);
 
-  // Micro-interactions 3D
+  //3D Micro-interactions
   initCardInteractions();
 
   console.log('[Billetterie]  Toutes les cartes chargées.');
 }
 
-/*UTILITAIRE XSS */
+/*XSS UTILITY */
 const _escEl = document.createElement('div');
 function escapeHtml(str) {
   _escEl.textContent = String(str ?? '');
   return _escEl.innerHTML;
 }
 
-/*POINT D'ENTRÉ */
+/*INIT */
 document.addEventListener('DOMContentLoaded', () => {
   injectAnimationStyles(); 
 
@@ -964,12 +964,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initCheckout();
   initScrollAnimations();
 
-  // Listeners quantité sur les cartes statiques existantes
+  // Listener quantity on existing static maps
   attachQtyListeners(document);
 
-  // Charger les vrais events OA
+  // Load the real OA events
   loadOABilletCards();
 
-  // Rendu initial panier vide
+  // Initial result: empty cart
   renderCart();
 });
