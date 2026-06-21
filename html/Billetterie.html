@@ -21,7 +21,7 @@
     <span class="loader-label">VilleNova</span>
   </div>
 
-  <!-- LIEN ÉVITEMENT -->
+  <!-- AVOID LINK-->
   <a class="skip-link" href="#main-content">Aller au contenu principal</a>
 
   <!-- HEADER -->
@@ -48,7 +48,7 @@
         </ul>
       </nav>
 
-      <!-- Panier résumé header -->
+      <!-- Basket summary header -->
       <button class="cart-pill" id="cart-toggle" aria-label="Voir le panier" aria-expanded="false">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
@@ -65,7 +65,7 @@
   <!-- MAIN-->
   <main id="main-content">
 
-    <!-- HERO BILLETTERIE-->
+    <!-- HERO-->
     <section class="hero-billet" aria-labelledby="hero-title">
       <div class="hero-bg-pattern" aria-hidden="true"></div>
       <div class="hero-content">
@@ -90,7 +90,7 @@
       </div>
     </section>
 
-    <!--FILTRES-->
+    <!--FILTERS-->
     <div class="filters-band" role="group" aria-label="Filtrer les événements">
       <div class="filters-inner">
         <button class="filter-chip active" data-filter="all"      aria-pressed="true">Tous</button>
@@ -112,7 +112,7 @@
       </div>
     </div>
 
-    <!-- GRILLE ÉVÉNEMENTS -->
+    <!--EVENTS SCHEDULE-->
     <section class="section" aria-labelledby="events-title">
       <div class="section-header">
         <h2 class="section-title" id="events-title">Événements disponibles</h2>
@@ -121,7 +121,7 @@
 
       <div class="events-billet-grid" id="events-grid" role="list">
 
-        <!--CARD 1 — VEDETTE STATIQUE -->
+        <!--CARDS 1-->
         <article class="billet-card billet-featured animate-in" data-category="festival" role="listitem" aria-labelledby="ev1-title">
           <div class="billet-card-img">
             <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80"
@@ -184,12 +184,11 @@
           </div>
         </article>
 
-        <!--CARD 2 — OpenAgenda bev1 (agenda général ev1)
-             JS injecte : image · titre · date · lieu · desc · tarifs -->
+        <!--CARDS2 -->
         <article class="billet-card animate-in" data-category="concert" role="listitem" aria-labelledby="bev1-title" style="--delay:.08s">
           <div class="billet-card-img">
             <picture>
-              <!-- src vide : aucune requête inutile, JS injecte la vraie URL -->
+              
               <img id="bev1-img"
                    src=""
                    alt="Chargement…"
@@ -206,7 +205,7 @@
             </div>
             <h3 class="card-title" id="bev1-title">Chargement…</h3>
             <p class="card-desc"    id="bev1-desc"></p>
-            <!-- JS génère les lignes tarif ici via buildTarifRow() -->
+            <!-- PRICES buildTarifRow() -->
             <div class="tarifs-grid" id="bev1-tarifs" role="group" aria-label="Tarifs"></div>
             <div class="card-dispo">
               <span class="dispo-dot dispo-ok" aria-hidden="true"></span>
@@ -215,7 +214,7 @@
           </div>
         </article>
 
-        <!--CARD 3 — OpenAgenda bev2 (agenda général ev2) -->
+        <!--CARDS 3 -->
         <article class="billet-card animate-in" data-category="expo" role="listitem" aria-labelledby="bev2-title" style="--delay:.16s">
           <div class="billet-card-img">
             <picture>
@@ -243,7 +242,7 @@
           </div>
         </article>
 
-        <!--CARD 4 — OpenAgenda bev3 (théâtre)-->
+        <!--CARDS 4-->
         <article class="billet-card animate-in" data-category="theatre" role="listitem" aria-labelledby="bev3-title" style="--delay:.24s">
           <div class="billet-card-img">
             <picture>
@@ -271,7 +270,7 @@
           </div>
         </article>
 
-        <!--CARD 5 — OpenAgenda bev4 (festival)-->
+        <!--CARDS 5 -->
         <article class="billet-card animate-in" data-category="festival" role="listitem" aria-labelledby="bev4-title" style="--delay:.32s">
           <div class="billet-card-img">
             <picture>
@@ -299,7 +298,7 @@
           </div>
         </article>
 
-        <!--CARD 6 — OpenAgenda bev5 (sport)-->
+        <!--CARDS 6-->
         <article class="billet-card animate-in" data-category="sport" role="listitem" aria-labelledby="bev5-title" style="--delay:.40s">
           <div class="billet-card-img">
             <picture>
@@ -332,7 +331,7 @@
 
   </main>
 
-  <!--PANIER LATÉRAL-->
+  <!--SIDE BASKET-->
   <aside class="cart-drawer" id="cart-drawer" role="complementary" aria-label="Panier" aria-hidden="true">
     <div class="cart-drawer-inner">
       <div class="cart-header">

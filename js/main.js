@@ -186,7 +186,7 @@ function guessCat(ev) {
     ev.longDescription?.fr ||
     ev.description?.fr     ||
     ev.summary?.fr         || ''
-  ).toLowerCase().slice(0, 300); // 300 chars suffisent, pas besoin de tout parser
+  ).toLowerCase().slice(0, 300); 
 
   const all = `${titre} ${keywords} ${type} ${lieu} ${desc}`;
 
