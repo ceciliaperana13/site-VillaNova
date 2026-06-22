@@ -1,5 +1,22 @@
 'use strict';
 
+/* ─── BASE PATH (GitHub Pages) ────────────────────────────────────────────────
+   Détecte automatiquement le sous-dossier du dépôt.
+   En local  : BASE_PATH = ""
+   Sur GitHub Pages (site-VillaNova) : BASE_PATH = "/site-VillaNova"
+────────────────────────────────────────────────────────────────────────────── */
+const BASE_PATH = (() => {
+  const path = window.location.pathname; // ex: /site-VillaNova/index.html
+  const match = path.match(/^(\/[^/]+)\//);
+  // Si on est à la racine (localhost ou domaine propre) on renvoie ""
+  if (!match || match[1] === '') return '';
+  // Si le segment ressemble à un fichier (localhost/index.html) on renvoie ""
+  if (match[1].includes('.')) return '';
+  return match[1]; // "/site-VillaNova"
+})();
+
+const EVENT_DETAIL = `${BASE_PATH}/html/evenement-detail.html`;
+
 /* LOADER */
 document.addEventListener('DOMContentLoaded', () => {
   const loader = document.getElementById('page-loader');
@@ -38,8 +55,7 @@ function initNav() {
   });
 }
 
-/* EVENT FILTERS
-   Cards have a data-category updated by fillCard() once the API responds. */
+/* EVENT FILTERS */
 function initFilters() {
   const filterTags = document.querySelectorAll('.filter-tag');
   if (!filterTags.length) return;
@@ -56,7 +72,7 @@ function initFilters() {
     });
   });
 }
-//
+
 function applyFilter(cat) {
   const cards = document.querySelectorAll('.event-card[data-category]');
   cards.forEach(card => {
@@ -173,7 +189,7 @@ const CAT_LABELS = {
   autre:    '📌 Autre',
 };
 
-/* CATEGORY DETECTION — from title, keywords, location and description */
+/* CATEGORY DETECTION */
 function guessCat(ev) {
   const titre    = (ev.title?.fr    || ev.title?.en    || '').toLowerCase();
   const keywords = (ev.keywords?.fr || ev.keywords?.en || []).join(' ').toLowerCase();
@@ -203,7 +219,7 @@ function guessCat(ev) {
   return 'autre';
 }
 
-/* DESCRIPTION — priority: longDescription > description > summary */
+/* DESCRIPTION */
 function getDesc(ev, maxLen = 150) {
   const raw =
     ev.longDescription?.fr ||
@@ -254,7 +270,7 @@ async function oaFetchOne(uid, eventId) {
   }
 }
 
-/* FILL A CARD (ev1–ev6) — updates data-category + badge from the API */
+/* FILL A CARD (ev1–ev6) */
 function fillCard(prefix, ev) {
   const get = (id) => document.getElementById(`${prefix}-${id}`);
 
@@ -267,7 +283,6 @@ function fillCard(prefix, ev) {
   const cat    = guessCat(ev);
   const fallback = 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&q=80';
 
-  /*picture */
   const imgEl = get('img');
   if (imgEl) {
     imgEl.src = imgSrc;
@@ -275,24 +290,21 @@ function fillCard(prefix, ev) {
     imgEl.onerror = () => { imgEl.src = fallback; imgEl.onerror = null; };
   }
 
-  /* Texts */
   const titleEl = get('title'); if (titleEl) titleEl.textContent = titre;
   const descEl  = get('desc');  if (descEl)  descEl.textContent  = desc;
   const dateEl  = get('date');  if (dateEl)  dateEl.textContent  = '📅 ' + date;
   const placeEl = get('place'); if (placeEl) placeEl.textContent = '📍 ' + lieu;
   const prixEl  = get('prix');  if (prixEl)  prixEl.textContent  = prix;
 
-  /* Detail link */
+  /* ── LIEN CORRIGÉ ── */
   const linkEl = get('link');
   if (linkEl) {
-    linkEl.href = `/html/evenement-detail.html?id=${encodeURIComponent(ev.uid || ev.slug)}`;
+    linkEl.href = `${EVENT_DETAIL}?id=${encodeURIComponent(ev.uid || ev.slug)}`;
   }
 
-  /* Category badge */
   const badgeEl = get('badge');
   if (badgeEl) badgeEl.textContent = CAT_LABELS[cat] || CAT_LABELS.autre;
 
-  /* data-category on the article — used by the filter */
   const article = (titleEl || imgEl)?.closest('.event-card');
   if (article) {
     article.dataset.category = cat;
@@ -310,7 +322,6 @@ function fillFeaturedCard(ev) {
   const cat    = guessCat(ev);
   const imgSrc = extractImage(ev);
 
-  /* picture */
   const imgEl = document.getElementById('ev-feat-img');
   if (imgEl) {
     imgEl.src = imgSrc;
@@ -318,11 +329,9 @@ function fillFeaturedCard(ev) {
     imgEl.onerror = () => { imgEl.src = fallback; imgEl.onerror = null; };
   }
 
-  /* Badge */
   const badgeEl = document.getElementById('ev-feat-badge');
   if (badgeEl) badgeEl.textContent = CAT_LABELS[cat] || CAT_LABELS.autre;
 
-  /* Texts */
   const titleEl = document.getElementById('ev-feat-title');
   if (titleEl) titleEl.textContent = titre;
 
@@ -335,7 +344,6 @@ function fillFeaturedCard(ev) {
   const placeEl = document.getElementById('ev-feat-place');
   if (placeEl) placeEl.textContent = '📍 ' + lieu;
 
-  /* Tags */
   const tagsEl = document.getElementById('ev-feat-tags');
   if (tagsEl) {
     const tags = [];
@@ -347,14 +355,13 @@ function fillFeaturedCard(ev) {
       .join('');
   }
 
-  /* Link */
+  /* ── LIEN CORRIGÉ ── */
   const linkEl = document.getElementById('ev-feat-link');
   if (linkEl) {
-    linkEl.href = `/html/evenement-detail.html?id=${encodeURIComponent(ev.uid || ev.slug)}`;
+    linkEl.href = `${EVENT_DETAIL}?id=${encodeURIComponent(ev.uid || ev.slug)}`;
     linkEl.setAttribute('aria-label', `Voir l'événement : ${titre}`);
   }
 
-  /* data-category on the featured article */
   const article = linkEl?.closest('.event-card');
   if (article) article.dataset.category = cat;
 
@@ -381,7 +388,6 @@ async function loadOpenAgendaCards() {
     '| Festival:', eventsFestival.length,
     '| Sport:', eventsSport.length);
 
-  /* Featured card */
   if (featuredEv) {
     fillFeaturedCard(featuredEv);
   } else {
@@ -389,10 +395,8 @@ async function loadOpenAgendaCards() {
     if (eventsMain[0]) fillFeaturedCard(eventsMain[0]);
   }
 
-  /* ev1–ev6: exclude the featured event from normal cards */
   const filteredMain = eventsMain.filter(e => String(e.uid) !== String(FEATURED_EVENT_UID));
 
-  /* Build a pool for ev3–ev6, falling back to main events if specialist agendas are empty */
   const pool3 = eventsTheatre[0]  || filteredMain[2] || null;
   const pool4 = eventsTheatre[1]  || filteredMain[3] || null;
   const pool5 = eventsFestival[0] || filteredMain[4] || null;
@@ -405,7 +409,17 @@ async function loadOpenAgendaCards() {
   if (pool5)           fillCard('ev5', pool5);
   if (pool6)           fillCard('ev6', pool6);
 
-  /* Re-apply active filter now that data-category values are set */
+  /* ── CORRIGER aussi les liens statiques ev5 et ev6 dans le HTML ── */
+  ['ev5-link', 'ev6-link'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.href.includes('/html/evenement-detail')) {
+      // déjà mis à jour par fillCard, mais au cas où l'API n'a pas répondu :
+      if (!el.href.includes(BASE_PATH)) {
+        el.href = `${EVENT_DETAIL}`;
+      }
+    }
+  });
+
   const activeFilter = document.querySelector('.filter-tag.active')?.dataset.filter || 'all';
   if (activeFilter !== 'all') applyFilter(activeFilter);
 }
