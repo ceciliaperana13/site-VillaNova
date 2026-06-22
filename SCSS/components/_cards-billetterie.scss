@@ -49,7 +49,7 @@
 }
 
 
-// CARTE VEDETTE
+// billet
 .billet-featured {
   grid-column: 1 / -1;
   display: grid;
@@ -75,7 +75,7 @@
 }
 
 
-// QUANTITÉS — Boutons - / +
+// ticket
 .ticket-line {
   display: flex;
   justify-content: space-between;
@@ -104,14 +104,14 @@
   }
 }
 
-/*  TON CONTENEUR RÉEL  */
+/* control  */
 .qty-control {
   display: flex;
   align-items: center;
-  gap: .5rem; /* espace entre - / nombre / + */
+  gap: .5rem; 
 }
 
-/*  Boutons – et +  */
+/* btn */
 .qty-btn {
   width: 28px;
   height: 28px;
@@ -134,7 +134,7 @@
   }
 }
 
-/* --- Le nombre au centre --- */
+/* qty */
 .qty-val {
   min-width: 22px;
   text-align: center;

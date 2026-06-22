@@ -13,7 +13,7 @@
   box-shadow: var(--shadow-card);
 }
 
-// Ligne d'information (icône + contenu)
+// row
 .info-row {
   display: grid;
   grid-template-columns: 32px 1fr;
@@ -21,14 +21,14 @@
   align-items: flex-start;
 }
 
-// Icône
+// Ico
 .info-icon {
   font-size: 1.45rem;
   color: var(--terracotta);
   flex-shrink: 0;
 }
 
-// Contenu texte
+// Content
 .info-content {
   display: flex;
   flex-direction: column;

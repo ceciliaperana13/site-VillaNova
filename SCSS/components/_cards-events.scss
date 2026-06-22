@@ -24,7 +24,7 @@
   }
 }
 
-// Image
+// Img
 .card-img-wrap {
   position: relative;
   overflow: hidden;
@@ -39,7 +39,7 @@
   }
 }
 
-// Corps
+// body
 .card-body {
   padding: 1rem 1.1rem;
   flex: 1;
@@ -48,14 +48,14 @@
   gap: .4rem;
 }
 
-// Grille événements
+// grid
 .events-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--gap-cards);
 }
 
-// Carte vedette
+// event featured
 .event-featured {
   grid-column: 1 / -1;
   display: grid;
