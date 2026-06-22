@@ -56,7 +56,7 @@ function initFilters() {
     });
   });
 }
-
+//
 function applyFilter(cat) {
   const cards = document.querySelectorAll('.event-card[data-category]');
   cards.forEach(card => {
@@ -267,7 +267,7 @@ function fillCard(prefix, ev) {
   const cat    = guessCat(ev);
   const fallback = 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&q=80';
 
-  /* Image */
+  /*picture */
   const imgEl = get('img');
   if (imgEl) {
     imgEl.src = imgSrc;
@@ -310,7 +310,7 @@ function fillFeaturedCard(ev) {
   const cat    = guessCat(ev);
   const imgSrc = extractImage(ev);
 
-  /* Image */
+  /* picture */
   const imgEl = document.getElementById('ev-feat-img');
   if (imgEl) {
     imgEl.src = imgSrc;

@@ -26,7 +26,7 @@ function getText(field) {
   return field.fr || field.en || Object.values(field)[0] || '';
 }
 
-/** Extracts the image URL (3 OA formats) + optimisation + fallback */
+/** Extracts the image URL (3 OA formats) + optimization + fallback */
 function extractImage(ev) {
   if (!ev.image) return FALLBACK_IMG;
 
