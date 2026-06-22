@@ -1,6 +1,6 @@
-/*CALENDRIER — VilleNova */
+/*CALENDRIER — VillaNova */
 
-/* Grille principale */
+/* grid */
 .calendar-grid {
   background: var(--blanc-casse);
   border-radius: var(--r-lg);
@@ -9,7 +9,7 @@
   box-shadow: var(--shadow-card);
 }
 
-/* Jours de la semaine */
+/*weekdays */
 .cal-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -26,7 +26,7 @@
   color: var(--sable-moyen);
 }
 
-/* Corps du calendrier */
+/* body */
 .cal-body {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -54,12 +54,12 @@
 
 .cal-cell { animation-delay: calc(var(--i, 0) * var(--anim-stagger)); }
 
-/* Cases vides */
+/* Cases null */
 .cal-cell--empty {
   background: rgba(244,237,228,.4);
 }
 
-/* Aujourd’hui */
+/* today */
 .cal-cell--today {
   background: rgba(209,123,73,.07);
 }
@@ -69,7 +69,7 @@
   color: #fff;
 }
 
-/* Cases avec événements */
+/* Cases events */
 .cal-cell--has-events {
   cursor: pointer;
 }
@@ -83,7 +83,7 @@
   color: var(--terracotta);
 }
 
-/* Numéro du jour */
+/* day num */
 .cal-day-num {
   display: inline-flex;
   align-items: center;
@@ -97,7 +97,7 @@
   transition: background var(--dur), color var(--dur);
 }
 
-/* Points (dots) */
+/*  (dots) */
 .cal-dots {
   display: flex;
   flex-wrap: wrap;
@@ -126,7 +126,7 @@
   line-height: 7px;
 }
 
-/*ÉTIQUETTES D'ÉVÉNEMENTS (PILLS)*/
+/*(PILLS)*/
 .cal-ev-pills {
   margin-top: .35rem;
   display: flex;
@@ -146,7 +146,7 @@
   white-space: nowrap;
 }
 
-/* Couleurs par catégorie */
+/* Coulor  */
 .cal-ev-pill[data-cat="festival"] { background: var(--cat-festival); }
 .cal-ev-pill[data-cat="concert"]  { background: var(--cat-concert); }
 .cal-ev-pill[data-cat="expo"]     { background: var(--cat-expo); }
@@ -154,9 +154,7 @@
 .cal-ev-pill[data-cat="gastro"]   { background: var(--cat-gastro); }
 .cal-ev-pill[data-cat="sport"]    { background: var(--cat-sport); }
 
-/* ============================================================
-   LÉGENDE
-   ============================================================ */
+
 
 .cal-legend {
   display: flex;

@@ -1,7 +1,7 @@
-// Import du module map
+// Import map
 @use "sass:map";
 
-// 1. Définition des breakpoints (mobile-first)
+// 1. breakpoints (mobile-first)
 $breakpoints: (
   xs: 480px,   // Extra small
   sm: 576px,   // Small / mobile large
@@ -36,7 +36,7 @@ $breakpoints: (
   }
 }
 
-// 4. Mixin entre deux breakpoints
+// 4. Mixin between two breakpoints
 @mixin between($min, $max) {
   $minVal: map.get($breakpoints, $min);
   $maxVal: map.get($breakpoints, $max);
@@ -50,7 +50,7 @@ $breakpoints: (
   }
 }
 
-// TYPOGRAPHIE FLUIDE 
+// TYPO 
 @mixin fluid-type($min, $max) {
   font-size: clamp(#{$min}, 1rem + 1.5vw, #{$max});
 }

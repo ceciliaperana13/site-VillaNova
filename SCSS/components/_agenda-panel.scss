@@ -1,6 +1,6 @@
 /*Drawer fixe à droite */
 
-/* ── Overlay ── */
+/*  Overlay  */
 .panel-overlay {
   position: fixed;
   inset: 0;
@@ -18,13 +18,13 @@
   pointer-events: auto;
 }
 
-/* ── Panneau ── */
+/* Pannel  */
 .event-panel {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
-  width: 380px;           /* taille fixe compacte */
+  width: 380px;           //fix
   background: var(--blanc-casse, #FAF9F7);
   z-index: 600;
   transform: translateX(100%);
@@ -43,7 +43,7 @@
   transform: translateX(0);
 }
 
-/* ── Scrollable ── */
+/* Scroll */
 .event-panel-inner {
   display: flex;
   flex-direction: column;
@@ -54,7 +54,7 @@
   scrollbar-color: var(--sable-moyen, #C2A27C) transparent;
 }
 
-/* ── Bouton fermeture ── */
+/* Button close */
 .panel-close {
   position: absolute;
   top: .75rem;
@@ -81,7 +81,7 @@
   transform: scale(1.12);
 }
 
-/* ── Image en ratio 16/9 → toujours entière ── */
+/* picture */
 .panel-img-wrap {
   position: relative;
   width: 100%;
@@ -98,7 +98,7 @@
   display: block;
 }
 
-/* ── Badge catégorie ── */
+/*Badge */
 .panel-badge {
   position: absolute;
   bottom: .75rem;
@@ -125,7 +125,7 @@
 .panel-badge[data-cat="sport"]    { background: rgba(74,120,156,.92); }
 .panel-badge[data-cat="autre"]    { background: rgba(122,122,157,.92); }
 
-/* ── Corps ── */
+/* body*/
 .panel-body {
   padding: 1.2rem;
   display: flex;
@@ -140,7 +140,7 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Titre ── */
+/*Titles */
 .panel-title {
   font-family: var(--font-titre, 'Playfair Display', serif);
   font-size: 1.25rem;
@@ -150,7 +150,7 @@
   margin: 0;
 }
 
-/* ── Méta ── */
+/*Méta */
 .panel-meta-list {
   list-style: none;
   margin: 0;
@@ -179,7 +179,7 @@
   font-size: .95rem;
 }
 
-/* ── Description ── */
+/* Description  */
 .panel-desc {
   font-size: .88rem;
   color: var(--gris-fonce, #4A4035);
@@ -187,7 +187,7 @@
   margin: 0;
 }
 
-/* ── Tags ── */
+/* Tags  */
 .panel-tags {
   display: flex;
   flex-wrap: wrap;
@@ -205,7 +205,7 @@
   white-space: nowrap;
 }
 
-/* ── CTA ── */
+/* CTA */
 .btn-cta {
   display: flex;
   align-items: center;
@@ -237,7 +237,7 @@
   padding-top: .5rem;
 }
 
-/* ── Liste multi-events (même jour) ── */
+/* multi-events */
 .panel-day-list {
   list-style: none;
   padding: 0;

@@ -3,7 +3,7 @@
 
 
 :root {
-  /* Couleurs principales */
+  /* Color */
   --sable-clair:   #F4EDE4;
   --sable-moyen:   #E6D3B3;
   --sable-fonce:   #C2A27C;
@@ -37,7 +37,7 @@
   --r-lg:   18px;
   --r-pill: 50px;
 
-  /* Ombres */
+/*Shadows */
   --shadow-card:   0 4px 24px rgba(43,43,43,.09);
   --shadow-hover:  0 10px 40px rgba(43,43,43,.16);
   --shadow-header: 0 2px 16px rgba(43,43,43,.08);
@@ -47,7 +47,7 @@
   --dur:  .25s;
   --ease: cubic-bezier(.4,0,.2,1);
 
-  /* Animations */
+  /* Entertainment */
   --anim-duration: 600ms;
   --anim-easing:   cubic-bezier(0.22, 1, 0.36, 1);
   --anim-stagger:  80ms;
