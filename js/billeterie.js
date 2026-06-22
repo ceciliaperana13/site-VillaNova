@@ -2,7 +2,7 @@
 
 /*OPENAGENDA — CONFIG*/
 const OA_KEY          = "832ecfba688a4dda9e6beb28922ee893";
-const OA_AGENDA_UID   = "2119473";
+const OA_AGENDA_UID = "2119473";
 const OA_AGENDA_SLUG  = "musees-de-marseille";
 const OA_THEATRE_UID  = "65855330";
 const OA_FESTIVAL_UID = "46290899";
