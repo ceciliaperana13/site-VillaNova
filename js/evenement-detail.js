@@ -206,10 +206,10 @@ function displayEvent(ev) {
   // Public OpenAgenda link
   const lienOA = `https://openagenda.com/${OA_AGENDA_SLUG}/events/${slug}`;
 
-  console.log('[VilleNova] Event received:', ev);
+  console.log('[VillaNova] Event received:', ev);
 
   /* ── Page meta ── */
-  document.title = `${titre} | VilleNova`;
+  document.title = `${titre} | VillaNova`;
   const metaDesc = document.getElementById('page-desc');
   if (metaDesc) metaDesc.content = desc.slice(0, 160);
 

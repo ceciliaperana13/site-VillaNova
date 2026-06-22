@@ -285,7 +285,7 @@ function fillCard(prefix, ev) {
   /* Detail link */
   const linkEl = get('link');
   if (linkEl) {
-    linkEl.href = `../html/evenement-detail.html?id=${encodeURIComponent(ev.uid || ev.slug)}`;
+    linkEl.href = `./html/evenement-detail.html?id=${encodeURIComponent(ev.uid || ev.slug)}`;
   }
 
   /* Category badge */
@@ -350,7 +350,7 @@ function fillFeaturedCard(ev) {
   /* Link */
   const linkEl = document.getElementById('ev-feat-link');
   if (linkEl) {
-    linkEl.href = `../html/evenement-detail.html?id=${encodeURIComponent(ev.uid || ev.slug)}`;
+    linkEl.href = `./html/evenement-detail.html?id=${encodeURIComponent(ev.uid || ev.slug)}`;
     linkEl.setAttribute('aria-label', `Voir l'événement : ${titre}`);
   }
 
