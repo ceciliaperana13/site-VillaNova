@@ -1,16 +1,11 @@
 'use strict';
 
-/* ─── BASE PATH (GitHub Pages) ────────────────────────────────────────────────
-   Détecte automatiquement le sous-dossier du dépôt.
-   En local  : BASE_PATH = ""
-   Sur GitHub Pages (site-VillaNova) : BASE_PATH = "/site-VillaNova"
-────────────────────────────────────────────────────────────────────────────── */
 const BASE_PATH = (() => {
-  const path = window.location.pathname; // ex: /site-VillaNova/index.html
+  const path = window.location.pathname; 
   const match = path.match(/^(\/[^/]+)\//);
-  // Si on est à la racine (localhost ou domaine propre) on renvoie ""
+  
   if (!match || match[1] === '') return '';
-  // Si le segment ressemble à un fichier (localhost/index.html) on renvoie ""
+ 
   if (match[1].includes('.')) return '';
   return match[1]; // "/site-VillaNova"
 })();
