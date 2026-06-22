@@ -1,6 +1,6 @@
-// =========================================
+
 // HEADER — VilleNova
-// =========================================
+
 
 .site-header {
   position: sticky;
@@ -35,7 +35,7 @@
   color: var(--brun-chaud);
   white-space: nowrap;
   flex-shrink: 0;
-  z-index: 10000; /* ← IMPORTANT pour rester cliquable */
+  z-index: 10000; 
 
   svg {
     width: 32px;
@@ -95,7 +95,7 @@
   cursor: pointer;
   border: none;
   background: transparent;
-  z-index: 10001; /* ← IMPORTANT */
+  z-index: 10001; 
 
   &:hover { background: var(--sable-moyen); }
 
